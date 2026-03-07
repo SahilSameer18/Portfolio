@@ -137,40 +137,40 @@ export default function Contact() {
 
           {/* Social Icons */}
           <motion.div className="flex gap-6 mt-6 justify-center md:justify-start">
-  {[
-    {
-      icon: FaLinkedin,
-      href: "https://www.linkedin.com/in/sahil-sameer-siddique-abb849233/",
-      color: "#0077B5",
-    },
-    {
-      icon: FaGithub,
-      href: "https://github.com/SahilSameer18",
-      color: "#ffffff",
-    },
-    {
-      icon: FaInstagram,
-      href: "https://instagram.com/yourinstagram",
-      color: "#E1306C",
-    },
-  ].map((social, i) => {
-    const Icon = social.icon;
-    return (
-      <motion.a
-        key={i}
-        href={social.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        whileHover={{ scale: 1.2 }}
-        transition={{ duration: 0.3 }}
-        className={`text-3xl`}
-        style={{ color: social.color }}
-      >
-        <Icon className="hover:drop-shadow-[0_0_8px]" />
-      </motion.a>
-    );
-  })}
-</motion.div>
+            {[
+              {
+                icon: FaLinkedin,
+                href: "https://www.linkedin.com/in/sahil-sameer-siddique-abb849233/",
+                color: "#0077B5",
+              },
+              {
+                icon: FaGithub,
+                href: "https://github.com/SahilSameer18",
+                color: "#ffffff",
+              },
+              {
+                icon: FaInstagram,
+                href: "https://instagram.com/yourinstagram",
+                color: "#E1306C",
+              },
+            ].map((social, i) => {
+              const Icon = social.icon;
+              return (
+                <motion.a
+                  key={i}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.2 }}
+                  transition={{ duration: 0.3 }}
+                  className={`text-3xl`}
+                  style={{ color: social.color }}
+                >
+                  <Icon className="hover:drop-shadow-[0_0_8px]" />
+                </motion.a>
+              );
+            })}
+          </motion.div>
         </motion.div>
       </div>
     </section>

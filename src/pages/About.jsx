@@ -16,11 +16,11 @@ export default function About() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2 }}
           viewport={{ once: true }}
-          
+
         >
           <div className="relative">
             <motion.div
-            
+
               className="w-72 h-72 md:w-96 md:h-96 rounded-2xl overflow-hidden border border-white/10 shadow-lg"
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}

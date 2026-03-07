@@ -2,8 +2,8 @@ const SoftBackdrop = () => {
   return (
     <div className="fixed inset-0 bg-black/40 -z-10 pointer-events-none overflow-hidden">
 
-      
-      
+
+
       {/* Top Glow */}
       <div className="absolute left-1/2 top-20 -translate-x-1/2 w-[38rem] h-[18rem] 
       bg-linear-to-tr from-indigo-500/25 via-pink-400/15 to-transparent 

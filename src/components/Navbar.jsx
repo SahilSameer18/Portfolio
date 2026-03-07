@@ -49,9 +49,8 @@ export default function Navbar() {
               href={item.path}
               aria-label={`Navigate to ${item.name} section`}
               whileHover={{ y: -2 }}
-              className={`relative overflow-hidden h-5 group transition-colors duration-300 ${
-                active === item.id ? "text-indigo-300" : "text-white"
-              }`}
+              className={`relative overflow-hidden h-5 group transition-colors duration-300 ${active === item.id ? "text-indigo-300" : "text-white"
+                }`}
             >
               <span className="block group-hover:-translate-y-full transition-transform duration-300">
                 {item.name}
@@ -114,9 +113,8 @@ export default function Navbar() {
                 aria-label={`Navigate to ${item.name} section`}
                 whileHover={{ scale: 1.1 }}
                 onClick={() => setIsOpen(false)}
-                className={`hover:text-purple-400 ${
-                  active === item.id ? "text-indigo-300" : ""
-                }`}
+                className={`hover:text-purple-400 ${active === item.id ? "text-indigo-300" : ""
+                  }`}
               >
                 {item.name}
               </motion.a>
