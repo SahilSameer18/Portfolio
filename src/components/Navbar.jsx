@@ -47,6 +47,7 @@ export default function Navbar() {
             <motion.a
               key={item.name}
               href={item.path}
+              aria-label={`Navigate to ${item.name} section`}
               whileHover={{ y: -2 }}
               className={`relative overflow-hidden h-5 group transition-colors duration-300 ${
                 active === item.id ? "text-indigo-300" : "text-white"
@@ -89,6 +90,7 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle navigation menu"
           className="md:hidden ml-4 text-lg"
         >
           ☰
@@ -109,6 +111,7 @@ export default function Navbar() {
               <motion.a
                 key={item.name}
                 href={item.path}
+                aria-label={`Navigate to ${item.name} section`}
                 whileHover={{ scale: 1.1 }}
                 onClick={() => setIsOpen(false)}
                 className={`hover:text-purple-400 ${

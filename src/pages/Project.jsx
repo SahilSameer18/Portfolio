@@ -66,7 +66,7 @@ export default function Projects() {
               <div className="relative">
                 <motion.img
                   src={project.image}
-                  alt={project.title}
+                  alt={`Screenshot showcasing the ${project.title} project`}
                   className="w-72 md:w-96 rounded-2xl border border-white/10 shadow-lg object-cover"
                 />
 
