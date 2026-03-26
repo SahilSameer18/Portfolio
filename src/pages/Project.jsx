@@ -9,25 +9,25 @@ const projects = [
     title: "SafarAI",
     description:
       "An intelligent trip planning application that uses AI to create personalized travel itineraries based on user preferences, budget, and interests.",
-    link: "https://github.com/sahilsiddique/portfolio",
+    link: "https://www.safarai.in/",
     techStack: ["React", "Tailwind CSS", "Firebase", "Gemini AI"],
     image: safar,
-  },
-  {
-    title: "Thumblify",
-    description:
-      "A smart tool that creates custom, eye-catching thumbnails instantly using artificial intelligence. Designed to enhance visual content and streamline creative workflows.",
-    link: "https://github.com/sahilsiddique/ecommerce-app",
-    techStack: ["React", "Node.js", "Express", "MongoDB"],
-    image: thumblify,
   },
   {
     title: "SkillBridgeAI",
     description:
       "Helps users prepare effectively for interviews based on submitted profiles, providing personalized questions, a tailored preparation plan, and skill gap insights.",
-    link: "https://github.com/sahilsiddique/portfolio",
+    link: "https://skillbridgeai-s.vercel.app/",
     techStack: ["React", "Tailwind CSS", "Firebase", "Gemini AI"],
     image: skillbridgeAI,
+  },
+  {
+    title: "Thumblify",
+    description:
+      "A smart tool that creates custom, eye-catching thumbnails instantly using artificial intelligence. Designed to enhance visual content and streamline creative workflows.",
+    link: "https://project-tracker-rho-murex.vercel.app",
+    techStack: ["React", "Node.js", "Express", "MongoDB"],
+    image: thumblify,
   },
 ];
 

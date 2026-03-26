@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import pic from "../assets/pic2.jpg";
-import resume from "../assets/sahilSameerResume.pdf";
+import resume from "../assets/sameer-resume.pdf";
 
 export default function Header() {
   const titles = ["Full Stack Developer", "Software Developer"];

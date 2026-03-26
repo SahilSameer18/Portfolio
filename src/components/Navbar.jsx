@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import resume from "../assets/sahilSameerResume.pdf";
+import resume from "../assets/sameer-resume.pdf";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
