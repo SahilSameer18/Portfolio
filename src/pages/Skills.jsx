@@ -9,7 +9,7 @@ const skillsData = [
   { name: "HTML", icon: "SiHtml5", color: "#E34F26" },
   { name: "Node.js", icon: "SiNodedotjs", color: "#339933" },
   { name: "MongoDB", icon: "SiMongodb", color: "#47A248" },
-  { name: "Firebase", icon: "SiFirebase", color: "#FFCA28" },
+  { name: "PostgreSQL", icon: "SiPostgresql", color: "#00599C" },
   { name: "GitHub", icon: "SiGithub", color: "#000000" },
   { name: "Postman", icon: "SiPostman", color: "#FF6C37" },
   { name: "REST APIs", icon: "TbApi", color: "#000000" },

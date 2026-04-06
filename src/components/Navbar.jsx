@@ -12,6 +12,7 @@ export default function Navbar() {
     { name: "Skills", path: "#skills", id: "skills" },
     { name: "Projects", path: "#projects", id: "projects" },
     { name: "Education", path: "#education", id: "education" },
+    { name: "contact", path: "#contact", id: "contact" },
   ];
 
   useEffect(() => {
@@ -65,14 +66,6 @@ export default function Navbar() {
 
         {/* Buttons */}
         <div className="hidden ml-8 md:flex items-center gap-3">
-          <motion.a
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="border border-slate-600 hover:bg-slate-800 px-3 py-1.5 rounded-full text-sm transition"
-          >
-            Contact
-          </motion.a>
 
           <motion.a
             href={resume}
@@ -119,13 +112,6 @@ export default function Navbar() {
                 {item.name}
               </motion.a>
             ))}
-
-            <a
-              href="#contact"
-              className="border border-slate-600 px-4 py-2 rounded-full"
-            >
-              Contact
-            </a>
 
             <a
               href={resume}

@@ -18,14 +18,14 @@ const projects = [
     description:
       "Helps users prepare effectively for interviews based on submitted profiles, providing personalized questions, a tailored preparation plan, and skill gap insights.",
     link: "https://skillbridgeai-s.vercel.app/",
-    techStack: ["React", "Tailwind CSS", "Firebase", "Gemini AI"],
+    techStack: ["React", "Tailwind CSS", "Express", "Gemini AI"],
     image: skillbridgeAI,
   },
   {
     title: "Thumblify",
     description:
       "A smart tool that creates custom, eye-catching thumbnails instantly using artificial intelligence. Designed to enhance visual content and streamline creative workflows.",
-    link: "https://project-tracker-rho-murex.vercel.app",
+    link: "https://github.com/SahilSameer18",
     techStack: ["React", "Node.js", "Express", "MongoDB"],
     image: thumblify,
   },

@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .animate-bounce-slow {
           animation: bounce 2s infinite;
         }
