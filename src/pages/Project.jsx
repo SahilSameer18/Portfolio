@@ -1,17 +1,17 @@
 import { motion } from "framer-motion";
 import safar from "../assets/safar.png";
-import thumblify from "../assets/thumblify.png";
+import prepstack from "../assets/prepstack.png";
 import { FaGithub } from "react-icons/fa";
 import skillbridgeAI from '../assets/skillbridgeAI.png'
 
 const projects = [
   {
-    title: "SafarAI",
+    title: "PrepStack",
     description:
-      "An intelligent trip planning application that uses AI to create personalized travel itineraries based on user preferences, budget, and interests.",
-    link: "https://www.safarai.in/",
-    techStack: ["React", "Tailwind CSS", "Firebase", "Gemini AI"],
-    image: safar,
+      "A comprehensive platform for interview preparation, offering AI project idea generation, structured dsa sheets, and many more interview preparation resources.",
+    link: "https://prepstack.vercel.app/",
+    techStack: ["React", "Node.js", "Express", "MongoDB"],
+    image: prepstack,
   },
   {
     title: "SkillBridgeAI",
@@ -22,13 +22,13 @@ const projects = [
     image: skillbridgeAI,
   },
   {
-    title: "Thumblify",
+    title: "SafarAI",
     description:
-      "A smart tool that creates custom, eye-catching thumbnails instantly using artificial intelligence. Designed to enhance visual content and streamline creative workflows.",
-    link: "https://github.com/SahilSameer18",
-    techStack: ["React", "Node.js", "Express", "MongoDB"],
-    image: thumblify,
-  },
+      "An intelligent trip planning application that uses AI to create personalized travel itineraries based on user preferences, budget, and interests.",
+    link: "https://www.safarai.in/",
+    techStack: ["React", "Tailwind CSS", "Firebase", "Gemini AI"],
+    image: safar,
+  }
 ];
 
 export default function Projects() {
