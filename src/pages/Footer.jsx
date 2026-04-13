@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Social Icons */}
           <div className="flex gap-6">
             <a
-              href="https://www.linkedin.com/in/sahil-sameer-siddique-abb849233/"
+              href="https://www.linkedin.com/in/sahil-sameer-siddique/"
               target="_blank"
               rel="noopener noreferrer"
               className="transform transition duration-500 hover:scale-125 hover:rotate-12 hover:drop-shadow-[0_0_12px_#0077B5]"

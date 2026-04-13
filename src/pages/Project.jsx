@@ -9,7 +9,7 @@ const projects = [
     title: "PrepStack",
     description:
       "A comprehensive platform for interview preparation, offering AI project idea generation, structured dsa sheets, and many more interview preparation resources.",
-    link: "https://prepstack.vercel.app/",
+    link: "https://prepstack-ss.vercel.app/",
     techStack: ["React", "Node.js", "Express", "MongoDB"],
     image: prepstack,
   },
