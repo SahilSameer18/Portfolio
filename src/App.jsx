@@ -1,5 +1,4 @@
-import Header from "./pages/Header";
-import "./App.css";
+import Hero from "./pages/Hero";
 import Navbar from "./components/Navbar";
 import SoftBackdrop from "./components/SoftBackdrop";
 import About from "./pages/About";
@@ -14,7 +13,7 @@ function App() {
     <>
       <SoftBackdrop />
       <Navbar />
-      <Header />
+      <Hero />
       <About />
       <Skills />
       <Project />
