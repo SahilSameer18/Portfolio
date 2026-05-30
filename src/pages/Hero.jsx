@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import pic from "../assets/pic2.jpg";
+import pic from "../assets/pic2.png";
 import resume from "../assets/sameer-resume.pdf";
 
 export default function Header() {
@@ -101,7 +101,7 @@ export default function Header() {
             <motion.img
               src={pic}
               alt="Sahil Sameer Siddique profile photo"
-              className="w-72 md:w-96 rounded-full border border-white/10 shadow-lg"
+              className="w-72 h-72 md:w-96 md:h-96 rounded-full border border-white/10 shadow-lg object-cover"
               whileHover={{ scale: 1.05 }}
             />
 
