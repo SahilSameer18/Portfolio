@@ -34,7 +34,7 @@ my-portfolio/
 │   ├── components/
 │   │   ├── Navbar.jsx          # Navigation component
 │   │   └── SoftBackdrop.jsx    # Background effect component
-│   ├── pages/
+│   ├── sections/
 │   │   ├── Hero.jsx            # Hero/intro section
 │   │   ├── About.jsx           # About section
 │   │   ├── Skills.jsx          # Skills section
@@ -121,12 +121,12 @@ my-portfolio/
 
 ### Changing Content
 
-- **Hero Section**: Edit `src/pages/Hero.jsx` to update name, titles, and resume link
-- **About Section**: Modify `src/pages/About.jsx` for personal information
-- **Skills**: Update `src/pages/Skills.jsx` with your technical skills
-- **Projects**: Add your projects in `src/pages/Project.jsx`
-- **Education**: Update `src/pages/Education.jsx` with academic details
-- **Contact**: Customize `src/pages/Contact.jsx` with contact information
+- **Hero Section**: Edit `src/sections/Hero.jsx` to update name, titles, and resume link
+- **About Section**: Modify `src/sections/About.jsx` for personal information
+- **Skills**: Update `src/sections/Skills.jsx` with your technical skills
+- **Projects**: Add your projects in `src/sections/Project.jsx`
+- **Education**: Update `src/sections/Education.jsx` with academic details
+- **Contact**: Customize `src/sections/Contact.jsx` with contact information
 
 ### Styling
 
@@ -175,7 +175,7 @@ Connect with me for collaboration opportunities:
 
 This project is open source and available under the MIT License.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built with [React](https://react.dev)
 - Styled with [Tailwind CSS](https://tailwindcss.com)
