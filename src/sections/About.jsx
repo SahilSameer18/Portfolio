@@ -7,75 +7,100 @@ export default function About() {
       id="about"
       className="min-h-screen flex items-center pt-24 pb-10 scroll-mt-12"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-16 items-center w-full">
 
-        {/* Left: Image */}
+        {/* ── Left: Image ── */}
         <motion.div
           className="flex justify-center"
-          initial={{ opacity: 0, x: -80 }}
+          initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-
         >
           <div className="relative">
-            <motion.div
-
-              className="w-72 h-72 md:w-96 md:h-96 rounded-2xl overflow-hidden border border-white/10 shadow-lg"
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            <div
+              className="w-72 h-72 md:w-96 md:h-96 rounded-2xl overflow-hidden"
+              style={{
+                border: "1px solid rgba(99,102,241,0.2)",
+                boxShadow: "0 8px 32px rgba(99,102,241,0.1)",
+              }}
             >
               <img
                 src={ais}
                 alt="Sahil Sameer Siddique"
                 className="w-full h-full object-contain"
               />
-            </motion.div>
-
+            </div>
+            <div
+              className="absolute -inset-4 rounded-2xl -z-10"
+              style={{
+                background: "radial-gradient(circle, rgba(99,102,241,0.15), transparent 70%)",
+                filter: "blur(20px)",
+              }}
+            />
           </div>
         </motion.div>
 
-        {/* Right: Text */}
+        {/* ── Right: Content ── */}
         <motion.div
           className="space-y-6"
-          initial={{ opacity: 0, x: 80 }}
+          initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-white"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+          {/* Heading */}
+          <h2
+            className="text-4xl md:text-5xl font-bold"
+            style={{
+              background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
           >
             About Me
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            className="text-gray-300 max-w-lg"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          >
-            I'm Sahil Sameer Siddique, a passionate Full Stack Developer with
-            experience building modern, scalable, and responsive web
-            applications. I love transforming ideas into interactive digital
-            experiences.
-          </motion.p>
+          {/* Accent divider — matches rest of portfolio */}
+          <div className="flex items-center gap-3">
+            <div className="h-px w-12 bg-indigo-500/50" />
+            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/70" />
+          </div>
 
-          <motion.p
-            className="text-gray-300 max-w-lg"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-          >
-            I enjoy working with technologies like React, Node.js, Express.js,
-            Tailwind CSS, and more. I am constantly learning new tools and
-            techniques to deliver high-quality projects.
-          </motion.p>
+          {/* Bio */}
+          <p className="text-gray-400 max-w-lg leading-relaxed">
+            I'm{" "}
+            <span className="text-white font-medium">Sahil Sameer Siddique</span>
+            , a Full Stack Developer with a strong backend focus. I specialise
+            in designing and building robust server-side systems — REST APIs,
+            JWT authentication, database architecture, and scalable backend
+            infrastructure.
+          </p>
+
+          <p className="text-gray-400 max-w-lg leading-relaxed">
+            On the backend I work with{" "}
+            <span className="text-indigo-300">Node.js</span>,{" "}
+            <span className="text-indigo-300">Express.js</span>,{" "}
+            <span className="text-indigo-300">MongoDB</span>,{" "}
+            <span className="text-indigo-300">PostgreSQL</span>, and{" "}
+            <span className="text-indigo-300">Prisma ORM</span>. On the frontend
+            I build clean, responsive interfaces with{" "}
+            <span className="text-indigo-300">React</span> and{" "}
+            <span className="text-indigo-300">Tailwind CSS</span>. I also
+            integrate AI capabilities using the{" "}
+            <span className="text-indigo-300">Gemini API</span>.
+          </p>
+
+          <p className="text-gray-400 max-w-lg leading-relaxed">
+            I've shipped production-ready platforms like{" "}
+            <span className="text-white font-medium">PrepStack</span> and{" "}
+            <span className="text-white font-medium">SkillBridge</span>, and I'm
+            constantly pushing to write cleaner, more secure, and more
+            performant code.
+          </p>
+
         </motion.div>
-
       </div>
     </section>
   );

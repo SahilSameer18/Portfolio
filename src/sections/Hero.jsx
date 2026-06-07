@@ -18,41 +18,39 @@ export default function Header() {
   return (
     <section id="home" className="min-h-screen flex items-center scroll-mt-12">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left Content */}
         <motion.div
           className="space-y-6"
-          initial={{ opacity: 0, x: -80 }}
+          initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <motion.p
             className="text-indigo-400 font-medium"
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.15 }}
           >
             Hello 👋 I'm
           </motion.p>
 
           <motion.h1
             className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2 }}
+            transition={{ delay: 0.3, duration: 0.7 }}
           >
             Sahil Sameer Siddique
           </motion.h1>
 
-          {/* Animated Title */}
           <div className="h-8">
             <AnimatePresence mode="wait">
               <motion.h2
                 key={titles[currentTitle]}
                 className="text-xl md:text-2xl text-gray-400"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 1.42 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4 }}
               >
                 {titles[currentTitle]}
               </motion.h2>
@@ -69,20 +67,24 @@ export default function Header() {
             using React and modern web technologies.
           </motion.p>
 
-          {/* Button */}
-          <motion.a href={resume} target="_blank" rel="noopener noreferrer">
+          <motion.a
+            href={resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.65 }}
+          >
             <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               className="group px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-500 rounded-full text-white cursor-pointer"
             >
               <p className="relative h-6 overflow-hidden">
                 <span className="block transition-transform duration-300 group-hover:-translate-y-full">
                   Resume
                 </span>
-
-                <span className="absolute inset-x-0 top-full block text-center transition-transform duration-300 group-hover:translate-y-[-100%]">
+                <span className="absolute inset-x-0 top-full block text-center transition-transform duration-300 group-hover:-translate-y-full">
                   Resume
                 </span>
               </p>
@@ -90,23 +92,21 @@ export default function Header() {
           </motion.a>
         </motion.div>
 
-        {/* Right Image */}
         <motion.div
           className="flex justify-center"
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="relative">
             <motion.img
               src={pic}
               alt="Sahil Sameer Siddique profile photo"
               className="w-72 h-72 md:w-96 md:h-96 rounded-full border border-white/10 shadow-lg object-cover"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 300 }}
             />
-
-            {/* Glow */}
-            <div className="absolute -inset-2 bg-indigo-500/20 blur-2xl -z-10 rounded-full"></div>
+            <div className="absolute -inset-2 bg-indigo-500/20 blur-2xl -z-10 rounded-full" />
           </div>
         </motion.div>
       </div>
