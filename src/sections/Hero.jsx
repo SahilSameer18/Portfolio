@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import pic from "../assets/pic2.png";
+import pic from "../assets/pic2.webp";
 import resume from "../assets/sameer-resume.pdf";
 
-const titles = ["Full Stack Developer", "MERN Stack Developer", "Software Developer"];
+const titles = ["Full Stack Developer", "Backend Developer", "Software Developer"];
 
 const containerVariants = {
   hidden: {},
@@ -48,7 +48,7 @@ export default function Hero() {
           >
             Sahil Sameer
             <br />
-            <span className="bg-gradient-to-r from-white/90 via-indigo-300 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white/90 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
               Siddique
             </span >
           </motion.h1>
@@ -58,7 +58,7 @@ export default function Hero() {
             <AnimatePresence mode="wait">
               <motion.p
                 key={titles[currentTitle]}
-                className="text-base md:text-lg font-medium tracking-wide text-indigo-300"
+                className="text-base md:text-lg font-medium tracking-wide bg-gradient-to-r from-white/90 via-indigo-500 to-purple-600 bg-clip-text text-transparent"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
@@ -77,7 +77,7 @@ export default function Hero() {
 
           {/* Bio */}
           <motion.p variants={itemVariants} className="text-gray-400 max-w-md leading-relaxed">
-            I build AI-powered, production-ready web apps using the MERN stack —
+            I build AI-powered, production-ready web apps using the MERN stack and postgreSQL - 
             from scalable REST APIs to Gemini AI integration.
           </motion.p>
 

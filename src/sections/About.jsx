@@ -8,7 +8,6 @@ export default function About() {
       className="min-h-screen flex items-center pt-24 pb-10 scroll-mt-12"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-16 items-center w-full">
-
         {/* ── Left: Image ── */}
         <motion.div
           className="flex justify-center order-2 md:order-1"
@@ -27,7 +26,8 @@ export default function About() {
             <div
               className="absolute -inset-4 rounded-2xl -z-10"
               style={{
-                background: "radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)",
+                background:
+                  "radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)",
                 filter: "blur(20px)",
               }}
             />
@@ -68,7 +68,6 @@ export default function About() {
                 borderRadius: "0 0 8px 0",
               }}
             />
-
           </motion.div>
         </motion.div>
 
@@ -84,7 +83,8 @@ export default function About() {
           <h2
             className="text-4xl md:text-5xl font-bold"
             style={{
-              background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+              background:
+                "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -102,36 +102,29 @@ export default function About() {
           {/* Bio — backend focused */}
           <p className="text-gray-400 max-w-lg leading-relaxed">
             I'm{" "}
-            <span className="text-white font-medium">Sahil Sameer Siddique</span>
-            , a Full Stack Developer with a deep focus on backend engineering.
-            I specialise in building scalable server-side systems — designing
-            REST APIs, implementing JWT authentication with refresh token
-            rotation, and architecting databases for performance and reliability.
+            <span className="text-white font-medium">
+              Sahil Sameer Siddique
+            </span>
+            , a Full Stack Developer with a deep focus on backend engineering. I
+            specialise in building scalable REST APIs, JWT authentication with
+            refresh token rotation, and architecting databases for performance
+            and reliability.
           </p>
 
           <p className="text-gray-400 max-w-lg leading-relaxed">
-            My backend stack is{" "}
-            <span className="text-indigo-300">Node.js</span> and{" "}
-            <span className="text-indigo-300">Express.js</span>, with{" "}
-            <span className="text-indigo-300">MongoDB</span> and{" "}
-            <span className="text-indigo-300">PostgreSQL</span> for data,{" "}
-            <span className="text-indigo-300">Prisma ORM</span> for schema
-            management, and{" "}
-            <span className="text-indigo-300">Zod</span> for strict input
-            validation. On the frontend I build clean, responsive interfaces
-            with <span className="text-indigo-300">React</span> and{" "}
-            <span className="text-indigo-300">Tailwind CSS</span>.
-          </p>
-
-          <p className="text-gray-400 max-w-lg leading-relaxed">
-            I've shipped full-stack, production-ready platforms like{" "}
+            My stack includes <span className="text-indigo-300">Node.js</span>,{" "}
+            <span className="text-indigo-300">Express.js</span>,{" "}
+            <span className="text-indigo-300">MongoDB</span>,{" "}
+            <span className="text-indigo-300">PostgreSQL</span>, and{" "}
+            <span className="text-indigo-300">Prisma</span> on the backend, with{" "}
+            <span className="text-indigo-300">React</span> and{" "}
+            <span className="text-indigo-300">Tailwind CSS</span> on the
+            frontend. I've shipped production platforms like{" "}
             <span className="text-white font-medium">PrepStack</span> and{" "}
-            <span className="text-white font-medium">SkillBridgeAI</span> —
-            both integrated with the{" "}
-            <span className="text-indigo-300">Gemini API</span> and deployed
-            live. I care about writing secure, clean, and maintainable code.
+            <span className="text-white font-medium">SkillBridgeAI</span>, both
+            live and integrated with the{" "}
+            <span className="text-indigo-300">Gemini API</span>.
           </p>
-
         </motion.div>
       </div>
     </section>

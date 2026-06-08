@@ -38,7 +38,7 @@ export default function Footer() {
 
         <a
           href="#home"
-          className="text-lg font-extrabold select-none"
+          className="text-lg font-extrabold select-none hidden md:block"
           style={{
             background: "linear-gradient(135deg, #818cf8, #c084fc, #f472b6)",
             WebkitBackgroundClip: "text",
