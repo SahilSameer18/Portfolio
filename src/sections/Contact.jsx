@@ -1,70 +1,172 @@
 import { motion } from "framer-motion";
 import { FaLinkedin, FaGithub, FaEnvelope, FaInstagram } from "react-icons/fa";
 
+// ─── Social Links Data ────────────────────────────────────────────────────────
+const socials = [
+  {
+    icon: FaLinkedin,
+    href: "https://www.linkedin.com/in/sahil-sameer-siddique/",
+    label: "LinkedIn",
+    color: "#0077B5",
+  },
+  {
+    icon: FaGithub,
+    href: "https://github.com/SahilSameer18",
+    label: "GitHub",
+    color: "#c4c4c4",
+  },
+  {
+    icon: FaInstagram,
+    href: "https://instagram.com/yourinstagram",
+    label: "Instagram",
+    color: "#E1306C",
+  },
+];
+
+// ─── Contact Section ──────────────────────────────────────────────────────────
 export default function Contact() {
   return (
     <section
       id="contact"
-      className="min-h-screen text-white py-20 md:py-28 px-6 md:px-12 scroll-mt-12"
+      className="min-h-screen flex items-center py-20 md:py-28 scroll-mt-12"
     >
-      <motion.div
-        className="text-center mb-12"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <h2 className="text-5xl md:text-6xl font-bold">Contact Me</h2>
-        <p className="text-xs tracking-widest text-white/60 mt-2">
-          GET IN TOUCH
-        </p>
-      </motion.div>
+      <div className="max-w-6xl mx-auto px-6 md:px-12 w-full grid md:grid-cols-2 gap-16 items-center">
 
-      <motion.div
-        className="max-w-3xl mx-auto"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl shadow-black/30">
-          <p className="text-white/70 leading-relaxed text-base md:text-lg">
-            I'm currently open to new opportunities, freelance projects, and meaningful collaborations. If you'd like to connect, just send a message to the email below and I will get back to you as soon as possible.
+        {/* ── Left: Heading + Text ── */}
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+        >
+          {/* Label */}
+          <p className="text-xs font-semibold uppercase tracking-widest text-indigo-400">
+            Get in touch
           </p>
 
-          <div className="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
-              <FaEnvelope className="text-indigo-500 text-3xl" />
-              <span className="break-words text-sm sm:text-base">
-                sahilsameer.dev18@gmail.com
-              </span>
+          {/* Heading */}
+          <h2
+            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+            style={{
+              background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            Let's build
+            <br />something
+            <br />together.
+          </h2>
+
+          {/* Accent divider */}
+          <div className="flex items-center gap-3">
+            <div className="h-px w-12 bg-indigo-500/50" />
+            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/70" />
+          </div>
+
+          {/* Subtext */}
+          <p className="text-gray-400 leading-relaxed max-w-sm">
+            I'm open to new opportunities, freelance projects, and meaningful
+            collaborations. Feel free to reach out anytime.
+          </p>
+        </motion.div>
+
+        {/* ── Right: Contact Card ── */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+        >
+          <div
+            className="rounded-3xl p-8 md:p-10 space-y-8"
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.3)",
+            }}
+          >
+
+            {/* Email */}
+            <div className="space-y-2">
+              <p className="text-xs uppercase tracking-widest text-gray-500">
+                Email
+              </p>
+              <motion.a
+                href="mailto:sahilsameer.dev18@gmail.com"
+                className="flex items-center gap-4 group w-fit"
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background: "rgba(99,102,241,0.12)",
+                    border: "1px solid rgba(99,102,241,0.25)",
+                  }}
+                >
+                  <FaEnvelope className="text-indigo-400" style={{ fontSize: "15px" }} />
+                </div>
+                <span className="text-gray-300 group-hover:text-white transition-colors duration-200 text-sm">
+                  sahilsameer.dev18@gmail.com
+                </span>
+              </motion.a>
             </div>
 
-            <div className="flex gap-5 justify-center sm:justify-end">
-              {[
-                { icon: FaLinkedin, href: "https://www.linkedin.com/in/sahil-sameer-siddique/", color: "#0077B5" },
-                { icon: FaGithub, href: "https://github.com/SahilSameer18", color: "#ffffff" },
-                { icon: FaInstagram, href: "https://instagram.com/yourinstagram", color: "#E1306C" },
-              ].map((social, i) => {
-                const Icon = social.icon;
-                return (
+            {/* Divider */}
+            <div className="h-px w-full bg-white/5" />
+
+            {/* Socials */}
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-widest text-gray-500">
+                Socials
+              </p>
+              <div className="flex flex-col gap-3">
+                {socials.map(({ icon: Icon, href, label, color }) => (
                   <motion.a
-                    key={i}
-                    href={social.href}
+                    key={label}
+                    href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1 }}
-                    className="text-3xl"
-                    style={{ color: social.color }}
+                    className="flex items-center gap-4 group w-fit"
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <Icon />
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.background = `${color}15`;
+                        e.currentTarget.style.borderColor = `${color}40`;
+                        e.currentTarget.style.boxShadow = `0 0 14px ${color}25`;
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                        e.currentTarget.style.boxShadow = "none";
+                      }}
+                    >
+                      <Icon style={{ color, fontSize: "15px" }} />
+                    </div>
+                    <span className="text-gray-400 group-hover:text-white transition-colors duration-200 text-sm">
+                      {label}
+                    </span>
                   </motion.a>
-                );
-              })}
+                ))}
+              </div>
             </div>
+
+            
+
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+
+      </div>
     </section>
   );
 }

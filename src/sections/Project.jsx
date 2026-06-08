@@ -16,7 +16,7 @@ const projects = [
     github: "https://github.com/SahilSameer18",
     techStack: ["React", "Node.js", "Express", "MongoDB"],
     image: prepstack,
-    accent: "#6366f1", // indigo
+    accent: "#FFA116", // leetcode yellow
   },
   {
     title: "SkillBridgeAI",
@@ -45,17 +45,17 @@ const projects = [
 // ─── Animation Variants ───────────────────────────────────────────────────────
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 const fadeLeft = {
   hidden: { opacity: 0, x: -30 },
-  show:   { opacity: 1, x: 0, transition: { duration: 0.6 } },
+  show: { opacity: 1, x: 0, transition: { duration: 0.6 } },
 };
 
 const fadeRight = {
   hidden: { opacity: 0, x: 30 },
-  show:   { opacity: 1, x: 0, transition: { duration: 0.6 } },
+  show: { opacity: 1, x: 0, transition: { duration: 0.6 } },
 };
 
 // ─── Tech Badge ───────────────────────────────────────────────────────────────
@@ -99,7 +99,7 @@ const ProjectCard = ({ project, idx }) => {
         <div className="relative group">
           {/* Glow layer behind image */}
           <div
-            className="absolute -inset-3 rounded-2xl blur-2xl -z-10 opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+            className="absolute -inset-3 rounded-2xl blur-2xl -z-10 opacity-15 group-hover:opacity-25 transition-opacity duration-500"
             style={{ background: project.accent }}
           />
 
@@ -110,7 +110,7 @@ const ProjectCard = ({ project, idx }) => {
             className="w-72 md:w-[22rem] rounded-2xl object-cover"
             style={{
               border: `1px solid ${project.accent}30`,
-              boxShadow: `0 8px 32px ${project.accent}20`,
+              boxShadow: `0 8px 32px ${project.accent}10`,
             }}
           />
 
@@ -186,11 +186,11 @@ const ProjectCard = ({ project, idx }) => {
               background: `${project.accent}20`,
               border: `1px solid ${project.accent}50`,
             }}
-            onMouseEnter={e => {
+            onMouseEnter={(e) => {
               e.currentTarget.style.background = `${project.accent}35`;
               e.currentTarget.style.boxShadow = `0 0 20px ${project.accent}30`;
             }}
-            onMouseLeave={e => {
+            onMouseLeave={(e) => {
               e.currentTarget.style.background = `${project.accent}20`;
               e.currentTarget.style.boxShadow = "none";
             }}
@@ -225,7 +225,6 @@ const ProjectCard = ({ project, idx }) => {
 export default function Projects() {
   return (
     <section id="projects" className="min-h-screen flex flex-col scroll-mt-12">
-
       {/* ── Section Heading ── */}
       <motion.div
         className="text-center mb-16"
@@ -237,7 +236,8 @@ export default function Projects() {
         <h2
           className="text-5xl md:text-6xl font-bold mb-4"
           style={{
-            background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+            background:
+              "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -287,11 +287,11 @@ export default function Projects() {
             border: "1px solid rgba(255,255,255,0.12)",
             backdropFilter: "blur(8px)",
           }}
-          onMouseEnter={e => {
+          onMouseEnter={(e) => {
             e.currentTarget.style.background = "rgba(255,255,255,0.10)";
             e.currentTarget.style.boxShadow = "0 0 24px rgba(99,102,241,0.25)";
           }}
-          onMouseLeave={e => {
+          onMouseLeave={(e) => {
             e.currentTarget.style.background = "rgba(255,255,255,0.05)";
             e.currentTarget.style.boxShadow = "none";
           }}
@@ -300,7 +300,6 @@ export default function Projects() {
           See More on GitHub
         </motion.a>
       </motion.div>
-
     </section>
   );
 }

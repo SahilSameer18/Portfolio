@@ -11,39 +11,70 @@ export default function About() {
 
         {/* ── Left: Image ── */}
         <motion.div
-          className="flex justify-center"
+          className="flex justify-center order-2 md:order-1"
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="relative">
+          {/* Subtle bob animation */}
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
+          >
+            {/* Subtle glow */}
             <div
+              className="absolute -inset-4 rounded-2xl -z-10"
+              style={{
+                background: "radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)",
+                filter: "blur(20px)",
+              }}
+            />
+
+            {/* Image */}
+            <motion.div
               className="w-72 h-72 md:w-96 md:h-96 rounded-2xl overflow-hidden"
               style={{
                 border: "1px solid rgba(99,102,241,0.2)",
-                boxShadow: "0 8px 32px rgba(99,102,241,0.1)",
+                boxShadow: "0 8px 32px rgba(99,102,241,0.08)",
               }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               <img
                 src={ais}
                 alt="Sahil Sameer Siddique"
                 className="w-full h-full object-contain"
               />
-            </div>
+            </motion.div>
+
+            {/* Corner accent — top left */}
             <div
-              className="absolute -inset-4 rounded-2xl -z-10"
+              className="absolute -top-2 -left-2 w-10 h-10"
               style={{
-                background: "radial-gradient(circle, rgba(99,102,241,0.15), transparent 70%)",
-                filter: "blur(20px)",
+                borderTop: "2px solid rgba(99,102,241,0.5)",
+                borderLeft: "2px solid rgba(99,102,241,0.5)",
+                borderRadius: "8px 0 0 0",
               }}
             />
-          </div>
+
+            {/* Corner accent — bottom right */}
+            <div
+              className="absolute -bottom-2 -right-2 w-10 h-10"
+              style={{
+                borderBottom: "2px solid rgba(99,102,241,0.5)",
+                borderRight: "2px solid rgba(99,102,241,0.5)",
+                borderRadius: "0 0 8px 0",
+              }}
+            />
+
+          </motion.div>
         </motion.div>
 
         {/* ── Right: Content ── */}
         <motion.div
-          className="space-y-6"
+          className="space-y-6 order-1 md:order-2"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
@@ -62,42 +93,43 @@ export default function About() {
             About Me
           </h2>
 
-          {/* Accent divider — matches rest of portfolio */}
+          {/* Accent divider */}
           <div className="flex items-center gap-3">
             <div className="h-px w-12 bg-indigo-500/50" />
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/70" />
           </div>
 
-          {/* Bio */}
+          {/* Bio — backend focused */}
           <p className="text-gray-400 max-w-lg leading-relaxed">
             I'm{" "}
             <span className="text-white font-medium">Sahil Sameer Siddique</span>
-            , a Full Stack Developer with a strong backend focus. I specialise
-            in designing and building robust server-side systems — REST APIs,
-            JWT authentication, database architecture, and scalable backend
-            infrastructure.
+            , a Full Stack Developer with a deep focus on backend engineering.
+            I specialise in building scalable server-side systems — designing
+            REST APIs, implementing JWT authentication with refresh token
+            rotation, and architecting databases for performance and reliability.
           </p>
 
           <p className="text-gray-400 max-w-lg leading-relaxed">
-            On the backend I work with{" "}
-            <span className="text-indigo-300">Node.js</span>,{" "}
-            <span className="text-indigo-300">Express.js</span>,{" "}
-            <span className="text-indigo-300">MongoDB</span>,{" "}
-            <span className="text-indigo-300">PostgreSQL</span>, and{" "}
-            <span className="text-indigo-300">Prisma ORM</span>. On the frontend
-            I build clean, responsive interfaces with{" "}
-            <span className="text-indigo-300">React</span> and{" "}
-            <span className="text-indigo-300">Tailwind CSS</span>. I also
-            integrate AI capabilities using the{" "}
-            <span className="text-indigo-300">Gemini API</span>.
+            My backend stack is{" "}
+            <span className="text-indigo-300">Node.js</span> and{" "}
+            <span className="text-indigo-300">Express.js</span>, with{" "}
+            <span className="text-indigo-300">MongoDB</span> and{" "}
+            <span className="text-indigo-300">PostgreSQL</span> for data,{" "}
+            <span className="text-indigo-300">Prisma ORM</span> for schema
+            management, and{" "}
+            <span className="text-indigo-300">Zod</span> for strict input
+            validation. On the frontend I build clean, responsive interfaces
+            with <span className="text-indigo-300">React</span> and{" "}
+            <span className="text-indigo-300">Tailwind CSS</span>.
           </p>
 
           <p className="text-gray-400 max-w-lg leading-relaxed">
-            I've shipped production-ready platforms like{" "}
+            I've shipped full-stack, production-ready platforms like{" "}
             <span className="text-white font-medium">PrepStack</span> and{" "}
-            <span className="text-white font-medium">SkillBridge</span>, and I'm
-            constantly pushing to write cleaner, more secure, and more
-            performant code.
+            <span className="text-white font-medium">SkillBridgeAI</span> —
+            both integrated with the{" "}
+            <span className="text-indigo-300">Gemini API</span> and deployed
+            live. I care about writing secure, clean, and maintainable code.
           </p>
 
         </motion.div>

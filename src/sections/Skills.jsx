@@ -15,24 +15,26 @@ const skillsData = [
   { name: "REST APIs",   icon: "TbWorldWww",      color: "#a5b4fc", category: "Backend"  },
   { name: "JWT",         icon: "SiJsonwebtokens", color: "#a5b4fc", category: "Backend"  },
   { name: "Zod",         icon: "SiZod",           color: "#a5b4fc", category: "Backend"  },
-  { name: "MongoDB",     icon: "SiMongodb",       color: "#338A30", category: "Database" },
-  { name: "PostgreSQL",  icon: "SiPostgresql",    color: "#5B9BD5", category: "Database" },
-  { name: "Prisma",      icon: "SiPrisma",        color: "#a5b4fc", category: "Database" },
-  { name: "Git",         icon: "SiGit",           color: "#C04020", category: "Tools"    },
-  { name: "GitHub",      icon: "SiGithub",        color: "#c4c4c4", category: "Tools"    },
-  { name: "Postman",     icon: "SiPostman",       color: "#CC5520", category: "Tools"    },
-  { name: "Vercel",      icon: "SiVercel",        color: "#c4c4c4", category: "Tools"    },
-  { name: "Render",      icon: "SiRender",        color: "#a5b4fc", category: "Tools"    },
+  { name: "MongoDB",     icon: "SiMongodb",       color: "#338A30", category: "Databases & ORM" },
+  { name: "PostgreSQL",  icon: "SiPostgresql",    color: "#5B9BD5", category: "Databases & ORM" },
+  { name: "Prisma",      icon: "SiPrisma",        color: "#a5b4fc", category: "Databases & ORM" },
+  { name: "Redis",       icon: "SiRedis",         color: "#DC382D", category: "Databases & ORM" },
+  { name: "Git",         icon: "SiGit",           color: "#C04020", category: "Tools & DevOps"    },
+  { name: "GitHub",      icon: "SiGithub",        color: "#c4c4c4", category: "Tools & DevOps"    },
+  { name: "Postman",     icon: "SiPostman",       color: "#CC5520", category: "Tools & DevOps"    },
+  { name: "Vercel",      icon: "SiVercel",        color: "#c4c4c4", category: "Tools & DevOps"    },
+  { name: "Render",      icon: "SiRender",        color: "#a5b4fc", category: "Tools & DevOps"    },
+  { name: "Docker",      icon: "SiDocker",        color: "#2496ED", category: "Tools & DevOps"    },
 ];
 
-const categories = ["Language", "Frontend", "Backend", "Database", "Tools"];
+const categories = ["Language", "Frontend", "Backend", "Databases & ORM", "Tools & DevOps"];
 
 const categoryAccents = {
   Language: "#6366f1",
   Frontend: "#4DB8D4",
   Backend:  "#a5b4fc",
-  Database: "#338A30",
-  Tools:    "#CC5520",
+  "Databases & ORM": "#338A30",
+  "Tools & DevOps":    "#CC5520",
 };
 
 const Icon = ({ name, color, size }) => {

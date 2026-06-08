@@ -7,6 +7,7 @@ import Project from "./sections/Project";
 import Education from "./sections/Education";
 import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
+import Experience from "./sections/Experience";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Hero />
       <About />
       <Skills />
+      {/* <Experience /> */}
       <Project />
       <Education />
       <Contact />
