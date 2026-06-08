@@ -13,7 +13,7 @@ const projects = [
     description:
       "A comprehensive platform for interview preparation, offering AI project idea generation, structured DSA sheets, and many more interview preparation resources.",
     link: "https://prepstack-ss.vercel.app/",
-    github: "https://github.com/SahilSameer18",
+    github: "https://github.com/SahilSameer18/prepstack",
     techStack: ["React", "Node.js", "Express", "MongoDB"],
     image: prepstack,
     accent: "#FFA116", // leetcode yellow
@@ -24,8 +24,8 @@ const projects = [
     description:
       "Helps users prepare effectively for interviews based on submitted profiles, providing personalized questions, a tailored preparation plan, and skill gap insights.",
     link: "https://skillbridgeai-s.vercel.app/",
-    github: "https://github.com/SahilSameer18",
-    techStack: ["React", "Tailwind CSS", "Express", "Gemini AI"],
+    github: "https://github.com/SahilSameer18/skillbridgeAI",
+    techStack: ["React", "PostgreSQL", "Prisma ORM", "Node", "Gemini AI"],
     image: skillbridgeAI,
     accent: "#4DB8D4", // cyan
   },
@@ -113,23 +113,6 @@ const ProjectCard = ({ project, idx }) => {
               boxShadow: `0 8px 32px ${project.accent}10`,
             }}
           />
-
-          {/* Live badge overlay */}
-          <div
-            className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
-            style={{
-              background: "rgba(0,0,0,0.6)",
-              backdropFilter: "blur(8px)",
-              border: `1px solid ${project.accent}40`,
-              color: project.accent,
-            }}
-          >
-            <span
-              className="w-1.5 h-1.5 rounded-full animate-pulse"
-              style={{ background: project.accent }}
-            />
-            Live
-          </div>
         </div>
       </motion.div>
 
