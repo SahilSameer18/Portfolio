@@ -3,7 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import pic from "../assets/pic2.webp";
 import resume from "../assets/sameer-resume.pdf";
 
-const titles = ["Full Stack Developer", "Backend Developer", "Software Developer"];
+const titles = [
+  "Full Stack Developer",
+  "Backend Developer",
+  "Software Developer",
+];
 
 const containerVariants = {
   hidden: {},
@@ -28,7 +32,6 @@ export default function Hero() {
   return (
     <section id="home" className="min-h-screen flex items-center scroll-mt-12">
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid md:grid-cols-2 gap-16 items-center">
-        
         {/* ── Left Text ── */}
         <motion.div
           className="space-y-7"
@@ -37,7 +40,10 @@ export default function Hero() {
           animate="show"
         >
           {/* Greeting */}
-          <motion.p variants={itemVariants} className="text-indigo-400 font-medium tracking-wide">
+          <motion.p
+            variants={itemVariants}
+            className="text-indigo-400 font-medium tracking-wide"
+          >
             Hello, I'm
           </motion.p>
 
@@ -50,7 +56,7 @@ export default function Hero() {
             <br />
             <span className="bg-gradient-to-r from-white/90 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
               Siddique
-            </span >
+            </span>
           </motion.h1>
 
           {/* Rotating Title */}
@@ -70,33 +76,56 @@ export default function Hero() {
           </motion.div>
 
           {/* Divider Lines (Rounded Ends) */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3">
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-3"
+          >
             <div className="h-px w-12 bg-gradient-to-r from-indigo-600 to-purple-500" />
             <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-500" />
           </motion.div>
 
           {/* Bio */}
-          <motion.p variants={itemVariants} className="text-gray-400 max-w-md leading-relaxed">
-            I build AI-powered, production-ready web apps using the MERN stack and postgreSQL - 
-            from scalable REST APIs to Gemini AI integration.
+          <motion.p
+            variants={itemVariants}
+            className="text-gray-400 max-w-md leading-relaxed"
+          >
+            I build AI-powered, production-ready web apps using the MERN stack
+            and postgreSQL - from scalable REST APIs to Gemini AI integration.
           </motion.p>
 
           {/* Resume Button */}
           <motion.div variants={itemVariants}>
             <motion.a
               href={resume}
-              target="_blank"
+              download="Sahil-Sameer-Resume.pdf"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="group inline-flex items-center px-8 py-3.5 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-500 shadow-[0_4px_20px_rgba(99,102,241,0.35)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.55)] transition-shadow duration-300"
+              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-500 shadow-[0_4px_20px_rgba(99,102,241,0.35)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.55)] transition-shadow duration-300"
             >
+              {/* Download Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4"
+                />
+              </svg>
+
+              {/* Text */}
               <span className="relative h-5 overflow-hidden flex flex-col">
                 <span className="block transition-transform duration-300 group-hover:-translate-y-full">
-                  View Resume
+                  Resume
                 </span>
                 <span className="absolute top-full block transition-transform duration-300 group-hover:-translate-y-full">
-                  View Resume
+                  Resume
                 </span>
               </span>
             </motion.a>
