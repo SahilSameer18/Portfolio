@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import resume from "../assets/sameer-resume.pdf";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -142,7 +141,7 @@ export default function Navbar() {
                 ))}
 
                 <motion.a
-                  href={resume}
+                  href="/sameer-resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -211,7 +210,7 @@ export default function Navbar() {
 
           {/* Desktop Resume Button */}
           <motion.a
-            href={resume}
+            href="/sameer-resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}

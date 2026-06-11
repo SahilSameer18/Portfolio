@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import pic from "../assets/pic2.webp";
-import resume from "../assets/sameer-resume.pdf";
 
 const titles = [
   "Full Stack Developer",
@@ -96,7 +95,7 @@ export default function Hero() {
           {/* Resume Button */}
           <motion.div variants={itemVariants}>
             <motion.a
-              href={resume}
+              href="/sameer-resume.pdf"
               download="Sahil-Sameer-Resume.pdf"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.04, y: -2 }}
