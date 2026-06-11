@@ -28,7 +28,7 @@ export default function Navbar() {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
@@ -99,71 +99,83 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Overlay */}
-        {/* Mobile Menu Overlay */}
-<AnimatePresence>
-  {isOpen && (
-    <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="w-full overflow-hidden"
-      style={{
-        background: "rgba(5,5,15,0.75)",
-        backdropFilter: "blur(20px)",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
-      }}
-    >
-      <div className="flex flex-col items-center gap-6 py-10">
-        {links.map((item, index) => (
-          <motion.a
-            key={item.name}
-            href={item.path}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.05 }}
-            onClick={(e) => {
-              e.preventDefault();
-              setIsOpen(false);
-              const target = document.querySelector(item.path);
-              if (target) {
-                setTimeout(() => {
-                  target.scrollIntoView({ behavior: "smooth" });
-                }, 300);
-              }
-            }}
-            className={`text-base font-medium tracking-widest uppercase transition-colors duration-200 ${
-              active === item.id
-                ? "text-indigo-400"
-                : "text-gray-400 hover:text-white"
-            }`}
-          >
-            {item.name}
-          </motion.a>
-        ))}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="w-full overflow-hidden"
+              style={{
+                background: "rgba(5,5,15,0.75)",
+                backdropFilter: "blur(20px)",
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
+              <div className="flex flex-col items-center gap-6 py-10">
+                {links.map((item, index) => (
+                  <motion.a
+                    key={item.name}
+                    href={item.path}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsOpen(false);
+                      const target = document.querySelector(item.path);
+                      if (target) {
+                        setTimeout(() => {
+                          target.scrollIntoView({ behavior: "smooth" });
+                        }, 300);
+                      }
+                    }}
+                    className={`text-base font-medium tracking-widest uppercase transition-colors duration-200 ${
+                      active === item.id
+                        ? "text-indigo-400"
+                        : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    {item.name}
+                  </motion.a>
+                ))}
 
-        <motion.a
-          href={resume}
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-2 px-8 py-3 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-500"
-          style={{ boxShadow: "0 0 20px rgba(99,102,241,0.35)" }}
-        >
-          Resume
-        </motion.a>
-      </div>
-    </motion.div>
-  )}
-</AnimatePresence>
+                <motion.a
+                  href={resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="mt-2 flex items-center gap-2 px-8 py-3 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-500"
+                  style={{ boxShadow: "0 0 20px rgba(99,102,241,0.35)" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M7 17L17 7M17 7H7M17 7v10"
+                    />
+                  </svg>
+                  Resume
+                </motion.a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* ── Desktop Navbar (Pill) ── */}
       <div className="hidden md:flex justify-center pt-4">
         <div className="flex items-center gap-10 border border-slate-700 bg-black/60 backdrop-blur-lg px-6 py-3 rounded-full text-white text-sm shadow-xl">
-
           {/* ✅ Desktop Logo — branding now visible on desktop too */}
           <a
             href="#home"
@@ -204,8 +216,22 @@ export default function Navbar() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-500 rounded-full text-white font-medium"
+            className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-500 rounded-full text-white font-medium"
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7 17L17 7M17 7H7M17 7v10"
+              />
+            </svg>
             Resume
           </motion.a>
         </div>

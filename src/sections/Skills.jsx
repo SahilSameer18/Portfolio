@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const skillsData = [
   { name: "JavaScript",  icon: "SiJavascript",    color: "#F7DF1E", category: "Language" },
-  { name: "TypeScript",  icon: "SiTypescript",    color: "#3178C6", category: "Language" },
+  // { name: "TypeScript",  icon: "SiTypescript",    color: "#3178C6", category: "Language" },
   { name: "C++",         icon: "SiCplusplus",     color: "#00599C", category: "Language" },
   { name: "React.js",    icon: "SiReact",         color: "#61DAFB", category: "Frontend" },
   { name: "Tailwind CSS",icon: "SiTailwindcss",   color: "#06B6D4", category: "Frontend" },
@@ -18,14 +18,14 @@ const skillsData = [
   { name: "MongoDB",     icon: "SiMongodb",       color: "#47A248", category: "Databases & ORM" },
   { name: "PostgreSQL",  icon: "SiPostgresql",    color: "#4169E1", category: "Databases & ORM" },
   { name: "Prisma",      icon: "SiPrisma",        color: "#2D3748", category: "Databases & ORM" },
-  { name: "Redis",       icon: "SiRedis",         color: "#DC382D", category: "Databases & ORM" },
-  // { name: "Neon", icon: "TbDatabase", color: "#00E599", category: "Databases & ORM" },
+  // { name: "Redis",       icon: "SiRedis",         color: "#DC382D", category: "Databases & ORM" },
+  { name: "Neon", icon: "TbDatabase", color: "#00E599", category: "Databases & ORM" },
   { name: "Git",         icon: "SiGit",           color: "#F05032", category: "Tools & DevOps"  },
   { name: "GitHub",      icon: "SiGithub",        color: "#FFFFFF", category: "Tools & DevOps"  },
   { name: "Postman",     icon: "SiPostman",       color: "#FF6C37", category: "Tools & DevOps"  },
   { name: "Vercel",      icon: "SiVercel",        color: "#FFFFFF", category: "Tools & DevOps"  },
   { name: "Render",      icon: "SiRender",        color: "#46E3B7", category: "Tools & DevOps"  },
-  { name: "Docker",      icon: "SiDocker",        color: "#2496ED", category: "Tools & DevOps"  },
+  // { name: "Docker",      icon: "SiDocker",        color: "#2496ED", category: "Tools & DevOps"  },
 ];
 
 const categories = ["Language", "Frontend", "Backend", "Databases & ORM", "Tools & DevOps"];
