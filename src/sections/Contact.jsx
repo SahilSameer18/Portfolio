@@ -31,7 +31,6 @@ export default function Contact() {
       className="min-h-screen flex items-center py-20 md:py-28 scroll-mt-12"
     >
       <div className="max-w-6xl mx-auto px-6 md:px-12 w-full grid md:grid-cols-2 gap-16 items-center">
-
         {/* ── Left: Heading + Text ── */}
         <motion.div
           className="space-y-6"
@@ -49,15 +48,18 @@ export default function Contact() {
           <h2
             className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
             style={{
-              background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+              background:
+                "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
             }}
           >
             Let's build
-            <br />something
-            <br />together.
+            <br />
+            something
+            <br />
+            together.
           </h2>
 
           {/* Accent divider */}
@@ -88,7 +90,6 @@ export default function Contact() {
               boxShadow: "0 8px 40px rgba(0,0,0,0.3)",
             }}
           >
-
             {/* Email */}
             <div className="space-y-2">
               <p className="text-xs uppercase tracking-widest text-gray-500">
@@ -107,7 +108,10 @@ export default function Contact() {
                     border: "1px solid rgba(99,102,241,0.25)",
                   }}
                 >
-                  <FaEnvelope className="text-indigo-400" style={{ fontSize: "15px" }} />
+                  <FaEnvelope
+                    className="text-indigo-400"
+                    style={{ fontSize: "15px" }}
+                  />
                 </div>
                 <span className="text-gray-300 group-hover:text-white transition-colors duration-200 text-sm">
                   sahilsameer.dev18@gmail.com
@@ -140,14 +144,16 @@ export default function Contact() {
                         background: "rgba(255,255,255,0.04)",
                         border: "1px solid rgba(255,255,255,0.08)",
                       }}
-                      onMouseEnter={e => {
+                      onMouseEnter={(e) => {
                         e.currentTarget.style.background = `${color}15`;
                         e.currentTarget.style.borderColor = `${color}40`;
                         e.currentTarget.style.boxShadow = `0 0 14px ${color}25`;
                       }}
-                      onMouseLeave={e => {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background =
+                          "rgba(255,255,255,0.04)";
+                        e.currentTarget.style.borderColor =
+                          "rgba(255,255,255,0.08)";
                         e.currentTarget.style.boxShadow = "none";
                       }}
                     >
@@ -160,12 +166,8 @@ export default function Contact() {
                 ))}
               </div>
             </div>
-
-            
-
           </div>
         </motion.div>
-
       </div>
     </section>
   );
