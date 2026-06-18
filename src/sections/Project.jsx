@@ -108,6 +108,8 @@ const ProjectCard = ({ project, idx }) => {
             src={project.image}
             alt={`${project.title} project screenshot`}
             className="w-72 md:w-[22rem] rounded-2xl object-cover"
+            loading="lazy"
+            decoding="async"
             style={{
               border: `1px solid ${project.accent}30`,
               boxShadow: `0 8px 32px ${project.accent}10`,

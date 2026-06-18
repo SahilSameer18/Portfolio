@@ -46,6 +46,8 @@ export default function About() {
                 src={ais}
                 alt="Sahil Sameer Siddique"
                 className="w-full h-full object-contain"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
 
