@@ -152,19 +152,38 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="min-h-screen flex items-center py-20 md:py-28 scroll-mt-12"
+      className="py-16 md:py-28 md:min-h-screen md:flex md:items-center scroll-mt-12"
     >
       <div className="max-w-3xl mx-auto px-6 md:px-12 w-full">
-        {/* Section Label */}
-        <motion.p
+        {/* Section Heading */}
+        <motion.div
+          className="text-center mb-10 md:mb-16"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE_OUT }}
           viewport={{ once: true }}
-          className="text-xs font-semibold uppercase tracking-widest text-indigo-400 mb-6"
         >
-          Get in touch
-        </motion.p>
+          <h2
+            className="text-5xl md:text-6xl font-bold mb-4"
+            style={{
+              background:
+                "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            Contact
+          </h2>
+          <p className="text-gray-500 text-xs uppercase tracking-widest mb-5">
+            Get in touch
+          </p>
+          <div className="flex items-center justify-center gap-3">
+            <div className="h-px w-16 bg-linear-to-r from-transparent to-indigo-500/50" />
+            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/70" />
+            <div className="h-px w-16 bg-linear-to-l from-transparent to-indigo-500/50" />
+          </div>
+        </motion.div>
 
         {/* Terminal */}
         <motion.div
