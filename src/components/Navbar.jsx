@@ -18,7 +18,6 @@ export default function Navbar() {
 
   // ✅ Separate effect: scroll tracking — runs once only
   useEffect(() => {
-    const sections = document.querySelectorAll("section");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -29,8 +28,30 @@ export default function Navbar() {
       },
       { threshold: 0.3 },
     );
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+
+    const observeSections = () => {
+      observer.disconnect();
+
+      document.querySelectorAll("section").forEach((section) => {
+        observer.observe(section);
+      });
+    };
+
+    observeSections();
+
+    const mutationObserver = new MutationObserver(() => {
+      observeSections();
+    });
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 
   // ✅ Separate effect: outside click — only active when menu is open
@@ -238,4 +259,3 @@ export default function Navbar() {
     </motion.nav>
   );
 }
-

@@ -15,12 +15,12 @@ const socials = [
     label: "GitHub",
     color: "#c4c4c4",
   },
-  {
-    icon: FaInstagram,
-    href: "https://instagram.com/yourinstagram",
-    label: "Instagram",
-    color: "#E1306C",
-  },
+  // {
+  //   icon: FaInstagram,
+  //   href: "https://instagram.com/yourinstagram",
+  //   label: "Instagram",
+  //   color: "#E1306C",
+  // },
 ];
 
 // ─── Footer ───────────────────────────────────────────────────────────────────

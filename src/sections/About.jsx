@@ -1,6 +1,15 @@
 import { motion } from "framer-motion";
 import ais from "../assets/about2.png";
 
+// ─── Achievement stats ──────────────────────────────────────────────────
+// Placeholder numbers — swap these for your real figures.
+// Keep `value` short (fits big type) and `label` to 2-3 words.
+const stats = [
+  { value: "5+", label: "Live projects" },
+  { value: "4", label: "Production platforms" },
+  { value: "30%", label: "Backend perf. improvement" },
+];
+
 export default function About() {
   return (
     <section
@@ -127,6 +136,40 @@ export default function About() {
             live and integrated with the{" "}
             <span className="text-indigo-300">Gemini API</span>.
           </p>
+
+          {/* ── Achievement stats ──
+              Simple stat row: big gradient numerals + short label
+              beneath each. Wraps to a 2-column grid on very narrow
+              screens so three stats never get cramped into one row
+              that's too tight to read. Edit `stats` above to update
+              numbers/labels — no markup changes needed. */}
+          <motion.div
+            className="grid grid-cols-3 sm:flex sm:flex-wrap gap-6 sm:gap-10 pt-2"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <p
+                  className="text-2xl md:text-3xl font-bold leading-none"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {stat.value}
+                </p>
+                <p className="text-xs text-gray-500 mt-1.5 leading-snug max-w-[7rem]">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </section>
