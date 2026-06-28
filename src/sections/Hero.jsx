@@ -95,7 +95,7 @@ export default function Hero() {
           {/* Resume Button */}
           <motion.div variants={itemVariants}>
             <motion.a
-              href="/sameer-resume.pdf"
+              href="/my-resume.pdf"
               download="Sahil-Sameer-Resume.pdf"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.04, y: -2 }}
