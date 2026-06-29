@@ -1,188 +1,63 @@
-# 🚀 Sahil Sameer Siddique - Portfolio Website
+# 🚀 Sahil Sameer Siddique | Portfolio
 
-A modern, responsive, and animated portfolio website built with React and cutting-edge web technologies. Showcasing projects, skills, and experience with smooth animations and a sleek design.
+A sleek, responsive, and animated portfolio website built with React 19, Vite, and Tailwind CSS. Featuring smooth animations, a dynamic dark/light mode toggle, and a beautiful fluid backdrop.
 
-## 📸 Preview
-
-The portfolio features:
-
-- **Hero Section** - Animated introduction with profile photo and dynamic title rotation
-- **About** - Personal background and professional overview
-- **Skills** - Technical expertise and proficiency levels
-- **Projects** - Showcase of completed projects and work samples
-- **Education** - Academic background and qualifications
-- **Contact** - Get in touch section for collaboration opportunities
-- **Responsive Design** - Fully optimized for desktop, tablet, and mobile devices
-
-## 🛠️ Tech Stack
-
-- **Frontend Framework**: React 19.2.0
-- **Build Tool**: Vite 7.3.1
-- **Styling**: Tailwind CSS 4.2.1
-- **Animations**:
-  - Framer Motion 12.35.0 (React animations)
-  - GSAP 3.14.2 (advanced animations)
-- **Icons**: React Icons 5.6.0
-- **Code Quality**: ESLint 9.39.1
-- **Development Server**: Vite Dev Server
-
-## 📦 Project Structure
-
-```
-my-portfolio/
-├── src/
-│   ├── components/
-│   │   ├── Navbar.jsx          # Navigation component
-│   │   └── SoftBackdrop.jsx    # Background effect component
-│   ├── sections/
-│   │   ├── Hero.jsx            # Hero/intro section
-│   │   ├── About.jsx           # About section
-│   │   ├── Skills.jsx          # Skills section
-│   │   ├── Project.jsx         # Projects showcase
-│   │   ├── Education.jsx       # Education section
-│   │   ├── Contact.jsx         # Contact section
-│   │   └── Footer.jsx          # Footer component
-│   ├── assets/                 # Images and media files
-│   ├── App.jsx                 # Main app component
-│   ├── main.jsx                # Entry point
-│   ├── index.css               # Global styles
-│   └── App.css                 # App-specific styles
-├── public/                     # Static assets
-├── vite.config.js              # Vite configuration
-├── eslint.config.js            # ESLint configuration
-├── package.json                # Project dependencies
-└── README.md                   # This file
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone <repository-url>
-   cd my-portfolio
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server**
-
-   ```bash
-   npm run dev
-   ```
-
-   The site will be available at `http://localhost:5173`
-
-## 📝 Available Scripts
-
-- **`npm run dev`** - Start development server with hot module replacement
-- **`npm run build`** - Create optimized production build
-- **`npm run preview`** - Preview production build locally
-- **`npm run lint`** - Run ESLint to check code quality
-
-## 🎨 Features
-
-✨ **Smooth Animations**
-
-- Framer Motion for component animations and transitions
-- GSAP for advanced motion graphics
-- Smooth scroll experience
-
-📱 **Responsive Design**
-
-- Mobile-first approach
-- Tailwind CSS for responsive utilities
-- Optimized for all screen sizes
-
-🎯 **Modern UI**
-
-- Clean and professional design
-- Gradient effects and smooth transitions
-- Dark theme with accent colors
-
-⚡ **Performance**
-
-- Vite for fast build times and instant HMR
-- Optimized bundle size
-- Fast development experience
-
-## 🔧 Customization
-
-### Changing Content
-
-- **Hero Section**: Edit `src/sections/Hero.jsx` to update name, titles, and resume link
-- **About Section**: Modify `src/sections/About.jsx` for personal information
-- **Skills**: Update `src/sections/Skills.jsx` with your technical skills
-- **Projects**: Add your projects in `src/sections/Project.jsx`
-- **Education**: Update `src/sections/Education.jsx` with academic details
-- **Contact**: Customize `src/sections/Contact.jsx` with contact information
-
-### Styling
-
-- **Colors & Theme**: Modify Tailwind CSS utilities in components
-- **Fonts & Typography**: Update in `src/index.css`
-- **Component Styles**: Edit individual CSS files in `src/`
-
-### Adding Images
-
-- Place images in `src/assets/`
-- Update import paths in components as needed
-- Ensure images are optimized for web
-
-## 🔗 Deployment
-
-The portfolio is ready to deploy to any static hosting platform:
-
-### Vercel (Recommended)
-
-```bash
-npm install -g vercel
-vercel
-```
-
-### Netlify
-
-```bash
-npm run build
-# Deploy the 'dist' folder to Netlify
-```
-
-### GitHub Pages
-
-Update `vite.config.js` with your repository name and run `npm run build`
-
-## 📧 Contact & Social
-
-Connect with me for collaboration opportunities:
-
-- **Email**: [Your email]
-- **LinkedIn**: [Your LinkedIn]
-- **GitHub**: [Your GitHub]
-
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## Acknowledgments
-
-- Built with [React](https://react.dev)
-- Styled with [Tailwind CSS](https://tailwindcss.com)
-- Animations powered by [Framer Motion](https://www.framer.com/motion/) and [GSAP](https://gsap.com)
-- Icons from [React Icons](https://react-icons.github.io/react-icons)
-- Dev tooling by [Vite](https://vite.dev)
+🔗 **Live Code Repository:** [github.com/SahilSameer18/Portfolio](https://github.com/SahilSameer18/Portfolio)
 
 ---
 
-**Made with ❤️ by Sahil Sameer Siddique**
+## ✨ Features
+
+- **Dynamic Theme System:** Smooth transitions between Light and Dark mode with unified branding context.
+- **Rich Animations:** Built with Framer Motion and GSAP for state-of-the-art visual interactivity.
+- **Soft Fluid Backdrop:** Custom layered radial gradients and a subtle noise texture.
+- **Section Observer Navbar:** Smart desktop pill-navbar and mobile drawer with scroll spy.
+- **Fully Responsive:** Mobile-first layout optimized for all modern device viewports.
+
+---
+
+## 🛠️ Tech Stack & Structure
+
+- **Core & Routing:** React 19, Vite 7
+- **Styling & Effects:** Tailwind CSS 4, Glassmorphism
+- **Motion Graphics:** Framer Motion 12, GSAP 3
+- **Icons & Tooling:** React Icons 5, ESLint 9
+
+```text
+src/
+├── components/          # Shared components (Navbar, ThemeToggle, SoftBackdrop)
+├── context/             # ThemeContext for global dark/light state
+├── sections/            # Portfolio sections (Hero, About, Skills, Projects, etc.)
+├── assets/              # Media and static assets
+└── App.jsx              # Application entry layout assembler
+```
+
+---
+
+## 🚀 Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/SahilSameer18/Portfolio.git
+cd Portfolio
+
+# Install dependencies
+npm install
+
+# Start the local development server
+npm run dev
+```
+
+### Available Commands
+- `npm run dev`: Runs the local Vite dev server.
+- `npm run build`: Bundles the application into `dist/` for production.
+- `npm run lint`: Performs static code analysis with ESLint.
+
+---
+
+## 📧 Connect
+- **LinkedIn:** [Sahil Sameer Siddique](https://www.linkedin.com/in/sahil-sameer-siddique/)
+- **GitHub:** [@SahilSameer18](https://github.com/SahilSameer18)
+
+---
+*Made with ❤️ by Sahil Sameer Siddique*
