@@ -95,7 +95,7 @@ export default function About() {
             className="text-4xl md:text-5xl font-bold"
             style={{
               background:
-                "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+                "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -111,9 +111,9 @@ export default function About() {
           </div>
 
           {/* Bio — backend focused */}
-          <p className="text-gray-400 max-w-lg leading-relaxed">
+          <p className="text-neutral-600 dark:text-gray-400 max-w-lg leading-relaxed">
             I'm{" "}
-            <span className="text-white font-medium">
+            <span className="text-neutral-900 dark:text-white font-medium">
               Sahil Sameer Siddique
             </span>
             , a Full Stack Developer with a deep focus on backend engineering. I
@@ -122,19 +122,19 @@ export default function About() {
             and reliability.
           </p>
 
-          <p className="text-gray-400 max-w-lg leading-relaxed">
-            My stack includes <span className="text-indigo-300">Node.js</span>,{" "}
-            <span className="text-indigo-300">Express.js</span>,{" "}
-            <span className="text-indigo-300">MongoDB</span>,{" "}
-            <span className="text-indigo-300">PostgreSQL</span>, and{" "}
-            <span className="text-indigo-300">Prisma</span> on the backend, with{" "}
-            <span className="text-indigo-300">React</span> and{" "}
-            <span className="text-indigo-300">Tailwind CSS</span> on the
+          <p className="text-neutral-600 dark:text-gray-400 max-w-lg leading-relaxed">
+            My stack includes <span className="text-indigo-600 dark:text-indigo-300 font-semibold">Node.js</span>,{" "}
+            <span className="text-indigo-600 dark:text-indigo-300 font-semibold">Express.js</span>,{" "}
+            <span className="text-indigo-600 dark:text-indigo-300 font-semibold">MongoDB</span>,{" "}
+            <span className="text-indigo-600 dark:text-indigo-300 font-semibold">PostgreSQL</span>, and{" "}
+            <span className="text-indigo-600 dark:text-indigo-300 font-semibold">Prisma</span> on the backend, with{" "}
+            <span className="text-indigo-600 dark:text-indigo-300 font-semibold">React</span> and{" "}
+            <span className="text-indigo-600 dark:text-indigo-300 font-semibold">Tailwind CSS</span> on the
             frontend. I've shipped production platforms like{" "}
-            <span className="text-white font-medium">PrepStack</span> and{" "}
-            <span className="text-white font-medium">SkillBridgeAI</span>, both
+            <span className="text-neutral-900 dark:text-white font-semibold">PrepStack</span> and{" "}
+            <span className="text-neutral-900 dark:text-white font-semibold">SkillBridgeAI</span>, both
             live and integrated with the{" "}
-            <span className="text-indigo-300">Gemini API</span>.
+            <span className="text-indigo-600 dark:text-indigo-300 font-semibold">Gemini API</span>.
           </p>
 
           {/* ── Achievement stats ──
@@ -156,7 +156,7 @@ export default function About() {
                   className="text-2xl md:text-3xl font-bold leading-none"
                   style={{
                     background:
-                      "linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%)",
+                      "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -164,7 +164,7 @@ export default function About() {
                 >
                   {stat.value}
                 </p>
-                <p className="text-xs text-gray-500 mt-1.5 leading-snug max-w-[7rem]">
+                <p className="text-xs text-neutral-500 dark:text-gray-500 mt-1.5 leading-snug max-w-[7rem]">
                   {stat.label}
                 </p>
               </div>

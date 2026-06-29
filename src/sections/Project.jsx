@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
+import { useTheme } from "../context/ThemeContext";
 import safar from "../assets/safar.png";
 import prepstack from "../assets/prepstack.png";
 import skillbridgeAI from "../assets/skillbridgeAI.png";
@@ -42,6 +43,15 @@ const projects = [
   },
 ];
 
+// ─── Accent Color Helper ───
+const getContrastAccent = (accent, theme) => {
+  if (theme === "dark") return accent;
+  if (accent === "#FFA116") return "#b45309"; // amber-700
+  if (accent === "#4DB8D4") return "#0369a1"; // sky-700
+  if (accent === "#34d399") return "#047857"; // emerald-700
+  return accent;
+};
+
 // ─── Animation Variants ───────────────────────────────────────────────────────
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -59,23 +69,30 @@ const fadeRight = {
 };
 
 // ─── Tech Badge ───────────────────────────────────────────────────────────────
-const TechBadge = ({ tech, accent }) => (
-  <span
-    className="px-3 py-1 rounded-full text-xs font-medium tracking-wide"
-    style={{
-      background: `${accent}18`,
-      border: `1px solid ${accent}35`,
-      color: accent,
-    }}
-  >
-    {tech}
-  </span>
-);
+const TechBadge = ({ tech, accent }) => {
+  const { theme } = useTheme();
+  const resolvedAccent = getContrastAccent(accent, theme);
+
+  return (
+    <span
+      className="px-3 py-1 rounded-full text-xs font-medium tracking-wide transition-colors duration-300"
+      style={{
+        background: `${resolvedAccent}18`,
+        border: `1px solid ${resolvedAccent}35`,
+        color: resolvedAccent,
+      }}
+    >
+      {tech}
+    </span>
+  );
+};
 
 // ─── Single Project Card ──────────────────────────────────────────────────────
 const ProjectCard = ({ project, idx }) => {
-  // Alternate image left/right for even/odd projects
   const isEven = idx % 2 === 0;
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  const resolvedAccent = getContrastAccent(project.accent, theme);
 
   return (
     <motion.div
@@ -99,20 +116,20 @@ const ProjectCard = ({ project, idx }) => {
         <div className="relative group">
           {/* Glow layer behind image */}
           <div
-            className="absolute -inset-3 rounded-2xl blur-2xl -z-10 opacity-15 group-hover:opacity-25 transition-opacity duration-500"
-            style={{ background: project.accent }}
+            className="absolute -inset-3 rounded-2xl blur-2xl -z-10 opacity-15 group-hover:opacity-25 transition-all duration-500"
+            style={{ background: resolvedAccent }}
           />
 
           {/* Project image */}
           <img
             src={project.image}
             alt={`${project.title} project screenshot`}
-            className="w-72 md:w-[22rem] rounded-2xl object-cover"
+            className="w-72 md:w-[22rem] rounded-2xl object-cover transition-all duration-300"
             loading="lazy"
             decoding="async"
             style={{
-              border: `1px solid ${project.accent}30`,
-              boxShadow: `0 8px 32px ${project.accent}10`,
+              border: `1px solid ${resolvedAccent}${isDark ? "30" : "15"}`,
+              boxShadow: `0 8px 32px ${resolvedAccent}${isDark ? "10" : "05"}`,
             }}
           />
         </div>
@@ -128,25 +145,25 @@ const ProjectCard = ({ project, idx }) => {
       >
         {/* Tag */}
         <p
-          className="text-xs font-semibold uppercase tracking-widest"
-          style={{ color: project.accent }}
+          className="text-xs font-semibold uppercase tracking-widest transition-colors duration-300"
+          style={{ color: resolvedAccent }}
         >
           {project.tag}
         </p>
 
         {/* Title */}
-        <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+        <h3 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white leading-tight transition-colors duration-300">
           {project.title}
         </h3>
 
         {/* Divider accent line */}
         <div
-          className="w-12 h-0.5 rounded-full"
-          style={{ background: project.accent }}
+          className="w-12 h-0.5 rounded-full transition-colors duration-300"
+          style={{ background: resolvedAccent }}
         />
 
         {/* Description */}
-        <p className="text-gray-400 leading-relaxed max-w-md">
+        <p className="text-neutral-600 dark:text-gray-400 leading-relaxed max-w-md transition-colors duration-300">
           {project.description}
         </p>
 
@@ -166,17 +183,18 @@ const ProjectCard = ({ project, idx }) => {
             rel="noopener noreferrer"
             whileHover={{ y: -2, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-300 shadow-xs"
             style={{
-              background: `${project.accent}20`,
-              border: `1px solid ${project.accent}50`,
+              background: isDark ? `${resolvedAccent}20` : `${resolvedAccent}`,
+              border: `1px solid ${resolvedAccent}50`,
+              color: isDark ? resolvedAccent : "#ffffff"
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = `${project.accent}35`;
-              e.currentTarget.style.boxShadow = `0 0 20px ${project.accent}30`;
+              e.currentTarget.style.background = isDark ? `${resolvedAccent}35` : `${resolvedAccent}ee`;
+              e.currentTarget.style.boxShadow = `0 0 20px ${resolvedAccent}${isDark ? "30" : "20"}`;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = `${project.accent}20`;
+              e.currentTarget.style.background = isDark ? `${resolvedAccent}20` : `${resolvedAccent}`;
               e.currentTarget.style.boxShadow = "none";
             }}
           >
@@ -191,10 +209,20 @@ const ProjectCard = ({ project, idx }) => {
             rel="noopener noreferrer"
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300"
             style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)",
+              border: `1px solid ${isDark ? "rgba(255,255,255,0.10)" : "rgba(99,102,241,0.22)"}`,
+              backdropFilter: "blur(8px)",
+              color: isDark ? "#9ca3af" : "#374151",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.85)";
+              e.currentTarget.style.color = isDark ? "#ffffff" : "#111827";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)";
+              e.currentTarget.style.color = isDark ? "#9ca3af" : "#374151";
             }}
           >
             <FaGithub className="text-base" />
@@ -208,6 +236,9 @@ const ProjectCard = ({ project, idx }) => {
 
 // ─── Main Projects Section ────────────────────────────────────────────────────
 export default function Projects() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <section id="projects" className="min-h-screen flex flex-col scroll-mt-12">
       {/* ── Section Heading ── */}
@@ -222,7 +253,7 @@ export default function Projects() {
           className="text-5xl md:text-6xl font-bold mb-4"
           style={{
             background:
-              "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+              "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -230,7 +261,7 @@ export default function Projects() {
         >
           My Projects
         </h2>
-        <p className="text-gray-500 text-xs uppercase tracking-widest mb-5">
+        <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
           Things I've built
         </p>
         {/* Decorative divider — matches Skills section style */}
@@ -256,7 +287,7 @@ export default function Projects() {
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        <p className="text-gray-400 text-sm">
+        <p className="text-neutral-500 dark:text-gray-400 text-sm">
           Explore more projects and open-source contributions on my GitHub
         </p>
 
@@ -266,19 +297,21 @@ export default function Projects() {
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.97 }}
-          className="flex items-center gap-2.5 px-6 py-3.5 rounded-full text-white font-semibold text-sm"
+          className="flex items-center gap-2.5 px-6 py-3.5 rounded-full font-semibold text-sm transition-all duration-300"
           style={{
-            background: "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            backdropFilter: "blur(8px)",
+            background: isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)",
+            border: `1px solid ${isDark ? "rgba(255,255,255,0.12)" : "rgba(99,102,241,0.25)"}`,
+            backdropFilter: "blur(10px)",
+            color: isDark ? "#e5e7eb" : "#1f2937",
+            boxShadow: isDark ? "none" : "0 2px 12px rgba(99,102,241,0.08)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "rgba(255,255,255,0.10)";
-            e.currentTarget.style.boxShadow = "0 0 24px rgba(99,102,241,0.25)";
+            e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.85)";
+            e.currentTarget.style.boxShadow = isDark ? "0 0 24px rgba(99,102,241,0.25)" : "0 0 24px rgba(99,102,241,0.18)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-            e.currentTarget.style.boxShadow = "none";
+            e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)";
+            e.currentTarget.style.boxShadow = isDark ? "none" : "0 2px 12px rgba(99,102,241,0.08)";
           }}
         >
           <FaGithub className="text-lg" />

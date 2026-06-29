@@ -20,6 +20,7 @@ import {
 } from "react-icons/si";
 import { TbWorldWww, TbDatabase } from "react-icons/tb";
 import { motion } from "framer-motion";
+import { useTheme } from "../context/ThemeContext";
 
 const skillsData = [
   {
@@ -173,6 +174,9 @@ const item = {
 };
 
 export default function Skills() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <section id="skills" className="py-20 scroll-mt-12">
       <div className="max-w-5xl mx-auto px-6">
@@ -187,7 +191,7 @@ export default function Skills() {
             className="text-5xl md:text-6xl font-bold mb-4"
             style={{
               background:
-                "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+                "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -195,7 +199,7 @@ export default function Skills() {
           >
             Skills
           </h2>
-          <p className="text-gray-500 text-xs uppercase tracking-widest mb-5">
+          <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
             Technologies I work with
           </p>
           <div className="flex items-center justify-center gap-3">
@@ -224,11 +228,11 @@ export default function Skills() {
                     className="w-1 h-5 rounded-full"
                     style={{ backgroundColor: accent }}
                   />
-                  <p className="text-sm font-semibold uppercase tracking-widest text-gray-300">
+                  <p className="text-sm font-semibold uppercase tracking-widest text-neutral-600 dark:text-gray-300">
                     {category}
                   </p>
-                  <div className="flex-1 h-px bg-white/5" />
-                  <span className="text-xs text-gray-600">
+                  <div className="flex-1 h-px bg-neutral-200 dark:bg-white/5" />
+                  <span className="text-xs text-neutral-400 dark:text-gray-600">
                     {catSkills.length}
                   </span>
                 </div>
@@ -240,43 +244,53 @@ export default function Skills() {
                   viewport={{ once: true }}
                   className="flex flex-wrap gap-2.5"
                 >
-                  {catSkills.map(({ name, icon, color }) => (
-                    <motion.div
-                      key={name}
-                      variants={item}
-                      whileHover={{
-                        y: -4,
-                        scale: 1.04,
-                        transition: { duration: 0.2 },
-                      }}
-                      className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl cursor-default select-none"
-                      style={{
-                        background: "rgba(255,255,255,0.03)",
-                        border: `1px solid rgba(255,255,255,0.07)`,
-                        backdropFilter: "blur(8px)",
-                        boxShadow: `0 0 0 0 ${color}00`,
-                        transition:
-                          "box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.boxShadow = `0 0 18px 2px ${color}30`;
-                        e.currentTarget.style.borderColor = `${color}50`;
-                        e.currentTarget.style.background = `${color}10`;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.boxShadow = "0 0 0 0 transparent";
-                        e.currentTarget.style.borderColor =
-                          "rgba(255,255,255,0.07)";
-                        e.currentTarget.style.background =
-                          "rgba(255,255,255,0.03)";
-                      }}
-                    >
-                      <Icon name={icon} color={color} size={19} />
-                      <span className="text-sm font-medium text-gray-200 whitespace-nowrap">
-                        {name}
-                      </span>
-                    </motion.div>
-                  ))}
+                  {catSkills.map(({ name, icon, color }) => {
+                    const iconColor = (name === "Express.js" || name === "GitHub" || name === "Vercel") && theme === "light"
+                      ? "#09090b"
+                      : color;
+
+                    return (
+                      <motion.div
+                        key={name}
+                        variants={item}
+                        whileHover={{
+                          y: -4,
+                          scale: 1.04,
+                          transition: { duration: 0.2 },
+                        }}
+                        className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl cursor-default select-none"
+                        style={{
+                          background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.55)",
+                          border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.85)"}`,
+                          backdropFilter: "blur(12px)",
+                          WebkitBackdropFilter: "blur(12px)",
+                          boxShadow: isDark
+                            ? "none"
+                            : "0 2px 8px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,0.7)",
+                          transition: "box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.boxShadow = isDark
+                            ? `0 0 20px 4px ${color}30`
+                            : `0 0 22px 4px ${color}55, 0 4px 16px ${color}30`;
+                          e.currentTarget.style.borderColor = `${color}99`;
+                          e.currentTarget.style.background = isDark ? `${color}12` : `${color}15`;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.boxShadow = isDark
+                            ? "none"
+                            : "0 2px 8px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,0.7)";
+                          e.currentTarget.style.borderColor = isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.85)";
+                          e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.55)";
+                        }}
+                      >
+                        <Icon name={icon} color={iconColor} size={19} />
+                        <span className="text-sm font-medium text-neutral-800 dark:text-gray-200 whitespace-nowrap transition-colors duration-300">
+                          {name}
+                        </span>
+                      </motion.div>
+                    );
+                  })}
                 </motion.div>
               </motion.div>
             );

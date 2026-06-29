@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaBriefcase } from "react-icons/fa";
+import { useTheme } from "../context/ThemeContext";
 
 // ─── Experience Data (edit this later) ───────────────────────────────────────
 const experienceData = [
@@ -29,6 +30,9 @@ const experienceData = [
 
 // ─── Experience Section ───────────────────────────────────────────────────────
 export default function Experience() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <section id="experience" className="py-20 md:py-28 scroll-mt-12">
       <div className="max-w-4xl mx-auto px-6 md:px-12">
@@ -44,7 +48,7 @@ export default function Experience() {
           <h2
             className="text-5xl md:text-6xl font-bold mb-4"
             style={{
-              background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+              background: "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -52,7 +56,7 @@ export default function Experience() {
           >
             Experience
           </h2>
-          <p className="text-gray-500 text-xs uppercase tracking-widest mb-5">
+          <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
             Where I've worked
           </p>
           <div className="flex items-center justify-center gap-3">
@@ -67,8 +71,8 @@ export default function Experience() {
 
           {/* Vertical line */}
           <div
-            className="absolute left-6 top-0 bottom-0 w-px"
-            style={{ background: "rgba(99,102,241,0.15)" }}
+            className="absolute left-6 top-0 bottom-0 w-px transition-colors duration-300"
+            style={{ background: isDark ? "rgba(99,102,241,0.2)" : "rgba(99,102,241,0.28)" }}
           />
 
           <div className="space-y-10">
@@ -83,30 +87,35 @@ export default function Experience() {
               >
                 {/* Icon on timeline */}
                 <div
-                  className="absolute left-0 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                  className="absolute left-0 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-300"
                   style={{
-                    background: "rgba(99,102,241,0.1)",
-                    border: "1px solid rgba(99,102,241,0.3)",
+                    background: isDark ? "rgba(99,102,241,0.1)" : "rgba(99,102,241,0.06)",
+                    border: `1px solid ${isDark ? "rgba(99,102,241,0.3)" : "rgba(99,102,241,0.25)"}`,
                   }}
                 >
-                  <FaBriefcase style={{ color: "#a5b4fc", fontSize: "16px" }} />
+                  <FaBriefcase style={{ color: isDark ? "#a5b4fc" : "#4f46e5", fontSize: "16px" }} />
                 </div>
 
                 {/* Card */}
                 <div
-                  className="flex-1 rounded-2xl p-6 space-y-4"
+                  className="flex-1 rounded-2xl p-6 space-y-4 transition-[box-shadow,border-color,background] duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: isDark ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.55)",
+                    border: `1px solid ${isDark ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.85)"}`,
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    boxShadow: isDark
+                      ? "none"
+                      : "0 2px 12px rgba(99,102,241,0.10), inset 0 1px 0 rgba(255,255,255,0.7)",
                   }}
                 >
                   {/* Top row */}
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div>
-                      <h3 className="text-base md:text-lg font-semibold text-white">
+                      <h3 className="text-base md:text-lg font-semibold text-neutral-900 dark:text-white transition-colors duration-300">
                         {exp.role}
                       </h3>
-                      <p className="text-sm text-indigo-400 font-medium mt-0.5">
+                      <p className="text-sm text-indigo-600 dark:text-indigo-400 font-semibold mt-0.5 transition-colors duration-300">
                         {exp.company}
                       </p>
                     </div>
@@ -114,16 +123,16 @@ export default function Experience() {
                     {/* Duration + location pills */}
                     <div className="flex flex-col items-end gap-1.5">
                       <span
-                        className="text-xs font-medium px-3 py-1 rounded-full"
+                        className="text-xs font-medium px-3 py-1 rounded-full transition-colors duration-300"
                         style={{
-                          background: "rgba(99,102,241,0.12)",
-                          border: "1px solid rgba(99,102,241,0.25)",
-                          color: "#a5b4fc",
+                          background: isDark ? "rgba(99,102,241,0.12)" : "rgba(99,102,241,0.08)",
+                          border: `1px solid ${isDark ? "rgba(99,102,241,0.25)" : "rgba(99,102,241,0.2)"}`,
+                          color: isDark ? "#a5b4fc" : "#4f46e5",
                         }}
                       >
                         {exp.duration}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-neutral-500 dark:text-gray-500 transition-colors duration-300">
                         {exp.location}
                       </span>
                     </div>
@@ -137,7 +146,7 @@ export default function Experience() {
                           className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0"
                           style={{ background: "#6366f1" }}
                         />
-                        <span className="text-sm text-gray-400 leading-relaxed">
+                        <span className="text-sm text-neutral-600 dark:text-gray-400 leading-relaxed transition-colors duration-300">
                           {point}
                         </span>
                       </li>

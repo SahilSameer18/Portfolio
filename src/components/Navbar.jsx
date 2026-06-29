@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "../context/ThemeContext";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState("home");
   const navRef = useRef(null);
+  const { theme } = useTheme();
 
   const links = [
     { name: "Home", path: "#home", id: "home" },
@@ -82,40 +85,45 @@ export default function Navbar() {
         <div
           className={`flex items-center justify-between px-6 py-4 transition-all duration-300 ${
             isOpen
-              ? "bg-white/10 backdrop-blur-3xl shadow-2xl"
+              ? "bg-white/70 dark:bg-white/10 backdrop-blur-3xl shadow-2xl"
               : "bg-transparent backdrop-blur-sm"
           }`}
         >
           {/* Mobile Logo */}
           <a
             href="#home"
-            className="text-2xl font-extrabold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+            className="text-2xl font-extrabold bg-gradient-to-r from-indigo-600 via-violet-500 to-violet-700 dark:from-indigo-400 dark:via-violet-400 dark:to-violet-600 bg-clip-text text-transparent"
           >
             SS
           </a>
 
-          {/* Hamburger Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex flex-col justify-center items-center w-10 h-10 gap-1.5 focus:outline-none"
-            aria-label="Toggle menu"
-          >
-            <motion.span
-              animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25 }}
-              className="w-7 h-0.5 bg-white rounded-full block"
-            />
-            <motion.span
-              animate={isOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
-              transition={{ duration: 0.2 }}
-              className="w-7 h-0.5 bg-white rounded-full block"
-            />
-            <motion.span
-              animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25 }}
-              className="w-7 h-0.5 bg-white rounded-full block"
-            />
-          </button>
+          {/* Controls: Toggle + Hamburger */}
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            
+            {/* Hamburger Button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex flex-col justify-center items-center w-10 h-10 gap-1.5 focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              <motion.span
+                animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.25 }}
+                className="w-7 h-0.5 bg-neutral-800 dark:bg-white rounded-full block"
+              />
+              <motion.span
+                animate={isOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
+                transition={{ duration: 0.2 }}
+                className="w-7 h-0.5 bg-neutral-800 dark:bg-white rounded-full block"
+              />
+              <motion.span
+                animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.25 }}
+                className="w-7 h-0.5 bg-neutral-800 dark:bg-white rounded-full block"
+              />
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu Overlay */}
@@ -128,9 +136,9 @@ export default function Navbar() {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="w-full overflow-hidden"
               style={{
-                background: "rgba(5,5,15,0.75)",
+                background: theme === "dark" ? "rgba(5,5,15,0.75)" : "rgba(255,255,255,0.85)",
                 backdropFilter: "blur(20px)",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                borderBottom: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.06)",
               }}
             >
               <div className="flex flex-col items-center gap-6 py-10">
@@ -153,8 +161,8 @@ export default function Navbar() {
                     }}
                     className={`text-base font-medium tracking-widest uppercase transition-colors duration-200 ${
                       active === item.id
-                        ? "text-indigo-400"
-                        : "text-gray-400 hover:text-white"
+                        ? "text-indigo-600 dark:text-indigo-400"
+                        : "text-neutral-500 hover:text-neutral-900 dark:text-gray-400 dark:hover:text-white"
                     }`}
                   >
                     {item.name}
@@ -168,7 +176,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.3 }}
-                  className="mt-2 flex items-center gap-2 px-8 py-3 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-500"
+                  className="mt-2 flex items-center gap-2 px-8 py-3 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-500"
                   style={{ boxShadow: "0 0 20px rgba(99,102,241,0.35)" }}
                 >
                   <svg
@@ -195,17 +203,17 @@ export default function Navbar() {
 
       {/* ── Desktop Navbar (Pill) ── */}
       <div className="hidden md:flex justify-center pt-4">
-        <div className="flex items-center gap-10 border border-slate-700 bg-black/60 backdrop-blur-lg px-6 py-3 rounded-full text-white text-sm shadow-xl">
+        <div className="flex items-center gap-8 border border-neutral-200 dark:border-slate-700 bg-white/70 dark:bg-black/60 backdrop-blur-lg px-6 py-2.5 rounded-full text-neutral-800 dark:text-white text-sm shadow-xl transition-all duration-300">
           {/* ✅ Desktop Logo — branding now visible on desktop too */}
           <a
             href="#home"
-            className="text-lg font-extrabold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent select-none"
+            className="text-lg font-extrabold bg-gradient-to-r from-indigo-600 via-violet-500 to-violet-700 dark:from-indigo-400 dark:via-violet-400 dark:to-violet-600 bg-clip-text text-transparent select-none"
           >
             SS
           </a>
 
           {/* Divider */}
-          <div className="w-px h-4 bg-white/20 rounded-full" />
+          <div className="w-px h-4 bg-neutral-200 dark:bg-white/20 rounded-full" />
 
           {/* Desktop Links */}
           <div className="flex items-center gap-8">
@@ -214,7 +222,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.path}
                 className={`relative h-5 overflow-hidden block group transition-colors duration-300 ${
-                  active === item.id ? "text-indigo-300" : "text-white"
+                  active === item.id ? "text-indigo-600 dark:text-indigo-300 font-semibold" : "text-neutral-500 hover:text-neutral-900 dark:text-gray-400 dark:hover:text-white"
                 }`}
               >
                 <span className="block leading-5 group-hover:-translate-y-full transition-transform duration-300">
@@ -225,9 +233,12 @@ export default function Navbar() {
                 </span>
               </a>
             ))}
+            
+            {/* Theme Toggle */}
+          <ThemeToggle />
           </div>
           {/* Divider */}
-          <div className="w-px h-4 bg-white/20 rounded-full" />
+          <div className="w-px h-4 bg-neutral-200 dark:bg-white/20 rounded-full" />
 
           {/* Desktop Resume Button */}
           <motion.a
@@ -236,7 +247,7 @@ export default function Navbar() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-500 rounded-full text-white font-medium"
+            className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-indigo-600 to-violet-500 rounded-full text-white font-medium shadow-sm"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -254,6 +265,7 @@ export default function Navbar() {
             </svg>
             Resume
           </motion.a>
+          
         </div>
       </div>
     </motion.nav>

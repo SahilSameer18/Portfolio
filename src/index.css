@@ -1,13 +1,40 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --heading-grad-start: #1e1b4b; /* indigo-950 */
+  --heading-grad-mid: #4f46e5;   /* indigo-600 */
+  --heading-grad-end: #8b5cf6;   /* violet-500 */
+}
+
+.dark {
+  --heading-grad-start: #ffffff;
+  --heading-grad-mid: #a5b4fc;
+  --heading-grad-end: #818cf8;
+}
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
+/* Smooth background, color, and border transitions optimized for high performance */
+body, nav, footer, section, .glass, button {
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+p, span, h1, h2, h3, h4, h5, h6, a, svg {
+  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              fill 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Base body styling */
 body {
-  @apply bg-neutral-950 text-gray-200 antialiased;
+  @apply bg-transparent text-neutral-800 dark:bg-neutral-950 dark:text-gray-200 antialiased;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
@@ -50,7 +77,7 @@ h3 {
 
 /* Glass effect utility */
 .glass {
-  @apply bg-white/5 backdrop-blur-md border border-white/10;
+  @apply bg-white/60 dark:bg-white/5 backdrop-blur-md border border-neutral-200 dark:border-white/10;
 }
 
 /* Custom scrollbar */
@@ -59,16 +86,16 @@ h3 {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  @apply bg-neutral-100 dark:bg-[#0a0a0a];
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #444;
+  @apply bg-neutral-300 dark:bg-neutral-700;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #666;
+  @apply bg-neutral-400 dark:bg-neutral-600;
 }
 
 /* Text selection */
@@ -86,3 +113,5 @@ h3 {
       transparent 40%),
     #020617;
 }
+
+

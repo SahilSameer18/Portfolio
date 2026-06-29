@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { FaLinkedin, FaGithub, FaEnvelope, FaInstagram } from "react-icons/fa";
+import { useTheme } from "../context/ThemeContext";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -37,24 +38,14 @@ const lines = [
     external: true,
     ariaLabel: "Open GitHub profile",
     color: "#c4c4c4",
+    lightColor: "#374151",
   },
-  // {
-  //   type: "entry",
-  //   icon: FaInstagram,
-  //   cmd: "instagram",
-  //   value: "@sahil.sameer.dev",
-  //   href: "https://www.instagram.com/sahil.sameer.dev/",
-  //   external: true,
-  //   ariaLabel: "Open Instagram profile",
-  //   color: "#e1306c",
-  // },
 ];
 
 const checks = [
   "email found",
   "linkedin found",
   "github found",
-  // "instagram found",
 ];
 
 // ---------------------------------------------------------------------------
@@ -92,6 +83,8 @@ const TYPE_SPEED_MS = 42;
 
 export default function Contact() {
   const sectionRef = useRef(null);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const isInView = useInView(sectionRef, {
     once: true,
@@ -167,7 +160,7 @@ export default function Contact() {
             className="text-5xl md:text-6xl font-bold mb-4"
             style={{
               background:
-                "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #818cf8 100%)",
+                "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -175,7 +168,7 @@ export default function Contact() {
           >
             Contact
           </h2>
-          <p className="text-gray-500 text-xs uppercase tracking-widest mb-5">
+          <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
             Get in touch
           </p>
           <div className="flex items-center justify-center gap-3">
@@ -191,18 +184,31 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: EASE_OUT }}
           viewport={{ once: true }}
-          // viewport.once guarantees this fires exactly once, so no extra
-          // guard is needed before flipping windowReady.
           onAnimationComplete={() => setWindowReady(true)}
-          className="rounded-2xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-md shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
+          className="rounded-2xl overflow-hidden border dark:border-white/10 backdrop-blur-md transition-all duration-300"
+          style={{
+            background: isDark ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.55)",
+            border: `1px solid ${isDark ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.85)"}`,
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            boxShadow: isDark
+              ? "0 8px 40px rgba(0,0,0,0.40)"
+              : "0 4px 24px rgba(99,102,241,0.12), inset 0 1px 0 rgba(255,255,255,0.8)",
+          }}
         >
           {/* Title Bar */}
-          <div className="flex items-center gap-2 px-5 py-3.5 border-b border-white/10 bg-white/2">
+          <div
+            className="flex items-center gap-2 px-5 py-3.5 border-b dark:border-white/10 transition-colors duration-300"
+            style={{
+              borderBottomColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(99,102,241,0.15)",
+              background: isDark ? "rgba(255,255,255,0.02)" : "rgba(99,102,241,0.04)",
+            }}
+          >
             <div className="w-3 h-3 rounded-full bg-red-500/70" />
             <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
             <div className="w-3 h-3 rounded-full bg-green-500/70" />
 
-            <span className="ml-3 text-xs text-gray-500 font-mono">
+            <span className="ml-3 text-xs text-neutral-500 dark:text-gray-500 font-mono transition-colors duration-300">
               sahil@portfolio: ~
             </span>
           </div>
@@ -210,11 +216,11 @@ export default function Contact() {
           {/* Body */}
           <div className="p-6 md:p-8 font-mono text-sm md:text-base space-y-4">
             {/* Command — visually animated, hidden from assistive tech */}
-            <div className="flex items-center gap-2 text-gray-300">
-              <span className="text-purple-400" aria-hidden="true">
+            <div className="flex items-center gap-2 text-neutral-700 dark:text-gray-300 transition-colors duration-300">
+              <span className="text-purple-600 dark:text-purple-400" aria-hidden="true">
                 ➜
               </span>
-              <span className="text-indigo-300" aria-hidden="true">
+              <span className="text-indigo-600 dark:text-indigo-300" aria-hidden="true">
                 ~
               </span>
 
@@ -222,20 +228,15 @@ export default function Contact() {
                 {fullText.slice(0, typed)}
                 <span
                   className={`inline-block w-2 h-4 ml-0.5 align-middle animate-pulse ${
-                    isTypingDone ? "bg-indigo-400/70" : "bg-indigo-400"
+                    isTypingDone ? "bg-indigo-600/70 dark:bg-indigo-400/70" : "bg-indigo-600 dark:bg-indigo-400"
                   }`}
                 />
               </span>
 
-              {/* Screen readers get the finished command immediately
-                  instead of per-character mutations. */}
               <span className="sr-only">{`➜ ~ ${fullText}`}</span>
             </div>
 
-            {/* Check Results — decorative terminal flavor only; the
-                actual contact links below carry the real information,
-                so this is hidden from assistive tech to avoid redundant
-                announcements. */}
+            {/* Check Results */}
             {visibleChecks > 0 && (
               <div className="space-y-2" aria-hidden="true">
                 {checks.slice(0, visibleChecks).map((item) => (
@@ -244,7 +245,7 @@ export default function Contact() {
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="flex items-center gap-2 text-emerald-400"
+                    className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 transition-colors duration-300"
                   >
                     <span>✓</span>
                     <span>{item}</span>
@@ -268,7 +269,7 @@ export default function Contact() {
                     <motion.p
                       key={key}
                       variants={lineVariants}
-                      className="text-gray-500 text-xs md:text-sm"
+                      className="text-neutral-500 dark:text-gray-500 text-xs md:text-sm transition-colors duration-300"
                     >
                       {line.text}
                     </motion.p>
@@ -293,33 +294,37 @@ export default function Contact() {
                         -mx-2
                         px-2
                         rounded-lg
-                        hover:bg-white/4
                         transition-colors
                         duration-200
-
                         focus:outline-none
                         focus:ring-2
                         focus:ring-indigo-500/70
                         focus:ring-offset-2
-                        focus:ring-offset-black
+                        focus:ring-offset-white
+                        dark:focus:ring-offset-black
                       "
+                      style={{
+                        "--hover-bg": isDark ? "rgba(255,255,255,0.06)" : "rgba(99,102,241,0.08)",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.06)" : "rgba(99,102,241,0.08)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "transparent";
+                      }}
                     >
                       <line.icon
                         aria-hidden="true"
-                        className="
-                          shrink-0
-                          transition-colors
-                          duration-200
-                        "
-                        style={{ color: line.color, fontSize: "14px" }}
+                        className="shrink-0 transition-colors duration-200"
+                        style={{ color: (!isDark && line.lightColor) ? line.lightColor : line.color, fontSize: "14px" }}
                       />
 
-                      <span className="text-purple-400">{line.cmd}</span>
+                      <span className="text-purple-600 dark:text-purple-400">{line.cmd}</span>
 
-                      <span className="text-gray-500">:</span>
+                      <span className="text-neutral-500 dark:text-gray-500">:</span>
 
                       <span
-                        className={`text-gray-300 group-hover:text-white transition-colors duration-200 break-all ${
+                        className={`text-neutral-600 group-hover:text-neutral-900 dark:text-gray-300 dark:group-hover:text-white transition-colors duration-200 break-all ${
                           line.cmd === "email" ? "group-hover:underline" : ""
                         }`}
                       >
@@ -332,14 +337,14 @@ export default function Contact() {
                 {/* Idle Prompt */}
                 <motion.div
                   variants={lineVariants}
-                  className="flex items-center gap-2 text-gray-300 pt-2"
+                  className="flex items-center gap-2 text-neutral-700 dark:text-gray-300 pt-2 transition-colors duration-300"
                 >
-                  <span className="text-purple-400">➜</span>
-                  <span className="text-indigo-300">~</span>
+                  <span className="text-purple-600 dark:text-purple-400">➜</span>
+                  <span className="text-indigo-600 dark:text-indigo-300">~</span>
 
                   <span
                     aria-hidden="true"
-                    className="inline-block w-2 h-4 bg-indigo-400/70 ml-0.5 align-middle animate-pulse"
+                    className="inline-block w-2 h-4 bg-indigo-600/70 dark:bg-indigo-400/70 ml-0.5 align-middle animate-pulse"
                   />
                 </motion.div>
               </motion.div>
@@ -353,7 +358,7 @@ export default function Contact() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.55 }}
           viewport={{ once: true }}
-          className="text-xs text-gray-500 mt-6 font-mono"
+          className="text-xs text-neutral-500 dark:text-gray-500 mt-6 font-mono transition-colors duration-300"
         >
           # usually responds within a day or two
         </motion.p>

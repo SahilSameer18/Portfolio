@@ -41,7 +41,7 @@ export default function Hero() {
           {/* Greeting */}
           <motion.p
             variants={itemVariants}
-            className="text-indigo-400 font-medium tracking-wide"
+            className="text-indigo-600 dark:text-indigo-400 font-medium tracking-wide"
           >
             Hello, I'm
           </motion.p>
@@ -49,11 +49,11 @@ export default function Hero() {
           {/* Name */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-neutral-900 dark:text-white"
           >
             Sahil Sameer
             <br />
-            <span className="bg-gradient-to-r from-white/90 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-600 dark:from-white/90 dark:via-indigo-400 dark:to-purple-500 bg-clip-text text-transparent">
               Siddique
             </span>
           </motion.h1>
@@ -63,7 +63,7 @@ export default function Hero() {
             <AnimatePresence mode="wait">
               <motion.p
                 key={titles[currentTitle]}
-                className="text-base md:text-lg font-medium tracking-wide bg-gradient-to-r from-white/90 via-indigo-500 to-purple-600 bg-clip-text text-transparent"
+                className="text-base md:text-lg font-medium tracking-wide bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-700 dark:from-white/90 dark:via-indigo-500 dark:to-purple-600 bg-clip-text text-transparent"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
@@ -86,7 +86,7 @@ export default function Hero() {
           {/* Bio */}
           <motion.p
             variants={itemVariants}
-            className="text-gray-400 max-w-md leading-relaxed"
+            className="text-neutral-600 dark:text-gray-400 max-w-md leading-relaxed"
           >
             I build AI-powered, production-ready web apps using the MERN stack
             and postgreSQL - from scalable REST APIs to Gemini AI integration.
@@ -150,7 +150,7 @@ export default function Hero() {
             <motion.img
               src={pic}
               alt="Sahil Sameer Siddique"
-              className="w-72 h-72 md:w-[22rem] md:h-[22rem] rounded-full object-cover border border-white/10"
+              className="w-72 h-72 md:w-[22rem] md:h-[22rem] rounded-full object-cover border border-neutral-900/10 dark:border-white/10"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             />
