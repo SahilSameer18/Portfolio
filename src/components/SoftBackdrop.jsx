@@ -1,62 +1,80 @@
 const SoftBackdrop = () => {
   return (
     <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-      {/* ───────────── LIGHT MODE ───────────── */}
+      {/* ───────────────── LIGHT MODE ───────────────── */}
       <div
         className="absolute inset-0 opacity-100 dark:opacity-0 transition-opacity duration-500"
         style={{
           background:
-            "linear-gradient(160deg, #f4f2fc 0%, #f0eef9 45%, #ece8f5 100%)",
+            "linear-gradient(145deg, #faf9ff 0%, #f4f1ff 30%, #eee9fd 70%, #e8e2fa 100%)",
         }}
       >
         {/* Large top-left indigo glow */}
         <div
-          className="absolute left-[-12rem] top-[-10rem] w-[60rem] h-[42rem] rounded-full blur-[120px]"
+          className="absolute left-[-14rem] top-[-12rem] w-[64rem] h-[48rem] rounded-full blur-[100px]"
           style={{
             background:
-              "radial-gradient(circle, rgba(99,102,241,.28) 0%, rgba(99,102,241,.10) 55%, transparent 75%)",
+              "radial-gradient(circle, rgba(99,102,241,.40) 0%, rgba(99,102,241,.18) 45%, transparent 75%)",
           }}
         />
 
-        {/* Soft center glow */}
+        {/* Top-right lavender glow */}
         <div
-          className="absolute left-1/2 top-32 -translate-x-1/2 w-[44rem] h-[22rem] rounded-full blur-[120px]"
+          className="absolute right-[-8rem] top-[-6rem] w-[40rem] h-[34rem] rounded-full blur-[95px]"
           style={{
             background:
-              "radial-gradient(circle, rgba(129,140,248,.12) 0%, transparent 75%)",
+              "radial-gradient(circle, rgba(168,85,247,.22) 0%, rgba(168,85,247,.10) 55%, transparent 75%)",
           }}
         />
 
-        {/* Bottom-right violet/pink glow */}
+        {/* Center white glow */}
         <div
-          className="absolute right-[-8rem] bottom-[-8rem] w-[48rem] h-[34rem] rounded-full blur-[120px]"
+          className="absolute left-1/2 top-28 -translate-x-1/2 w-[46rem] h-[24rem] rounded-full blur-[110px]"
           style={{
             background:
-              "radial-gradient(circle, rgba(217,70,239,.18) 0%, rgba(139,92,246,.12) 55%, transparent 75%)",
+              "radial-gradient(circle, rgba(255,255,255,.70) 0%, rgba(255,255,255,.25) 50%, transparent 80%)",
           }}
         />
 
-        {/* Small top-right accent */}
+        {/* Bottom-left blue glow */}
         <div
-          className="absolute right-16 top-16 w-[20rem] h-[20rem] rounded-full blur-[90px]"
+          className="absolute left-[-8rem] bottom-[-8rem] w-[34rem] h-[30rem] rounded-full blur-[95px]"
           style={{
             background:
-              "radial-gradient(circle, rgba(168,85,247,.10) 0%, transparent 75%)",
+              "radial-gradient(circle, rgba(59,130,246,.14) 0%, transparent 75%)",
           }}
         />
 
-        {/* Tiny noise texture */}
+        {/* Bottom-right amber glow */}
         <div
-          className="absolute inset-0 opacity-[0.025]"
+          className="absolute right-[-12rem] bottom-[-10rem] w-[56rem] h-[42rem] rounded-full blur-[105px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(245,158,11,.18) 0%, rgba(250,204,21,.14) 50%, transparent 78%)",
+          }}
+        />
+
+        {/* Ambient center glow */}
+        <div
+          className="absolute left-1/3 top-1/2 w-[28rem] h-[22rem] rounded-full blur-[100px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(129,140,248,.14) 0%, transparent 75%)",
+          }}
+        />
+
+        {/* Noise */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage:
               "radial-gradient(rgba(0,0,0,.18) .5px, transparent .5px)",
-            backgroundSize: "20px 20px",
+            backgroundSize: "18px 18px",
           }}
         />
       </div>
 
-      {/* ───────────── DARK MODE ───────────── */}
+      {/* ───────────────── DARK MODE  ───────────────── */}
       <div className="absolute inset-0 opacity-0 dark:opacity-100 transition-opacity duration-500">
         {/* Top glow */}
         <div
