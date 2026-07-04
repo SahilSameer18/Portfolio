@@ -245,8 +245,10 @@ export default function Skills() {
                   className="flex flex-wrap gap-2.5"
                 >
                   {catSkills.map(({ name, icon, color }) => {
-                    const iconColor = (name === "Express.js" || name === "GitHub" || name === "Vercel") && theme === "light"
+                    const iconColor = (name === "Express.js" || name === "GitHub" || name === "Vercel" || name === "Prisma") && theme === "light"
                       ? "#09090b"
+                      : name === "Prisma" && theme === "dark"
+                      ? "#a5b4fc"
                       : color;
 
                     return (

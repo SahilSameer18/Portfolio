@@ -1,14 +1,45 @@
 import { motion } from "framer-motion";
 import ais from "../assets/about2.png";
+import { useCountUp } from "../hooks/useCountUp";
 
 // ─── Achievement stats ──────────────────────────────────────────────────
 // Placeholder numbers — swap these for your real figures.
 // Keep `value` short (fits big type) and `label` to 2-3 words.
 const stats = [
-  { value: "5+", label: "Live projects" },
-  { value: "4", label: "Production platforms" },
+  { value: "5+",  label: "Live projects" },
+  { value: "4",   label: "Production platforms" },
   { value: "30%", label: "Backend perf. improvement" },
 ];
+
+// Splits "5+" → { num: 5, suffix: "+" } etc.
+function parseStat(value) {
+  const num = parseInt(value, 10);
+  return { num, suffix: value.replace(String(num), "") };
+}
+
+function StatItem({ stat }) {
+  const { num, suffix } = parseStat(stat.value);
+  const { count, ref }  = useCountUp(num, 1.6);
+
+  return (
+    <div ref={ref}>
+      <p
+        className="text-2xl md:text-3xl font-bold leading-none"
+        style={{
+          background: "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}
+      >
+        {count}{suffix}
+      </p>
+      <p className="text-xs text-neutral-500 dark:text-gray-500 mt-1.5 leading-snug max-w-[7rem]">
+        {stat.label}
+      </p>
+    </div>
+  );
+}
 
 export default function About() {
   return (
@@ -151,23 +182,7 @@ export default function About() {
             viewport={{ once: true }}
           >
             {stats.map((stat) => (
-              <div key={stat.label}>
-                <p
-                  className="text-2xl md:text-3xl font-bold leading-none"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  {stat.value}
-                </p>
-                <p className="text-xs text-neutral-500 dark:text-gray-500 mt-1.5 leading-snug max-w-[7rem]">
-                  {stat.label}
-                </p>
-              </div>
+              <StatItem key={stat.label} stat={stat} />
             ))}
           </motion.div>
         </motion.div>

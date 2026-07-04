@@ -35,7 +35,7 @@ p, span, h1, h2, h3, h4, h5, h6, a, svg {
 /* Base body styling */
 body {
   @apply bg-transparent text-neutral-800 dark:bg-neutral-950 dark:text-gray-200 antialiased;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* Section spacing */
@@ -114,4 +114,9 @@ h3 {
     #020617;
 }
 
-
+/* ── Custom Cursor ────────────────────────────────────────────────────────── */
+/* Hides the OS cursor when .custom-cursor is active on <html> */
+.custom-cursor,
+.custom-cursor * {
+  cursor: none !important;
+}

@@ -32,7 +32,8 @@ export default function Footer() {
         borderTop: isDark
           ? "1px solid rgba(255,255,255,0.07)"
           : "1px solid rgba(99,102,241,0.18)",
-background: isDark ? "rgba(0,0,0,0.40)" : "rgba(238,236,250,0.55)",        backdropFilter: "blur(14px)",
+        background: isDark ? "rgba(0,0,0,0.40)" : "rgba(238,236,250,0.55)",
+        backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
       }}
     >
@@ -93,12 +94,13 @@ background: isDark ? "rgba(0,0,0,0.40)" : "rgba(238,236,250,0.55)",        backd
           {/* Back to top */}
           <motion.a
             href="#home"
+            aria-label="Back to top"
             className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200"
             whileHover={{ y: -2 }}
             transition={{ duration: 0.2 }}
           >
-            <FaArrowUp style={{ fontSize: "11px" }} />
-            Top
+            <FaArrowUp aria-hidden="true" style={{ fontSize: "11px" }} />
+            <span>Top</span>
           </motion.a>
         </div>
       </div>

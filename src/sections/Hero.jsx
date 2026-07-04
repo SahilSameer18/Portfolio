@@ -89,7 +89,7 @@ export default function Hero() {
             className="text-neutral-600 dark:text-gray-400 max-w-md leading-relaxed"
           >
             I build AI-powered, production-ready web apps using the MERN stack
-            and postgreSQL - from scalable REST APIs to Gemini AI integration.
+            and PostgreSQL - from scalable REST APIs to Gemini AI integration.
           </motion.p>
 
           {/* Resume Button */}
@@ -150,6 +150,8 @@ export default function Hero() {
             <motion.img
               src={pic}
               alt="Sahil Sameer Siddique"
+              loading="eager"
+              fetchPriority="high"
               className="w-72 h-72 md:w-[22rem] md:h-[22rem] rounded-full object-cover border border-neutral-900/10 dark:border-white/10"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
