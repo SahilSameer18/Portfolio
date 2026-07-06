@@ -13,6 +13,7 @@ const educationData = [
     location: "Sonipat, Haryana",
     type: "Undergraduate",
     year: "2025",
+    // cgpa: "8.5 / 10",
     accent: "#6366f1",
     accentMid: "#a5b4fc",
     highlights: ["Data Structures & Algorithms", "Database Management", "Full Stack Web Dev"],
@@ -24,6 +25,7 @@ const educationData = [
     location: "Patna, Bihar",
     type: "Senior Secondary",
     year: "2020",
+    // cgpa: "78%",
     accent: "#9333ea",
     accentMid: "#c084fc",
     highlights: ["Physics", "Chemistry", "Mathematics"],
@@ -97,6 +99,13 @@ function EducationCard({ edu, index }) {
         // Box-shadow and border change on hover; background stays stable
         // so gradient text always renders correctly regardless of theme.
       >
+        {/* ── Mobile-only left accent border ── */}
+        <div
+          aria-hidden="true"
+          className="md:hidden absolute left-0 top-4 bottom-4 w-[3px] rounded-r-full pointer-events-none"
+          style={{ background: `linear-gradient(180deg, ${edu.accent}, ${edu.accent}55)`, zIndex: 2 }}
+        />
+
         {/* ── Ghost year watermark — z:1 sits above glass bg (z:0) but below content (z:10) ── */}
         <div
           aria-hidden="true"
@@ -183,6 +192,20 @@ function EducationCard({ edu, index }) {
           >
             {edu.degree}
           </h3>
+
+          {/* CGPA / Percentage badge */}
+          {edu.cgpa && (
+            <span
+              className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-md"
+              style={{
+                background: isDark ? `${edu.accent}18` : `${edu.accent}10`,
+                border: `1px solid ${edu.accent}35`,
+                color: isDark ? edu.accentMid : edu.accent,
+              }}
+            >
+              🎓 {edu.cgpa}
+            </span>
+          )}
 
           {/* Institution */}
           <p

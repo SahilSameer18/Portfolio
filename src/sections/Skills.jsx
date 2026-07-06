@@ -18,121 +18,54 @@ import {
   SiVercel,
   SiRender,
 } from "react-icons/si";
-import { TbWorldWww, TbDatabase } from "react-icons/tb";
+import { TbWorldWww, TbDatabase, TbSparkles } from "react-icons/tb";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 
 const skillsData = [
-  {
-    name: "JavaScript",
-    icon: "SiJavascript",
-    color: "#F7DF1E",
-    category: "Language",
-  },
-  // { name: "TypeScript",  icon: "SiTypescript",    color: "#3178C6", category: "Language" },
-  { name: "C++", icon: "SiCplusplus", color: "#00599C", category: "Language" },
-  { name: "React.js", icon: "SiReact", color: "#61DAFB", category: "Frontend" },
-  {
-    name: "Tailwind CSS",
-    icon: "SiTailwindcss",
-    color: "#06B6D4",
-    category: "Frontend",
-  },
-  { name: "HTML", icon: "SiHtml5", color: "#E34F26", category: "Frontend" },
-  { name: "CSS", icon: "SiCss", color: "#1572B6", category: "Frontend" },
-  {
-    name: "Node.js",
-    icon: "SiNodedotjs",
-    color: "#339933",
-    category: "Backend",
-  },
-  {
-    name: "Express.js",
-    icon: "SiExpress",
-    color: "#FFFFFF",
-    category: "Backend",
-  },
-  {
-    name: "REST APIs",
-    icon: "TbWorldWww",
-    color: "#38BDF8",
-    category: "Backend",
-  },
-  {
-    name: "JWT",
-    icon: "SiJsonwebtokens",
-    color: "#D63AFF",
-    category: "Backend",
-  },
-  { name: "Zod", icon: "SiZod", color: "#3068B7", category: "Backend" },
-  {
-    name: "MongoDB",
-    icon: "SiMongodb",
-    color: "#47A248",
-    category: "Databases & ORM",
-  },
-  {
-    name: "PostgreSQL",
-    icon: "SiPostgresql",
-    color: "#4169E1",
-    category: "Databases & ORM",
-  },
-  {
-    name: "Prisma",
-    icon: "SiPrisma",
-    color: "#2D3748",
-    category: "Databases & ORM",
-  },
-  // { name: "Redis",       icon: "SiRedis",         color: "#DC382D", category: "Databases & ORM" },
-  {
-    name: "Neon",
-    icon: "TbDatabase",
-    color: "#00E599",
-    category: "Databases & ORM",
-  },
-  { name: "Git", icon: "SiGit", color: "#F05032", category: "Tools & DevOps" },
-  {
-    name: "GitHub",
-    icon: "SiGithub",
-    color: "#FFFFFF",
-    category: "Tools & DevOps",
-  },
-  {
-    name: "Postman",
-    icon: "SiPostman",
-    color: "#FF6C37",
-    category: "Tools & DevOps",
-  },
-  {
-    name: "Vercel",
-    icon: "SiVercel",
-    color: "#FFFFFF",
-    category: "Tools & DevOps",
-  },
-  {
-    name: "Render",
-    icon: "SiRender",
-    color: "#46E3B7",
-    category: "Tools & DevOps",
-  },
-  // { name: "Docker",      icon: "SiDocker",        color: "#2496ED", category: "Tools & DevOps"  },
+  { name: "JavaScript",   icon: "SiJavascript",    color: "#F7DF1E", category: "Language" },
+  { name: "C++",          icon: "SiCplusplus",     color: "#00599C", category: "Language" },
+  { name: "React.js",     icon: "SiReact",         color: "#61DAFB", category: "Frontend" },
+  { name: "Tailwind CSS", icon: "SiTailwindcss",   color: "#06B6D4", category: "Frontend" },
+  { name: "HTML",         icon: "SiHtml5",         color: "#E34F26", category: "Frontend" },
+  { name: "CSS",          icon: "SiCss",           color: "#1572B6", category: "Frontend" },
+  { name: "Node.js",      icon: "SiNodedotjs",     color: "#339933", category: "Backend" },
+  { name: "Express.js",   icon: "SiExpress",       color: "#FFFFFF", category: "Backend" },
+  { name: "REST APIs",    icon: "TbWorldWww",      color: "#38BDF8", category: "Backend" },
+  { name: "JWT",          icon: "SiJsonwebtokens", color: "#D63AFF", category: "Backend" },
+  { name: "Zod",          icon: "SiZod",           color: "#3068B7", category: "Backend" },
+  { name: "Gemini AI",    icon: "TbSparkles",      color: "#8E75B2", category: "AI & APIs" },
+  { name: "MongoDB",      icon: "SiMongodb",       color: "#47A248", category: "Databases & ORM" },
+  { name: "PostgreSQL",   icon: "SiPostgresql",    color: "#4169E1", category: "Databases & ORM" },
+  { name: "Prisma",       icon: "SiPrisma",        color: "#2D3748", category: "Databases & ORM" },
+  { name: "Neon",         icon: "TbDatabase",      color: "#00E599", category: "Databases & ORM" },
+  { name: "Git",          icon: "SiGit",           color: "#F05032", category: "Tools & DevOps" },
+  { name: "GitHub",       icon: "SiGithub",        color: "#FFFFFF", category: "Tools & DevOps" },
+  { name: "Postman",      icon: "SiPostman",       color: "#FF6C37", category: "Tools & DevOps" },
+  { name: "Vercel",       icon: "SiVercel",        color: "#FFFFFF", category: "Tools & DevOps" },
+  { name: "Render",       icon: "SiRender",        color: "#46E3B7", category: "Tools & DevOps" },
 ];
 
 const categories = [
   "Language",
   "Frontend",
   "Backend",
+  "AI & APIs",
   "Databases & ORM",
   "Tools & DevOps",
 ];
 
 const categoryAccents = {
-  Language: "#6366f1",
-  Frontend: "#4DB8D4",
-  Backend: "#a5b4fc",
+  "Language":        "#6366f1",
+  "Frontend":        "#4DB8D4",
+  "Backend":         "#a5b4fc",
+  "AI & APIs":       "#8E75B2",
   "Databases & ORM": "#338A30",
-  "Tools & DevOps": "#CC5520",
+  "Tools & DevOps":  "#CC5520",
 };
+
+// Pinned "Core Stack" shown more prominently at the top
+const coreStackNames = ["JavaScript", "Node.js", "React.js", "PostgreSQL"];
 
 const Icon = ({ name, color, size }) => {
   const iconMap = {
@@ -156,6 +89,7 @@ const Icon = ({ name, color, size }) => {
     SiRender,
     TbWorldWww,
     TbDatabase,
+    TbSparkles,
   };
 
   const IconComponent = iconMap[name];
@@ -177,9 +111,13 @@ export default function Skills() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
+  const coreStack = skillsData.filter((s) => coreStackNames.includes(s.name));
+
   return (
     <section id="skills" className="py-20 scroll-mt-12">
       <div className="max-w-5xl mx-auto px-6">
+
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -209,6 +147,7 @@ export default function Skills() {
           </div>
         </motion.div>
 
+        {/* ── Category Groups ── */}
         <div className="space-y-12">
           {categories.map((category, ci) => {
             const catSkills = skillsData.filter((s) => s.category === category);
@@ -225,7 +164,7 @@ export default function Skills() {
               >
                 <div className="flex items-center gap-3 mb-5">
                   <div
-                    className="w-1 h-5 rounded-full"
+                    className="w-1.5 h-5 rounded-full"
                     style={{ backgroundColor: accent }}
                   />
                   <p className="text-sm font-semibold uppercase tracking-widest text-neutral-600 dark:text-gray-300">
@@ -245,21 +184,18 @@ export default function Skills() {
                   className="flex flex-wrap gap-2.5"
                 >
                   {catSkills.map(({ name, icon, color }) => {
-                    const iconColor = (name === "Express.js" || name === "GitHub" || name === "Vercel" || name === "Prisma") && theme === "light"
-                      ? "#09090b"
-                      : name === "Prisma" && theme === "dark"
-                      ? "#a5b4fc"
-                      : color;
+                    const iconColor =
+                      (name === "Express.js" || name === "GitHub" || name === "Vercel" || name === "Prisma") && theme === "light"
+                        ? "#09090b"
+                        : name === "Prisma" && theme === "dark"
+                        ? "#a5b4fc"
+                        : color;
 
                     return (
                       <motion.div
                         key={name}
                         variants={item}
-                        whileHover={{
-                          y: -4,
-                          scale: 1.04,
-                          transition: { duration: 0.2 },
-                        }}
+                        whileHover={{ y: -4, scale: 1.04, transition: { duration: 0.2 } }}
                         className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl cursor-default select-none"
                         style={{
                           background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.55)",
@@ -298,6 +234,7 @@ export default function Skills() {
             );
           })}
         </div>
+
       </div>
     </section>
   );

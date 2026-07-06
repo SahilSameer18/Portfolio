@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { useTheme } from "../context/ThemeContext";
 import pic from "../assets/pic2.webp";
 
 const titles = [
@@ -20,6 +22,8 @@ const itemVariants = {
 
 export default function Hero() {
   const [currentTitle, setCurrentTitle] = useState(0);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,15 +33,17 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="min-h-screen flex items-center scroll-mt-12">
+    <section id="home" className="relative min-h-screen flex items-center scroll-mt-12">
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid md:grid-cols-2 gap-16 items-center">
+
         {/* ── Left Text ── */}
         <motion.div
-          className="space-y-7"
+          className="space-y-6"
           variants={containerVariants}
           initial="hidden"
           animate="show"
         >
+
           {/* Greeting */}
           <motion.p
             variants={itemVariants}
@@ -63,7 +69,7 @@ export default function Hero() {
             <AnimatePresence mode="wait">
               <motion.p
                 key={titles[currentTitle]}
-                className="text-base md:text-lg font-medium tracking-wide bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-700 dark:from-white/90 dark:via-indigo-500 dark:to-purple-600 bg-clip-text text-transparent"
+                className="text-base md:text-lg font-semibold tracking-wide bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-700 dark:from-white/90 dark:via-indigo-500 dark:to-purple-600 bg-clip-text text-transparent"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
@@ -74,11 +80,8 @@ export default function Hero() {
             </AnimatePresence>
           </motion.div>
 
-          {/* Divider Lines (Rounded Ends) */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center gap-3"
-          >
+          {/* Divider Lines */}
+          <motion.div variants={itemVariants} className="flex items-center gap-3">
             <div className="h-px w-12 bg-gradient-to-r from-indigo-600 to-purple-500" />
             <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-500" />
           </motion.div>
@@ -91,6 +94,49 @@ export default function Hero() {
             I build AI-powered, production-ready web apps using the MERN stack
             and PostgreSQL - from scalable REST APIs to Gemini AI integration.
           </motion.p>
+
+          {/* Social Links */}
+          <motion.div variants={itemVariants} className="flex items-center gap-3">
+            <motion.a
+              href="https://github.com/SahilSameer18"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub profile"
+              whileHover={{ y: -2, scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200"
+              style={{
+                background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
+                border: isDark ? "1px solid rgba(255,255,255,0.10)" : "1px solid rgba(0,0,0,0.10)",
+                color: isDark ? "#e5e7eb" : "#1f2937",
+              }}
+            >
+              <FaGithub size={17} />
+            </motion.a>
+
+            <motion.a
+              href="https://www.linkedin.com/in/sahil-sameer-siddique/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
+              whileHover={{ y: -2, scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200"
+              style={{
+                background: isDark ? "rgba(0,119,181,0.12)" : "rgba(0,119,181,0.08)",
+                border: "1px solid rgba(0,119,181,0.30)",
+                color: "#0077B5",
+              }}
+            >
+              <FaLinkedin size={17} />
+            </motion.a>
+
+            <span className="w-px h-5 mx-1" style={{ background: isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.10)" }} aria-hidden="true" />
+
+            <span className="text-xs text-neutral-500 dark:text-gray-500 font-medium">
+              Open to opportunities
+            </span>
+          </motion.div>
 
           {/* Resume Button */}
           <motion.div variants={itemVariants}>
@@ -117,8 +163,6 @@ export default function Hero() {
                   d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4"
                 />
               </svg>
-
-              {/* Text */}
               <span className="relative h-5 overflow-hidden flex flex-col">
                 <span className="block transition-transform duration-300 group-hover:-translate-y-full">
                   Resume
@@ -143,22 +187,61 @@ export default function Hero() {
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             className="relative will-change-transform"
           >
-            {/* Glow */}
-            <div className="absolute inset-0 rounded-full -z-10 bg-gradient-radial from-indigo-500/10 to-transparent blur-3xl scale-125" />
+            {/* Ambient glow behind ring */}
+            <div
+              className="absolute -inset-8 rounded-full -z-10 pointer-events-none"
+              style={{
+                background: "radial-gradient(circle, rgba(99,102,241,0.18) 0%, rgba(168,85,247,0.10) 50%, transparent 75%)",
+                filter: "blur(20px)",
+              }}
+            />
 
-            {/* Profile Image */}
+            {/* Profile photo — clean indigo ring + glow via box-shadow, zero DOM overhead */}
             <motion.img
               src={pic}
               alt="Sahil Sameer Siddique"
               loading="eager"
               fetchPriority="high"
-              className="w-72 h-72 md:w-[22rem] md:h-[22rem] rounded-full object-cover border border-neutral-900/10 dark:border-white/10"
-              whileHover={{ scale: 1.05 }}
+              className="w-72 h-72 md:w-[22rem] md:h-[22rem] rounded-full object-cover"
+              style={{
+                boxShadow: isDark
+                  ? "0 0 0 3px #6366f1, 0 0 0 8px rgba(99,102,241,0.22), 0 16px 48px rgba(99,102,241,0.28)"
+                  : "0 0 0 3px #6366f1, 0 0 0 8px rgba(99,102,241,0.14), 0 8px 32px rgba(99,102,241,0.18)",
+              }}
+              whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             />
           </motion.div>
         </motion.div>
+
       </div>
+
+      {/* ── Scroll-down arrow ── */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        aria-hidden="true"
+      >
+        <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-400 dark:text-gray-600">
+          scroll
+        </span>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="text-neutral-400 dark:text-gray-600"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </motion.div>
     </section>
   );
 }
+
+

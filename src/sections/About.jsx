@@ -1,14 +1,21 @@
 import { motion } from "framer-motion";
+import { useTheme } from "../context/ThemeContext";
 import ais from "../assets/about2.png";
 import { useCountUp } from "../hooks/useCountUp";
 
 // ─── Achievement stats ──────────────────────────────────────────────────
-// Placeholder numbers — swap these for your real figures.
-// Keep `value` short (fits big type) and `label` to 2-3 words.
 const stats = [
   { value: "5+",  label: "Live projects" },
   { value: "4",   label: "Production platforms" },
   { value: "30%", label: "Backend perf. improvement" },
+];
+
+// ─── Passion chips ────────────────────────────────────────────────────────
+const passions = [
+  { icon: "🔒", label: "Auth & Security" },
+  { icon: "🤖", label: "AI Integration" },
+  { icon: "⚡", label: "REST APIs" },
+  { icon: "🗄️", label: "Databases" },
 ];
 
 // Splits "5+" → { num: 5, suffix: "+" } etc.
@@ -42,12 +49,16 @@ function StatItem({ stat }) {
 }
 
 export default function About() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <section
       id="about"
       className="min-h-screen flex items-center pt-24 pb-10 scroll-mt-12"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-16 items-center w-full">
+
         {/* ── Left: Image ── */}
         <motion.div
           className="flex justify-center order-2 md:order-1"
@@ -66,8 +77,7 @@ export default function About() {
             <div
               className="absolute -inset-4 rounded-2xl -z-10"
               style={{
-                background:
-                  "radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)",
+                background: "radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)",
                 filter: "blur(20px)",
               }}
             />
@@ -85,7 +95,7 @@ export default function About() {
               <img
                 src={ais}
                 alt="Sahil Sameer Siddique"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
               />
@@ -121,6 +131,24 @@ export default function About() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
+          {/* Open to opportunities badge */}
+          <div>
+            <span
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold"
+              style={{
+                background: isDark ? "rgba(34,197,94,0.10)" : "rgba(34,197,94,0.08)",
+                border: "1px solid rgba(34,197,94,0.28)",
+                color: "#22c55e",
+              }}
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"
+                aria-hidden="true"
+              />
+              Open to Opportunities
+            </span>
+          </div>
+
           {/* Heading */}
           <h2
             className="text-4xl md:text-5xl font-bold"
@@ -168,12 +196,27 @@ export default function About() {
             <span className="text-indigo-600 dark:text-indigo-300 font-semibold">Gemini API</span>.
           </p>
 
-          {/* ── Achievement stats ──
-              Simple stat row: big gradient numerals + short label
-              beneath each. Wraps to a 2-column grid on very narrow
-              screens so three stats never get cramped into one row
-              that's too tight to read. Edit `stats` above to update
-              numbers/labels — no markup changes needed. */}
+          {/* ── What I love building ── */}
+          <div className="flex flex-wrap gap-2 pt-1">
+            {passions.map(({ icon, label }) => (
+              <span
+                key={label}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium"
+                style={{
+                  background: isDark ? "rgba(255,255,255,0.05)" : "rgba(99,102,241,0.06)",
+                  border: isDark
+                    ? "1px solid rgba(255,255,255,0.08)"
+                    : "1px solid rgba(99,102,241,0.14)",
+                  color: isDark ? "#94a3b8" : "#4338ca",
+                }}
+              >
+                <span>{icon}</span>
+                {label}
+              </span>
+            ))}
+          </div>
+
+          {/* ── Achievement stats ── */}
           <motion.div
             className="grid grid-cols-3 sm:flex sm:flex-wrap gap-6 sm:gap-10 pt-2"
             initial={{ opacity: 0, y: 12 }}
@@ -185,7 +228,24 @@ export default function About() {
               <StatItem key={stat.label} stat={stat} />
             ))}
           </motion.div>
+
+          {/* CTA — View Projects */}
+          <motion.a
+            href="#projects"
+            whileHover={{ scale: 1.03, y: -1 }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300"
+            style={{
+              background: isDark ? "rgba(99,102,241,0.14)" : "rgba(99,102,241,0.09)",
+              border: "1px solid rgba(99,102,241,0.28)",
+              color: isDark ? "#a5b4fc" : "#4f46e5",
+            }}
+          >
+            View My Projects
+            <span aria-hidden="true">→</span>
+          </motion.a>
         </motion.div>
+
       </div>
     </section>
   );

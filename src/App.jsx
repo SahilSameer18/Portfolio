@@ -6,6 +6,7 @@ import Cursor from "./components/Cursor";
 import ScrollProgress from "./components/ScrollProgress";
 
 const About     = lazy(() => import("./sections/About"));
+// const Experience = lazy(() => import("./sections/Experience"));
 const Skills    = lazy(() => import("./sections/Skills"));
 const Project   = lazy(() => import("./sections/Project"));
 const Education = lazy(() => import("./sections/Education"));
@@ -33,6 +34,9 @@ function App() {
       <Suspense fallback={<SectionFallback />}>
         <Skills />
       </Suspense>
+      {/* <Suspense fallback={<SectionFallback />}>
+        <Experience />
+      </Suspense> */}
       <Suspense fallback={<SectionFallback />}>
         <Project />
       </Suspense>

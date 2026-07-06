@@ -12,6 +12,7 @@ const projects = [
   {
     title: "PrepStack",
     tag: "SDE Prep Platform",
+    featured: true,
     description:
       "A comprehensive platform for interview preparation, offering AI project idea generation, structured DSA sheets, and many more interview preparation resources.",
     link: "https://prepstack-ss.vercel.app/",
@@ -215,12 +216,32 @@ const ProjectCard = ({ project, idx }) => {
               whileInView="show"
               viewport={{ once: true }}
             >
-              <p
-                className="text-xs font-semibold uppercase tracking-widest transition-colors duration-300"
-                style={{ color: resolvedAccent }}
-              >
-                {project.tag}
+              {/* Project number */}
+              <p className="text-xs font-mono tracking-widest text-neutral-400 dark:text-gray-600">
+                {String(idx + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
               </p>
+
+              {/* Tag + Featured badge */}
+              <div className="flex items-center gap-3 flex-wrap">
+                <p
+                  className="text-xs font-semibold uppercase tracking-widest transition-colors duration-300"
+                  style={{ color: resolvedAccent }}
+                >
+                  {project.tag}
+                </p>
+                {project.featured && (
+                  <span
+                    className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
+                    style={{
+                      background: isDark ? "rgba(245,158,11,0.15)" : "rgba(245,158,11,0.10)",
+                      border: "1px solid rgba(245,158,11,0.35)",
+                      color: isDark ? "#fbbf24" : "#b45309",
+                    }}
+                  >
+                    ⭐ Featured
+                  </span>
+                )}
+              </div>
 
               <h3 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white leading-tight transition-colors duration-300">
                 {project.title}
