@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaLinkedin, FaGithub, FaArrowUp, FaHeart } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaArrowUp } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 
 // ─── Social Links ─────────────────────────────────────────────────────────────
@@ -21,9 +21,9 @@ const socials = [
 ];
 
 const navLinks = [
-  { label: "Home",     href: "#home" },
+  { label: "Home",     href: "#home"     },
   { label: "Projects", href: "#projects" },
-  { label: "Contact",  href: "#contact" },
+  { label: "Contact",  href: "#contact"  },
 ];
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
@@ -33,30 +33,59 @@ export default function Footer() {
 
   return (
     <footer
-      className="py-6 md:py-8 px-6 md:px-12 transition-[background,border-color] duration-300"
+      className="relative pt-10 md:pt-14 pb-6 md:pb-8 px-6 md:px-12 overflow-hidden transition-[background,border-color] duration-300"
       style={{
-        borderTop: isDark
-          ? "1px solid rgba(255,255,255,0.07)"
-          : "1px solid rgba(99,102,241,0.18)",
-        background: isDark ? "rgba(0,0,0,0.40)" : "rgba(238,236,250,0.55)",
-        backdropFilter: "blur(14px)",
+        background: isDark ? "rgba(0,0,0,0.50)" : "rgba(238,236,250,0.60)",
+        backdropFilter:       "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
       }}
     >
-      <div className="max-w-6xl mx-auto space-y-4">
+      {/* ── Gradient top border — colorful 3-stop sweep ── */}
+      <div
+        aria-hidden="true"
+        className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, #6366f1 20%, #a78bfa 50%, #f472b6 80%, transparent 100%)",
+        }}
+      />
 
-        {/* ── Top Row: Logo | Nav | Socials+Top ── */}
+      {/* ── Soft ambient glow behind content ── */}
+      <div
+        aria-hidden="true"
+        className="absolute -top-16 left-1/2 -translate-x-1/2 w-[36rem] h-[14rem] rounded-full blur-3xl pointer-events-none"
+        style={{
+          background: isDark
+            ? "radial-gradient(ellipse at center, rgba(99,102,241,0.20), transparent 70%)"
+            : "radial-gradient(ellipse at center, rgba(99,102,241,0.12), transparent 70%)",
+          opacity: 0.9,
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto space-y-5 relative z-10">
+
+        {/* ── Tagline ── */}
+        <div className="text-center">
+          <p
+            className="text-sm font-medium tracking-wide"
+            style={{ color: isDark ? "rgba(148,163,184,0.65)" : "rgba(100,116,139,0.75)" }}
+          >
+            Turning ideas into code, one commit at a time ☕
+          </p>
+        </div>
+
+        {/* ── Top Row: Logo | Nav | Socials + Top ── */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
 
-          {/* Logo — visible on all screens */}
+          {/* Logo */}
           <a
             href="#home"
             className="text-lg font-extrabold select-none"
             style={{
               background: "linear-gradient(135deg, #818cf8, #c084fc, #f472b6)",
               WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+              WebkitTextFillColor:  "transparent",
+              backgroundClip:       "text",
             }}
           >
             SS
@@ -128,8 +157,8 @@ export default function Footer() {
           }}
         />
 
-        {/* ── Bottom Row: Copyright ── */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
+        {/* ── Bottom Row: Copyright only ── */}
+        <div className="flex items-center justify-center">
           <p className="text-neutral-500 dark:text-gray-600 text-xs text-center transition-colors duration-200">
             © {new Date().getFullYear()} Sahil Sameer Siddique. All rights reserved.
           </p>
@@ -139,3 +168,4 @@ export default function Footer() {
     </footer>
   );
 }
+

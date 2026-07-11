@@ -174,6 +174,30 @@ const ProjectCard = ({ project, idx }) => {
             borderRadius: "1.5rem",
           }}
         >
+          {/* ── Mobile accent header — hidden on desktop ─────────────────────
+               Gives each card visual identity on small screens where the
+               alternating layout and 3-D tilt don't apply.               */}
+          <div className="md:hidden flex items-center gap-3 mb-5">
+            <div
+              className="w-[3px] h-6 rounded-full flex-shrink-0"
+              style={{
+                background: `linear-gradient(180deg, ${resolvedAccent}, ${resolvedAccent}55)`,
+              }}
+            />
+            <span
+              className="text-xs font-mono tracking-[0.18em] font-bold"
+              style={{ color: resolvedAccent }}
+            >
+              {String(idx + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+            </span>
+            <span
+              className="text-[10px] font-bold uppercase tracking-widest"
+              style={{ color: `${resolvedAccent}99` }}
+            >
+              — {project.tag}
+            </span>
+          </div>
+
           {/* Card grid */}
           <div
             className={`grid md:grid-cols-2 gap-10 md:gap-16 items-center ${

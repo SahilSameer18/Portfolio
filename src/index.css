@@ -132,3 +132,31 @@ h3 {
 .shimmer-text {
   animation: gradient-shimmer 5s ease infinite;
 }
+
+/* ── Button shine sweep ───────────────────────────────────────────────────────
+   Add .btn-shimmer + overflow-hidden to any button element to get a diagonal
+   white stripe that sweeps left → right on hover.                            */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent        38%,
+    rgba(255,255,255,0.28) 50%,
+    transparent        62%
+  );
+  transform: translateX(-140%);
+  transition: transform 0.58s ease;
+  pointer-events: none;
+}
+
+.btn-shimmer:hover::after {
+  transform: translateX(140%);
+}
+

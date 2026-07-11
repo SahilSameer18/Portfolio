@@ -45,7 +45,7 @@ function App() {
 
       <SoftBackdrop />
       <Navbar />
-      <Hero />
+      <Hero startAnimation={!showPreloader} />
 
       <Suspense fallback={<SectionFallback />}>
         <About />

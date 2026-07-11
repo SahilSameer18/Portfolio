@@ -20,20 +20,55 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
 };
 
-export default function Hero() {
+// ── Static particle config (outside component to avoid re-creation per render) ──
+const PARTICLES = [
+  { size: 3, x: "12%",  y: "22%", delay: 0,   dur: 7   },
+  { size: 4, x: "78%",  y: "14%", delay: 1.4, dur: 9   },
+  { size: 2, x: "63%",  y: "58%", delay: 0.8, dur: 8   },
+  { size: 5, x: "28%",  y: "72%", delay: 2.1, dur: 11  },
+  { size: 3, x: "88%",  y: "78%", delay: 0.4, dur: 10  },
+  { size: 2, x: "45%",  y: "35%", delay: 3.0, dur: 8.5 },
+  { size: 4, x: "8%",   y: "58%", delay: 1.8, dur: 9.5 },
+  { size: 3, x: "55%",  y: "88%", delay: 0.6, dur: 7.5 },
+];
+
+export default function Hero({ startAnimation = true }) {
   const [currentTitle, setCurrentTitle] = useState(0);
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
   useEffect(() => {
+    if (!startAnimation) return;
     const interval = setInterval(() => {
       setCurrentTitle((prev) => (prev + 1) % titles.length);
     }, 3500);
     return () => clearInterval(interval);
-  }, []);
+  }, [startAnimation]);
 
   return (
     <section id="home" className="relative min-h-screen flex items-center scroll-mt-12">
+
+      {/* ── Floating particles — subtle drifting dots behind content ── */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        {PARTICLES.map((p, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width:  p.size,
+              height: p.size,
+              left:   p.x,
+              top:    p.y,
+              background: isDark
+                ? "radial-gradient(circle, rgba(139,92,246,0.75), rgba(99,102,241,0.18))"
+                : "radial-gradient(circle, rgba(99,102,241,0.50), rgba(139,92,246,0.12))",
+            }}
+            animate={{ y: [0, -(p.size * 3 + 10), 0], opacity: [0.25, 0.75, 0.25] }}
+            transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
+          />
+        ))}
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid md:grid-cols-2 gap-16 items-center">
 
         {/* ── Left Text ── */}
@@ -41,33 +76,8 @@ export default function Hero() {
           className="space-y-6"
           variants={containerVariants}
           initial="hidden"
-          animate="show"
+          animate={startAnimation ? "show" : "hidden"}
         >
-
-          {/* Open to Work Badge — prominent hero-level signal */}
-          <motion.div variants={itemVariants}>
-            <span
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-sm font-semibold"
-              style={{
-                background: isDark
-                  ? "rgba(34,197,94,0.10)"
-                  : "rgba(240,253,244,0.95)",
-                border: isDark
-                  ? "1px solid rgba(34,197,94,0.32)"
-                  : "1px solid rgba(134,239,172,0.75)",
-                color: isDark ? "#22c55e" : "#15803d",
-                boxShadow: isDark
-                  ? "0 0 20px rgba(34,197,94,0.12)"
-                  : "0 2px 10px rgba(34,197,94,0.14)",
-              }}
-            >
-              <span className="relative flex h-2 w-2 flex-shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-              </span>
-              Open to Opportunities
-            </span>
-          </motion.div>
 
           {/* Greeting */}
           <motion.p
@@ -155,12 +165,6 @@ export default function Hero() {
             >
               <FaLinkedin size={17} />
             </motion.a>
-
-            <span className="w-px h-5 mx-1" style={{ background: isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.10)" }} aria-hidden="true" />
-
-            <span className="text-xs text-neutral-500 dark:text-gray-500 font-medium">
-              Open to opportunities
-            </span>
           </motion.div>
 
           {/* Resume Button */}
@@ -171,7 +175,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-700 to-violet-500 shadow-[0_4px_20px_rgba(99,102,241,0.35)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.55)] transition-shadow duration-300"
+              className="group btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-700 to-violet-500 shadow-[0_4px_20px_rgba(99,102,241,0.35)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.55)] transition-shadow duration-300"
             >
               {/* Download Icon */}
               <svg
@@ -204,7 +208,7 @@ export default function Hero() {
         <motion.div
           className="flex justify-center"
           initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
+          animate={startAnimation ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <motion.div
@@ -243,27 +247,34 @@ export default function Hero() {
 
       {/* ── Scroll-down arrow ── */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        aria-hidden="true"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={startAnimation ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
       >
-        <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-400 dark:text-gray-600">
-          scroll
-        </span>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-neutral-400 dark:text-gray-600"
+        <motion.div
+          className="flex flex-col items-center gap-1"
+          animate={startAnimation ? { y: [0, 6, 0] } : {}}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          aria-hidden="true"
         >
-          <path d="M6 9l6 6 6-6" />
-        </svg>
+          <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-400 dark:text-gray-600">
+            scroll
+          </span>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-neutral-400 dark:text-gray-600"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </motion.div>
       </motion.div>
     </section>
   );

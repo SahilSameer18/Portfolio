@@ -134,17 +134,24 @@ export default function About() {
           {/* Open to opportunities badge */}
           <div>
             <span
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold"
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-semibold"
               style={{
-                background: isDark ? "rgba(34,197,94,0.10)" : "rgba(34,197,94,0.08)",
-                border: "1px solid rgba(34,197,94,0.28)",
-                color: "#22c55e",
+                background: isDark
+                  ? "rgba(99,102,241,0.12)"
+                  : "rgba(238,242,255,0.95)",
+                border: isDark
+                  ? "1px solid rgba(99,102,241,0.32)"
+                  : "1px solid rgba(199,210,254,0.75)",
+                color: isDark ? "#a5b4fc" : "#4338ca",
+                boxShadow: isDark
+                  ? "0 0 20px rgba(99,102,241,0.12)"
+                  : "0 2px 10px rgba(99,102,241,0.12)",
               }}
             >
-              <span
-                className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"
-                aria-hidden="true"
-              />
+              <span className="relative flex h-2 w-2 flex-shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
+              </span>
               Open to Opportunities
             </span>
           </div>
