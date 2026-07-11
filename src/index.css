@@ -119,3 +119,16 @@ h3 {
 .custom-cursor * {
   cursor: none !important;
 }
+
+/* ── Gradient shimmer — animates background-position on text gradients ──────
+   Used on the hero name "Siddique" via .shimmer-text class.
+   background-size: 200% is set inline so the keyframe moves it smoothly.    */
+@keyframes gradient-shimmer {
+  0%   { background-position: 0%   center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0%   center; }
+}
+
+.shimmer-text {
+  animation: gradient-shimmer 5s ease infinite;
+}

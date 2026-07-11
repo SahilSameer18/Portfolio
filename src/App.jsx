@@ -1,9 +1,11 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import Hero from "./sections/Hero";
 import Navbar from "./components/Navbar";
 import SoftBackdrop from "./components/SoftBackdrop";
 import Cursor from "./components/Cursor";
 import ScrollProgress from "./components/ScrollProgress";
+import Preloader from "./components/Preloader";
 
 const About     = lazy(() => import("./sections/About"));
 // const Experience = lazy(() => import("./sections/Experience"));
@@ -18,8 +20,25 @@ function SectionFallback() {
 }
 
 function App() {
+  // Show preloader only once per browser session
+  const [showPreloader, setShowPreloader] = useState(
+    () => !sessionStorage.getItem("preloaderShown"),
+  );
+
   return (
     <>
+      {/* ── Branded intro animation — fades out before site is visible ── */}
+      <AnimatePresence>
+        {showPreloader && (
+          <Preloader
+            onComplete={() => {
+              sessionStorage.setItem("preloaderShown", "true");
+              setShowPreloader(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Global UI overlays */}
       <ScrollProgress />
       <Cursor />

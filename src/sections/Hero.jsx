@@ -44,6 +44,31 @@ export default function Hero() {
           animate="show"
         >
 
+          {/* Open to Work Badge — prominent hero-level signal */}
+          <motion.div variants={itemVariants}>
+            <span
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-sm font-semibold"
+              style={{
+                background: isDark
+                  ? "rgba(34,197,94,0.10)"
+                  : "rgba(240,253,244,0.95)",
+                border: isDark
+                  ? "1px solid rgba(34,197,94,0.32)"
+                  : "1px solid rgba(134,239,172,0.75)",
+                color: isDark ? "#22c55e" : "#15803d",
+                boxShadow: isDark
+                  ? "0 0 20px rgba(34,197,94,0.12)"
+                  : "0 2px 10px rgba(34,197,94,0.14)",
+              }}
+            >
+              <span className="relative flex h-2 w-2 flex-shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+              </span>
+              Open to Opportunities
+            </span>
+          </motion.div>
+
           {/* Greeting */}
           <motion.p
             variants={itemVariants}
@@ -65,11 +90,11 @@ export default function Hero() {
           </motion.h1>
 
           {/* Rotating Title */}
-          <motion.div variants={itemVariants} className="h-7">
+          <motion.div variants={itemVariants} className="h-9">
             <AnimatePresence mode="wait">
               <motion.p
                 key={titles[currentTitle]}
-                className="text-base md:text-lg font-semibold tracking-wide bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-700 dark:from-white/90 dark:via-indigo-500 dark:to-purple-600 bg-clip-text text-transparent"
+                className="text-lg md:text-xl font-semibold tracking-wide bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-700 dark:from-white/90 dark:via-indigo-500 dark:to-purple-600 bg-clip-text text-transparent"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}

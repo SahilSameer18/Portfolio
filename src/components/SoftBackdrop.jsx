@@ -78,7 +78,7 @@ const SoftBackdrop = () => {
           className="absolute left-1/2 -translate-x-1/2 top-20 w-[44rem] h-[22rem] rounded-full blur-3xl"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(99,102,241,0.22) 0%, rgba(236,72,153,0.10) 55%, transparent 80%)",
+              "radial-gradient(ellipse at center, rgba(99,102,241,0.38) 0%, rgba(236,72,153,0.20) 55%, transparent 80%)",
           }}
         />
 
@@ -87,7 +87,7 @@ const SoftBackdrop = () => {
           className="absolute right-12 bottom-10 w-[32rem] h-[18rem] rounded-full blur-2xl"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(99,102,241,0.15) 0%, rgba(236,72,153,0.08) 60%, transparent 80%)",
+              "radial-gradient(ellipse at center, rgba(99,102,241,0.26) 0%, rgba(236,72,153,0.16) 60%, transparent 80%)",
           }}
         />
 
@@ -96,19 +96,34 @@ const SoftBackdrop = () => {
           className="absolute -left-10 bottom-0 w-[30rem] h-[22rem] rounded-full blur-3xl"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(147,51,234,0.13) 0%, rgba(99,102,241,0.07) 60%, transparent 80%)",
+              "radial-gradient(ellipse at center, rgba(147,51,234,0.24) 0%, rgba(99,102,241,0.14) 60%, transparent 80%)",
           }}
         />
 
         {/* Dot-noise texture */}
         <div
-          className="absolute inset-0 opacity-[0.025]"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage: "radial-gradient(rgba(255,255,255,0.15) 0.5px, transparent 0.5px)",
             backgroundSize: "18px 18px",
           }}
         />
       </div>
+
+      {/* ── Grain / film-noise texture — both modes ──────────────────── */}
+      {/* SVG fractalNoise at ~3.5% opacity + overlay blend gives the     */}
+      {/* premium tactile "paper" feel without affecting readability.      */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23grain)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "200px 200px",
+          opacity: 0.035,
+          mixBlendMode: "overlay",
+        }}
+      />
 
     </div>
   );
