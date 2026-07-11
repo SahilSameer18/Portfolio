@@ -128,15 +128,10 @@ export default function Footer() {
           }}
         />
 
-        {/* ── Bottom Row: Copyright | Built-with ── */}
+        {/* ── Bottom Row: Copyright ── */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-neutral-500 dark:text-gray-600 text-xs text-center transition-colors duration-200">
             © {new Date().getFullYear()} Sahil Sameer Siddique. All rights reserved.
-          </p>
-          <p className="flex items-center gap-1.5 text-xs text-neutral-400 dark:text-gray-600 transition-colors duration-200">
-            Built with
-            <FaHeart style={{ color: "#6366f1", fontSize: "10px" }} aria-hidden="true" />
-            using React &amp; Framer Motion
           </p>
         </div>
 

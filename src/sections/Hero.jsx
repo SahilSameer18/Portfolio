@@ -146,7 +146,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-500 shadow-[0_4px_20px_rgba(99,102,241,0.35)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.55)] transition-shadow duration-300"
+              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-700 to-violet-500 shadow-[0_4px_20px_rgba(99,102,241,0.35)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.55)] transition-shadow duration-300"
             >
               {/* Download Icon */}
               <svg

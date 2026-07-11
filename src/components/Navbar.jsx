@@ -247,7 +247,7 @@ export default function Navbar() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-indigo-600 to-violet-500 rounded-full text-white font-medium shadow-sm"
+            className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-indigo-700 to-violet-500 rounded-full text-white font-medium shadow-sm"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
