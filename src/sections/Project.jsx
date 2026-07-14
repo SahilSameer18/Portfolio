@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { useTheme } from "../context/ThemeContext";
+import AnimatedHeading from "../components/AnimatedHeading";
 import safar from "../assets/safar.png";
 import prepstack from "../assets/prepstack.png";
 import skillbridgeAI from "../assets/skillbridgeAI.png";
@@ -380,7 +381,9 @@ export default function Projects() {
         transition={{ duration: 0.7 }}
         viewport={{ once: true, margin: "0px" }}
       >
-        <h2
+        <AnimatedHeading
+          text="My Projects"
+          center
           className="text-5xl md:text-6xl font-bold mb-4"
           style={{
             background:           "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
@@ -388,9 +391,7 @@ export default function Projects() {
             WebkitTextFillColor:  "transparent",
             backgroundClip:       "text",
           }}
-        >
-          My Projects
-        </h2>
+        />
         <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
           Things I've built
         </p>

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import ais from "../assets/about2.png";
 import { useCountUp } from "../hooks/useCountUp";
+import AnimatedHeading from "../components/AnimatedHeading";
 
 // ─── Achievement stats ──────────────────────────────────────────────────
 const stats = [
@@ -157,7 +158,8 @@ export default function About() {
           </div>
 
           {/* Heading */}
-          <h2
+          <AnimatedHeading
+            text="About Me"
             className="text-4xl md:text-5xl font-bold"
             style={{
               background:
@@ -166,9 +168,7 @@ export default function About() {
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
             }}
-          >
-            About Me
-          </h2>
+          />
 
           {/* Accent divider */}
           <div className="flex items-center gap-3">

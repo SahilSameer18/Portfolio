@@ -7,6 +7,7 @@ import {
   SiCss,
   SiNodedotjs,
   SiExpress,
+  SiSocketdotio,
   SiJsonwebtokens,
   SiZod,
   SiMongodb,
@@ -21,6 +22,7 @@ import {
 import { TbWorldWww, TbDatabase, TbSparkles } from "react-icons/tb";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
+import AnimatedHeading from "../components/AnimatedHeading";
 
 const skillsData = [
   { name: "JavaScript",   icon: "SiJavascript",    color: "#F7DF1E", category: "Language" },
@@ -31,6 +33,7 @@ const skillsData = [
   { name: "CSS",          icon: "SiCss",           color: "#1572B6", category: "Frontend" },
   { name: "Node.js",      icon: "SiNodedotjs",     color: "#339933", category: "Backend" },
   { name: "Express.js",   icon: "SiExpress",       color: "#FFFFFF", category: "Backend" },
+  { name: "Socket.io",    icon: "SiSocketdotio",   color: "#010101", category: "Backend" },
   { name: "REST APIs",    icon: "TbWorldWww",      color: "#38BDF8", category: "Backend" },
   { name: "JWT",          icon: "SiJsonwebtokens", color: "#D63AFF", category: "Backend" },
   { name: "Zod",          icon: "SiZod",           color: "#3068B7", category: "Backend" },
@@ -77,6 +80,7 @@ const Icon = ({ name, color, size }) => {
     SiCss,
     SiNodedotjs,
     SiExpress,
+    SiSocketdotio,
     SiJsonwebtokens,
     SiZod,
     SiMongodb,
@@ -118,14 +122,10 @@ export default function Skills() {
       <div className="max-w-5xl mx-auto px-6">
 
         {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65 }}
-          viewport={{ once: true, margin: "0px" }}
-          className="mb-16 text-center"
-        >
-          <h2
+        <div className="mb-16 text-center">
+          <AnimatedHeading
+            text="Skills"
+            center
             className="text-5xl md:text-6xl font-bold mb-4"
             style={{
               background:
@@ -134,9 +134,7 @@ export default function Skills() {
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
             }}
-          >
-            Skills
-          </h2>
+          />
           <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
             Technologies I work with
           </p>
@@ -145,7 +143,7 @@ export default function Skills() {
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/70" />
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-indigo-500/50" />
           </div>
-        </motion.div>
+        </div>
 
         {/* ── Category Groups ── */}
         <div className="space-y-12">
@@ -185,8 +183,10 @@ export default function Skills() {
                 >
                   {catSkills.map(({ name, icon, color }) => {
                     const iconColor =
-                      (name === "Express.js" || name === "GitHub" || name === "Vercel" || name === "Prisma") && theme === "light"
+                      (name === "Express.js" || name === "GitHub" || name === "Vercel" || name === "Prisma" || name === "Socket.io") && theme === "light"
                         ? "#09090b"
+                        : (name === "Socket.io") && theme === "dark"
+                        ? "#ffffff"
                         : name === "Prisma" && theme === "dark"
                         ? "#a5b4fc"
                         : color;

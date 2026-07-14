@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { FaLinkedin, FaGithub, FaEnvelope, FaInstagram, FaClipboard, FaCheck } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
+import AnimatedHeading from "../components/AnimatedHeading";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -143,7 +144,9 @@ export default function Contact() {
           transition={{ duration: 0.7, ease: EASE_OUT }}
           viewport={{ once: true, margin: "0px" }}
         >
-          <h2
+          <AnimatedHeading
+            text="Let's Connect"
+            center
             className="text-5xl md:text-6xl font-bold mb-4"
             style={{
               background:
@@ -152,9 +155,7 @@ export default function Contact() {
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
             }}
-          >
-            Let's Connect
-          </h2>
+          />
           <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
             Open to collaborations &amp; opportunities
           </p>

@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { FaGraduationCap, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 import { HiAcademicCap } from "react-icons/hi";
 import { useTheme } from "../context/ThemeContext";
+import AnimatedHeading from "../components/AnimatedHeading";
 
 // ─── Education Data ───────────────────────────────────────────────────────────
 const educationData = [
@@ -321,7 +322,9 @@ export default function Education() {
           <p className="text-neutral-500 text-xs uppercase tracking-[0.22em] mb-4">
             Academic Journey
           </p>
-          <h2
+          <AnimatedHeading
+            text="Education"
+            center
             className="text-5xl md:text-6xl font-bold mb-5"
             style={{
               background: "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
@@ -329,9 +332,7 @@ export default function Education() {
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
             }}
-          >
-            Education
-          </h2>
+          />
           <div className="flex items-center justify-center gap-3">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-indigo-500/50" />
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/70" />

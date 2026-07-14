@@ -213,7 +213,7 @@ export default function Navbar() {
           </a>
 
           {/* Divider */}
-          <div className="w-px h-4 bg-neutral-200 dark:bg-white/20 rounded-full" />
+          <div className="w-px h-4 bg-neutral-300 dark:bg-white/20 rounded-full" />
 
           {/* Desktop Links */}
           <div className="flex items-center gap-8">
@@ -238,7 +238,7 @@ export default function Navbar() {
           <ThemeToggle />
           </div>
           {/* Divider */}
-          <div className="w-px h-4 bg-neutral-200 dark:bg-white/20 rounded-full" />
+          <div className="w-px h-4 bg-neutral-300 dark:bg-white/20 rounded-full" />
 
           {/* Desktop Resume Button */}
           <motion.a
