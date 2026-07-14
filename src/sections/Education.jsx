@@ -70,10 +70,10 @@ function EducationCard({ edu, index }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 36 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-      viewport={{ once: true }}
+      transition={{ duration: 0.65, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "0px" }}
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={(e) => {
@@ -313,10 +313,10 @@ export default function Education() {
         {/* ── Heading ── */}
         <motion.div
           className="text-center mb-20"
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "0px" }}
         >
           <p className="text-neutral-500 text-xs uppercase tracking-[0.22em] mb-4">
             Academic Journey

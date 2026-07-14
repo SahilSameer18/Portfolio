@@ -47,10 +47,10 @@ export default function Experience() {
         {/* ── Heading ── */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.75 }}
+          viewport={{ once: true, margin: "0px" }}
         >
           {/* Status badge */}
           <div className="flex justify-center mb-5">
@@ -118,10 +118,10 @@ export default function Experience() {
               <motion.div
                 key={index}
                 className="relative flex gap-8 items-start pl-16"
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: index * 0.15 }}
-                viewport={{ once: true }}
+                transition={{ duration: 0.75, delay: index * 0.12 }}
+                viewport={{ once: true, margin: "0px" }}
               >
                 {/* Icon on timeline */}
                 <div

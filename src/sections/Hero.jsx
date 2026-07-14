@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 import pic from "../assets/pic2.webp";
@@ -16,8 +16,8 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
 };
 
 // ── Static particle config (outside component to avoid re-creation per render) ──
@@ -36,6 +36,7 @@ export default function Hero({ startAnimation = true }) {
   const [currentTitle, setCurrentTitle] = useState(0);
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     if (!startAnimation) return;
@@ -48,7 +49,8 @@ export default function Hero({ startAnimation = true }) {
   return (
     <section id="home" className="relative min-h-screen flex items-center scroll-mt-12">
 
-      {/* ── Floating particles — subtle drifting dots behind content ── */}
+      {/* ── Floating particles — hidden on reduced-motion/mobile ── */}
+      {!prefersReduced && (
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         {PARTICLES.map((p, i) => (
           <motion.div
@@ -68,6 +70,7 @@ export default function Hero({ startAnimation = true }) {
           />
         ))}
       </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid md:grid-cols-2 gap-16 items-center">
 

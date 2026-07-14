@@ -104,7 +104,7 @@ const container = {
 
 const item = {
   hidden: { opacity: 0, y: 10, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.3 } },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45 } },
 };
 
 export default function Skills() {
@@ -119,10 +119,10 @@ export default function Skills() {
 
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.65 }}
+          viewport={{ once: true, margin: "0px" }}
           className="mb-16 text-center"
         >
           <h2
@@ -157,10 +157,10 @@ export default function Skills() {
             return (
               <motion.div
                 key={category}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: ci * 0.05 }}
-                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: ci * 0.06 }}
+                viewport={{ once: true, margin: "0px" }}
               >
                 <div className="flex items-center gap-3 mb-5">
                   <div

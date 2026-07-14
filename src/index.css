@@ -20,14 +20,17 @@ html {
 }
 
 /* ── Smooth theme transition ──────────────────────────────────────────────
-   Covers background-color, border-color, color, fill, stroke, box-shadow
-   on ALL elements. transform and opacity are intentionally excluded so
-   Framer Motion scroll-reveal and hover animations are never affected.     */
+   Only transitions background-color, border-color, color on ALL elements.
+   fill/stroke (SVG icons) and box-shadow are deliberately excluded — they
+   cause expensive repaints on EVERY element during scrolling on mobile.
+   Components that need shadow transitions handle them locally.
+   transform and opacity are excluded so Framer Motion animations are never
+   affected.                                                               */
 *,
 *::before,
 *::after {
-  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
-  transition-duration: 0.3s;
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 

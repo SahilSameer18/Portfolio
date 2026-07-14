@@ -64,8 +64,8 @@ export default function About() {
           className="flex justify-center order-2 md:order-1"
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true, margin: "0px" }}
         >
           {/* Subtle bob animation */}
           <motion.div
@@ -128,8 +128,8 @@ export default function About() {
           className="space-y-6 order-1 md:order-2"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true, margin: "0px" }}
         >
           {/* Open to opportunities badge */}
           <div>
@@ -226,10 +226,10 @@ export default function About() {
           {/* ── Achievement stats ── */}
           <motion.div
             className="grid grid-cols-3 sm:flex sm:flex-wrap gap-6 sm:gap-10 pt-2"
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
           >
             {stats.map((stat) => (
               <StatItem key={stat.label} stat={stat} />

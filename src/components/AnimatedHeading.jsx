@@ -4,12 +4,12 @@ const EASE = [0.22, 1, 0.36, 1];
 
 const containerVariants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
+  show: { transition: { staggerChildren: 0.12 } },
 };
 
 const wordVariant = {
   hidden: { y: "110%", opacity: 0 },
-  show: { y: 0, opacity: 1, transition: { duration: 0.55, ease: EASE } },
+  show: { y: 0, opacity: 1, transition: { duration: 0.7, ease: EASE } },
 };
 
 /**
@@ -36,7 +36,7 @@ export default function AnimatedHeading({ text, className, style, center = false
       variants={containerVariants}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, margin: "0px" }}
     >
       {words.map((word, i) => (
         /* overflow-hidden clips the word during its upward travel */

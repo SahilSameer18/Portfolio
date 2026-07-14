@@ -83,7 +83,7 @@ export default function Contact() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const isInView = useInView(sectionRef, { once: true, amount: 0.4 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.15 });
 
   const [windowReady, setWindowReady] = useState(false);
   const [typed, setTyped] = useState(0);
@@ -138,10 +138,10 @@ export default function Contact() {
         {/* ── Section Heading ── */}
         <motion.div
           className="text-center mb-10 md:mb-16"
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE_OUT }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: EASE_OUT }}
+          viewport={{ once: true, margin: "0px" }}
         >
           <h2
             className="text-5xl md:text-6xl font-bold mb-4"
@@ -169,10 +169,10 @@ export default function Contact() {
              NO backdrop-filter here — blur repaints the entire layer on scroll
              and causes severe jank on low-end GPUs. Use solid-ish opaque bg instead. ── */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: EASE_OUT }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.75, ease: EASE_OUT }}
+          viewport={{ once: true, margin: "0px" }}
           onAnimationComplete={() => setWindowReady(true)}
           className="rounded-2xl overflow-hidden"
           style={{

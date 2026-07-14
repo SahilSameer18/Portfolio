@@ -56,18 +56,18 @@ const getContrastAccent = (accent, theme) => {
 
 // ─── Animation Variants ───────────────────────────────────────────────────────
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  hidden: { opacity: 0, y: 35 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.7 } },
 };
 
 const fadeLeft = {
-  hidden: { opacity: 0, x: -30 },
-  show:   { opacity: 1, x: 0,  transition: { duration: 0.6 } },
+  hidden: { opacity: 0, x: -35 },
+  show:   { opacity: 1, x: 0,  transition: { duration: 0.7 } },
 };
 
 const fadeRight = {
-  hidden: { opacity: 0, x: 30 },
-  show:   { opacity: 1, x: 0,  transition: { duration: 0.6 } },
+  hidden: { opacity: 0, x: 35 },
+  show:   { opacity: 1, x: 0,  transition: { duration: 0.7 } },
 };
 
 // ─── Tech Badge ───────────────────────────────────────────────────────────────
@@ -161,7 +161,7 @@ const ProjectCard = ({ project, idx }) => {
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "0px" }}
       >
         {/* ── 3-D tilt ── */}
         <motion.div
@@ -210,7 +210,7 @@ const ProjectCard = ({ project, idx }) => {
               variants={isEven ? fadeLeft : fadeRight}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "0px" }}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
             >
               <div className="relative group">
@@ -238,7 +238,7 @@ const ProjectCard = ({ project, idx }) => {
               variants={isEven ? fadeRight : fadeLeft}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "0px" }}
             >
               {/* Project number */}
               <p className="text-xs font-mono tracking-widest text-neutral-400 dark:text-gray-600">
@@ -375,10 +375,10 @@ export default function Projects() {
       {/* Section Heading */}
       <motion.div
         className="text-center mb-16"
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true, margin: "0px" }}
       >
         <h2
           className="text-5xl md:text-6xl font-bold mb-4"
@@ -411,10 +411,10 @@ export default function Projects() {
       {/* GitHub CTA */}
       <motion.div
         className="flex flex-col items-center mt-20 gap-4 text-center"
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true, margin: "0px" }}
       >
         <p className="text-neutral-500 dark:text-gray-400 text-sm">
           Explore more projects and open-source contributions on my GitHub
