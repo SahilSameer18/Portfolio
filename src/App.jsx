@@ -6,6 +6,7 @@ import SoftBackdrop from "./components/SoftBackdrop";
 import Cursor from "./components/Cursor";
 import ScrollProgress from "./components/ScrollProgress";
 import Preloader from "./components/Preloader";
+import SmoothScroll from "./components/SmoothScroll";
 
 const About     = lazy(() => import("./sections/About"));
 // const Experience = lazy(() => import("./sections/Experience"));
@@ -26,7 +27,7 @@ function App() {
   );
 
   return (
-    <>
+    <SmoothScroll>
       {/* ── Branded intro animation — fades out before site is visible ── */}
       <AnimatePresence>
         {showPreloader && (
@@ -68,7 +69,7 @@ function App() {
       <Suspense fallback={<SectionFallback />}>
         <Footer />
       </Suspense>
-    </>
+    </SmoothScroll>
   );
 }
 

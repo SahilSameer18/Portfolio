@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { FaBriefcase } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
-import AnimatedHeading from "../components/AnimatedHeading";
+import GlitchText from "../components/GlitchText";
 
 // ─── Experience Data ──────────────────────────────────────────────────────────
 // TODO: Replace "Company Name" and "Another Company" with your real internship details.
@@ -68,9 +68,7 @@ export default function Experience() {
             </span>
           </div>
 
-          <AnimatedHeading
-            text="Experience"
-            center
+          <h2
             className="text-5xl md:text-6xl font-bold mb-4"
             style={{
               background: "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
@@ -78,7 +76,9 @@ export default function Experience() {
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
             }}
-          />
+          >
+            <GlitchText text="Experience" />
+          </h2>
           <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
             Where I've worked
           </p>

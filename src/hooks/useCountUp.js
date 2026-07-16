@@ -44,3 +44,4 @@ export function useCountUp(end, duration = 1.5) {
 
   return { count, ref };
 }
+

@@ -163,3 +163,25 @@ h3 {
   transform: translateX(140%);
 }
 
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Force dark mode new root to stay above during transition */
+::view-transition-new(root) {
+  z-index: 9999;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+/* We disable the CSS color transitions when a view transition is active */
+html:active-view-transition *,
+html:active-view-transition *::before,
+html:active-view-transition *::after {
+  transition: none !important;
+}
+

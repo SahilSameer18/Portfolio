@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { useTheme } from "../context/ThemeContext";
-import AnimatedHeading from "../components/AnimatedHeading";
+import GlitchText from "../components/GlitchText";
 import safar from "../assets/safar.png";
 import prepstack from "../assets/prepstack.png";
 import skillbridgeAI from "../assets/skillbridgeAI.png";
@@ -219,17 +219,24 @@ const ProjectCard = ({ project, idx }) => {
                   className="absolute -inset-3 rounded-2xl blur-2xl -z-10 opacity-15 group-hover:opacity-25 transition-all duration-500"
                   style={{ background: resolvedAccent }}
                 />
-                <img
-                  src={project.image}
-                  alt={`${project.title} project screenshot`}
-                  className="w-72 md:w-[22rem] rounded-2xl object-cover transition-all duration-300"
-                  loading="lazy"
-                  decoding="async"
-                  style={{
-                    border:    `1px solid ${resolvedAccent}${isDark ? "30" : "15"}`,
-                    boxShadow: `0 8px 32px ${resolvedAccent}${isDark ? "10" : "05"}`,
-                  }}
-                />
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <img
+                    src={project.image}
+                    alt={`${project.title} project screenshot`}
+                    className="w-72 md:w-[22rem] rounded-2xl object-cover transition-all duration-300"
+                    loading="lazy"
+                    decoding="async"
+                    style={{
+                      border:    `1px solid ${resolvedAccent}${isDark ? "30" : "15"}`,
+                      boxShadow: `0 8px 32px ${resolvedAccent}${isDark ? "10" : "05"}`,
+                    }}
+                  />
+                </a>
               </div>
             </motion.div>
 
@@ -381,9 +388,7 @@ export default function Projects() {
         transition={{ duration: 0.7 }}
         viewport={{ once: true, margin: "0px" }}
       >
-        <AnimatedHeading
-          text="My Projects"
-          center
+        <h2
           className="text-5xl md:text-6xl font-bold mb-4"
           style={{
             background:           "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
@@ -391,7 +396,9 @@ export default function Projects() {
             WebkitTextFillColor:  "transparent",
             backgroundClip:       "text",
           }}
-        />
+        >
+          <GlitchText text="My Projects" />
+        </h2>
         <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
           Things I've built
         </p>

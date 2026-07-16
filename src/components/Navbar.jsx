@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import ThemeToggle from "./ThemeToggle";
+import Magnetic from "./Magnetic";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -213,32 +214,33 @@ export default function Navbar() {
           </a>
 
           {/* Divider */}
-          <div className="w-px h-4 bg-neutral-300 dark:bg-white/20 rounded-full" />
+          <div className="w-px h-4 bg-neutral-400 dark:bg-white/20 rounded-full" />
 
           {/* Desktop Links */}
           <div className="flex items-center gap-8">
             {links.map((item) => (
-              <a
-                key={item.name}
-                href={item.path}
-                className={`relative h-5 overflow-hidden block group transition-colors duration-300 ${
-                  active === item.id ? "text-indigo-600 dark:text-indigo-300 font-semibold" : "text-neutral-500 hover:text-neutral-900 dark:text-gray-400 dark:hover:text-white"
-                }`}
-              >
-                <span className="block leading-5 group-hover:-translate-y-full transition-transform duration-300">
-                  {item.name}
-                </span>
-                <span className="block leading-5 absolute top-full left-0 group-hover:-translate-y-full transition-transform duration-300">
-                  {item.name}
-                </span>
-              </a>
+              <Magnetic key={item.name}>
+                <a
+                  href={item.path}
+                  className={`relative h-5 overflow-hidden block group transition-colors duration-300 ${
+                    active === item.id ? "text-indigo-600 dark:text-indigo-300 font-semibold" : "text-neutral-500 hover:text-neutral-900 dark:text-gray-400 dark:hover:text-white"
+                  }`}
+                >
+                  <span className="block leading-5 group-hover:-translate-y-full transition-transform duration-300">
+                    {item.name}
+                  </span>
+                  <span className="block leading-5 absolute top-full left-0 group-hover:-translate-y-full transition-transform duration-300">
+                    {item.name}
+                  </span>
+                </a>
+              </Magnetic>
             ))}
             
             {/* Theme Toggle */}
           <ThemeToggle />
           </div>
           {/* Divider */}
-          <div className="w-px h-4 bg-neutral-300 dark:bg-white/20 rounded-full" />
+          <div className="w-px h-4 bg-neutral-400 dark:bg-white/20 rounded-full" />
 
           {/* Desktop Resume Button */}
           <motion.a

@@ -3,6 +3,8 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 import pic from "../assets/pic2.webp";
+import Magnetic from "../components/Magnetic";
+import GlitchText from "../components/GlitchText";
 
 const titles = [
   "Full Stack Developer",
@@ -95,10 +97,10 @@ export default function Hero({ startAnimation = true }) {
             variants={itemVariants}
             className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-neutral-900 dark:text-white"
           >
-            Sahil Sameer
+            <GlitchText text="Sahil Sameer" />
             <br />
             <span className="bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-600 dark:from-white/90 dark:via-indigo-400 dark:to-purple-500 bg-clip-text text-transparent">
-              Siddique
+              <GlitchText text="Siddique" />
             </span>
           </motion.h1>
 
@@ -135,39 +137,43 @@ export default function Hero({ startAnimation = true }) {
 
           {/* Social Links */}
           <motion.div variants={itemVariants} className="flex items-center gap-3">
-            <motion.a
-              href="https://github.com/SahilSameer18"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub profile"
-              whileHover={{ y: -2, scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200"
-              style={{
-                background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
-                border: isDark ? "1px solid rgba(255,255,255,0.10)" : "1px solid rgba(0,0,0,0.10)",
-                color: isDark ? "#e5e7eb" : "#1f2937",
-              }}
-            >
-              <FaGithub size={17} />
-            </motion.a>
+            <Magnetic>
+              <motion.a
+                href="https://github.com/SahilSameer18"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
+                whileHover={{ y: -2, scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200"
+                style={{
+                  background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
+                  border: isDark ? "1px solid rgba(255,255,255,0.10)" : "1px solid rgba(0,0,0,0.10)",
+                  color: isDark ? "#e5e7eb" : "#1f2937",
+                }}
+              >
+                <FaGithub size={17} />
+              </motion.a>
+            </Magnetic>
 
-            <motion.a
-              href="https://www.linkedin.com/in/sahil-sameer-siddique/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn profile"
-              whileHover={{ y: -2, scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200"
-              style={{
-                background: isDark ? "rgba(0,119,181,0.12)" : "rgba(0,119,181,0.08)",
-                border: "1px solid rgba(0,119,181,0.30)",
-                color: "#0077B5",
-              }}
-            >
-              <FaLinkedin size={17} />
-            </motion.a>
+            <Magnetic>
+              <motion.a
+                href="https://www.linkedin.com/in/sahil-sameer-siddique/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
+                whileHover={{ y: -2, scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200"
+                style={{
+                  background: isDark ? "rgba(0,119,181,0.12)" : "rgba(0,119,181,0.08)",
+                  border: "1px solid rgba(0,119,181,0.30)",
+                  color: "#0077B5",
+                }}
+              >
+                <FaLinkedin size={17} />
+              </motion.a>
+            </Magnetic>
           </motion.div>
 
           {/* Resume Button */}

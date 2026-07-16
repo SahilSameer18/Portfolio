@@ -22,7 +22,7 @@ import {
 import { TbWorldWww, TbDatabase, TbSparkles } from "react-icons/tb";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
-import AnimatedHeading from "../components/AnimatedHeading";
+import GlitchText from "../components/GlitchText";
 
 const skillsData = [
   { name: "JavaScript",   icon: "SiJavascript",    color: "#F7DF1E", category: "Language" },
@@ -123,9 +123,7 @@ export default function Skills() {
 
         {/* Heading */}
         <div className="mb-16 text-center">
-          <AnimatedHeading
-            text="Skills"
-            center
+          <h2
             className="text-5xl md:text-6xl font-bold mb-4"
             style={{
               background:
@@ -134,7 +132,9 @@ export default function Skills() {
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
             }}
-          />
+          >
+            <GlitchText text="Skills" />
+          </h2>
           <p className="text-neutral-500 text-xs uppercase tracking-widest mb-5">
             Technologies I work with
           </p>
