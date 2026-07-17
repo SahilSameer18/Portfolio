@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 
 const CHARS = "!<>-_\\/[]{}—=+*^?#_";
 
-export default function GlitchText({ text, className, style, triggerOnInView = true }) {
+export default function GlitchText({ text, className, style, triggerOnInView = true, active = true }) {
   const [displayText, setDisplayText] = useState(text);
   const [triggerGlitch, setTriggerGlitch] = useState(false);
   const ref = useRef(null);
@@ -12,10 +12,10 @@ export default function GlitchText({ text, className, style, triggerOnInView = t
   const isInView = useInView(ref, { once: true, margin: "-10%" });
 
   useEffect(() => {
-    if (triggerOnInView && isInView) {
+    if (triggerOnInView && isInView && active) {
       setTriggerGlitch(true);
     }
-  }, [isInView, triggerOnInView]);
+  }, [isInView, triggerOnInView, active]);
 
   useEffect(() => {
     if (!triggerGlitch) {

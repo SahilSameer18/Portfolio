@@ -1,127 +1,128 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 
-const nameStr = "Sahil Sameer";
+const BOOT_LOGS = [
+  "[system] Initializing boot sequence...",
+  "[system] Loading environment variables...",
+  "[ok] ENV loaded successfully.",
+  "[network] Resolving localhost...",
+  "[network] Starting reverse proxy on port 80...",
+  "[db] Connecting to PostgreSQL cluster at aws-ap-south-1...",
+  "[db] Authenticating user 'sahil_admin'...",
+  "[ok] PostgreSQL connected (Pool size: 20).",
+  "[cache] Initializing Redis connection...",
+  "[ok] Redis connected (Latency: 12ms).",
+  "[auth] Initializing JWT strategies...",
+  "[api] Mounting routes: /api/v1/auth, /api/v1/users...",
+  "[api] Compiling AI models...",
+  "[ok] Gemini LLM interface ready.",
+  "[server] Starting Express application...",
+  "[ok] Server listening on port 8080.",
+  "System is ready. Welcome to Sahil Sameer portfolio."
+];
 
-const characterVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.15 + i * 0.045,
-      duration: 0.55,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
-
-/**
- * Preloader — branded intro animation (plays once per browser session).
- * Parent wraps this in <AnimatePresence>; calling onComplete removes it
- * from the tree and triggers the exit animation automatically.
- */
 export default function Preloader({ onComplete }) {
+  const [logs, setLogs] = useState([]);
+  const bottomRef = useRef(null);
+
   useEffect(() => {
-    // After 2.2s, signal parent to remove us → AnimatePresence runs exit
-    const timer = setTimeout(onComplete, 2200);
-    return () => clearTimeout(timer);
+    let currentIndex = 0;
+    let isActive = true;
+    
+    const showNextLog = () => {
+      if (!isActive) return;
+      
+      if (currentIndex < BOOT_LOGS.length) {
+        const logToAdd = BOOT_LOGS[currentIndex];
+        setLogs(prev => [...prev, logToAdd]);
+        currentIndex++;
+        
+        // Randomize typing speed for realism (between 30ms and 110ms)
+        const delay = Math.random() * 80 + 30;
+        
+        // Add artificial pauses for "heavy" operations
+        let extraDelay = 0;
+        if (BOOT_LOGS[currentIndex - 1].includes("Connecting to PostgreSQL")) extraDelay = 500;
+        if (BOOT_LOGS[currentIndex - 1].includes("Compiling AI models")) extraDelay = 600;
+        if (BOOT_LOGS[currentIndex - 1].includes("Starting Express application")) extraDelay = 400;
+        
+        setTimeout(showNextLog, delay + extraDelay);
+      } else {
+        // Finished booting. Wait a bit, then dismiss.
+        setTimeout(() => {
+          if (isActive) onComplete();
+        }, 1200);
+      }
+    };
+    
+    // Start sequence after a small delay
+    const startTimeout = setTimeout(showNextLog, 400);
+    
+    return () => {
+      isActive = false;
+      clearTimeout(startTimeout);
+    };
   }, [onComplete]);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView();
+    }
+  }, [logs]);
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-8 select-none"
-      style={{ background: "#050507" }}
+      className="fixed inset-0 z-[9999] flex flex-col justify-end p-6 md:p-12 lg:p-24 overflow-hidden"
+      style={{ background: "#050507", fontFamily: "monospace" }}
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } }}
+      exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }}
     >
-      {/* ── Ambient radial glow behind logo ── */}
+      <div className="w-full max-w-4xl flex flex-col gap-1.5 md:gap-2">
+        {logs.map((log, index) => {
+          if (!log) return null;
+          
+          // Color coding parts of the log for visual flair
+          let colorClass = "text-neutral-400";
+          if (log.startsWith("[ok]")) colorClass = "text-emerald-400";
+          else if (log.startsWith("[system]")) colorClass = "text-indigo-400";
+          else if (log.startsWith("[db]")) colorClass = "text-blue-400";
+          else if (log.startsWith("[cache]")) colorClass = "text-amber-400";
+          else if (log.startsWith("[api]") || log.startsWith("[auth]")) colorClass = "text-purple-400";
+          else if (log.startsWith("System is ready")) colorClass = "text-white font-bold text-xl md:text-2xl mt-6 mb-2";
+
+          return (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2 }}
+              className={`text-xs md:text-sm lg:text-base leading-relaxed break-words ${colorClass}`}
+            >
+              {log}
+            </motion.div>
+          );
+        })}
+        {/* Blinking cursor */}
+        {logs.length < BOOT_LOGS.length && (
+          <motion.div
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+            className="w-2.5 h-4 md:w-3 md:h-5 bg-indigo-500 mt-2"
+          />
+        )}
+        <div ref={bottomRef} className="h-4" />
+      </div>
+      
+      {/* Background ambient glow to make it look premium */}
       <div
         aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "radial-gradient(ellipse at center, rgba(99,102,241,0.18) 0%, rgba(139,92,246,0.10) 45%, transparent 72%)",
-          pointerEvents: "none",
+          background: "radial-gradient(ellipse at bottom right, rgba(99,102,241,0.08) 0%, transparent 60%)",
+          zIndex: -1
         }}
       />
-
-      {/* ── SS Logo ── */}
-      <div className="relative">
-        {/* Soft glow ring behind letters */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: "-28px",
-            background: "radial-gradient(circle, rgba(99,102,241,0.28) 0%, transparent 72%)",
-            filter: "blur(24px)",
-            pointerEvents: "none",
-          }}
-        />
-
-        <span
-          className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight flex items-center justify-center gap-[0.08em]"
-          style={{
-            background: "linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            filter: "drop-shadow(0 0 36px rgba(129,140,248,0.45))",
-            lineHeight: 1.1,
-          }}
-        >
-          {nameStr.split("").map((char, index) => (
-            <motion.span
-              key={index}
-              custom={index}
-              variants={characterVariants}
-              initial="hidden"
-              animate="visible"
-              className={char === " " ? "w-3 sm:w-4" : "inline-block"}
-            >
-              {char}
-            </motion.span>
-          ))}
-        </span>
-      </div>
-
-      {/* ── Progress bar + label ── */}
-      <motion.div
-        className="flex flex-col items-center gap-3"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.45, duration: 0.4, ease: "easeOut" }}
-      >
-        {/* Track */}
-        <div
-          className="relative w-28 h-[2px] rounded-full overflow-hidden"
-          style={{ background: "rgba(255,255,255,0.07)" }}
-        >
-          {/* Fill — sweeps left → right */}
-          <motion.div
-            className="absolute inset-y-0 left-0 rounded-full"
-            style={{
-              background: "linear-gradient(90deg, #6366f1 0%, #a78bfa 50%, #f472b6 100%)",
-            }}
-            initial={{ width: "0%" }}
-            animate={{ width: "100%" }}
-            transition={{ delay: 0.55, duration: 1.35, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </div>
-
-        {/* "portfolio" label */}
-        <motion.p
-          className="text-[9px] tracking-[0.38em] uppercase font-semibold"
-          style={{ color: "rgba(148,163,184,0.45)" }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.65, duration: 0.4 }}
-        >
-          portfolio
-        </motion.p>
-      </motion.div>
     </motion.div>
   );
 }

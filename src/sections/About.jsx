@@ -13,10 +13,10 @@ const stats = [
 
 // ─── Passion chips ────────────────────────────────────────────────────────
 const passions = [
+  { icon: "🗄️", label: "Databases" },
+  { icon: "⚡", label: "REST APIs" },
   { icon: "🔒", label: "Auth & Security" },
   { icon: "🤖", label: "AI Integration" },
-  { icon: "⚡", label: "REST APIs" },
-  { icon: "🗄️", label: "Databases" },
 ];
 
 // Splits "5+" → { num: 5, suffix: "+" } etc.
@@ -111,11 +111,11 @@ export default function About() {
               </h3>
 
               <p className="text-sm md:text-base text-neutral-600 dark:text-gray-400 leading-relaxed">
-                I build scalable full-stack products with a strong focus on backend architecture, secure APIs, and AI-powered user experiences. I enjoy turning ideas into production-ready web platforms that are reliable, thoughtful, and measurable.
+                I am a backend-focused full stack developer who loves architecting scalable server-side systems, optimizing complex databases, and designing secure, high-performance APIs. I thrive on turning complex logic into robust, production-ready platforms.
               </p>
 
               <p className="text-sm md:text-base text-neutral-600 dark:text-gray-400 leading-relaxed">
-                My technical specialties lie in optimizing REST APIs, JWT authentication structures with refresh token rotation, and designing relational and document databases for raw performance. On the frontend, I pair this backend robustness with fluid, interactive React interfaces styled via Tailwind CSS.
+                My technical specialties lie in optimizing REST APIs, advanced JWT authentication structures, and modeling relational databases for maximum efficiency. While my heart is in the backend, I pair this structural robustness with highly interactive React interfaces to deliver a complete, seamless user experience.
               </p>
             </div>
 

@@ -7,8 +7,8 @@ import Magnetic from "../components/Magnetic";
 import GlitchText from "../components/GlitchText";
 
 const titles = [
-  "Full Stack Engineer",
-  "Backend & API Architect",
+  "Backend-Focused Full Stack Developer",
+  "API Architect & Database Specialist",
   "AI Integrations Developer",
 ];
 
@@ -97,10 +97,10 @@ export default function Hero({ startAnimation = true }) {
             variants={itemVariants}
             className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-neutral-900 dark:text-white"
           >
-            <GlitchText text="Sahil Sameer" />
+            <GlitchText text="Sahil Sameer" active={startAnimation} />
             <br />
             <span className="bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-600 dark:from-white/90 dark:via-indigo-400 dark:to-purple-500 bg-clip-text text-transparent">
-              <GlitchText text="Siddique" />
+              <GlitchText text="Siddique" active={startAnimation} />
             </span>
           </motion.h1>
 
@@ -131,9 +131,9 @@ export default function Hero({ startAnimation = true }) {
             variants={itemVariants}
             className="text-neutral-600 dark:text-gray-400 max-w-lg leading-relaxed text-sm md:text-base"
           >
-            I build scalable backend + AI products that turn ideas into live,
-            production-ready platforms. Specializing in secure APIs, performance-optimized
-            databases, and intelligent Gemini AI integrations.
+            I specialize in engineering robust backend architectures, optimizing complex databases, 
+            and building secure APIs. I turn ambitious ideas into scalable, production-ready platforms 
+            with seamless frontend and AI integrations.
           </motion.p>
 
           {/* Social Links */}
