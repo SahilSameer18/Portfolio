@@ -1,14 +1,134 @@
-/**
- * SoftBackdrop — full-screen fixed background layer.
- *
- * Fully static — zero scroll listeners, zero JS animations, zero will-change.
- * All blobs are plain <div>s with CSS radial-gradients. The browser paints
- * them once and never touches them again, giving maximum scroll performance
- * on both desktop and mobile.
- */
+import { useEffect, useRef } from "react";
+import { useTheme } from "../context/ThemeContext";
 
-const SoftBackdrop = () => (
-  <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+/**
+ * SoftBackdrop — full-screen fixed background layer with interactive particles.
+ */
+const SoftBackdrop = () => {
+  const { theme } = useTheme();
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId;
+    let particles = [];
+    const maxParticles = 65;
+    const mouse = { x: null, y: null, radius: 130 };
+
+    const resizeCanvas = () => {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx.scale(dpr, dpr);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      initParticles();
+    };
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
+        this.baseSpeedY = -(Math.random() * 0.4 + 0.15); // float up (antigravity)
+        this.speedX = Math.random() * 0.2 - 0.1;
+        this.speedY = this.baseSpeedY;
+        this.size = Math.random() * 1.8 + 0.8; // particles size
+        this.opacity = Math.random() * 0.45 + 0.15;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Reset if it goes off top
+        if (this.y < -10) {
+          this.y = window.innerHeight + 10;
+          this.x = Math.random() * window.innerWidth;
+          this.speedY = this.baseSpeedY;
+          this.speedX = Math.random() * 0.2 - 0.1;
+        }
+        if (this.x < -10) this.x = window.innerWidth + 10;
+        if (this.x > window.innerWidth + 10) this.x = -10;
+
+        // Mouse interaction (repelling force)
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = this.x - mouse.x;
+          const dy = this.y - mouse.y;
+          const distance = Math.hypot(dx, dy);
+
+          if (distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius; // 0 to 1
+            const angle = Math.atan2(dy, dx);
+            const targetX = this.x + Math.cos(angle) * force * 18;
+            const targetY = this.y + Math.sin(angle) * force * 18;
+
+            this.x += (targetX - this.x) * 0.08;
+            this.y += (targetY - this.y) * 0.08;
+          }
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        if (theme === "dark") {
+          ctx.fillStyle = `rgba(167, 139, 250, ${this.opacity})`; // violet-400
+        } else {
+          ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity * 0.7})`; // indigo-500
+        }
+        ctx.fill();
+      }
+    }
+
+    const initParticles = () => {
+      particles = [];
+      for (let i = 0; i < maxParticles; i++) {
+        particles.push(new Particle());
+      }
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      particles.forEach((p) => {
+        p.update();
+        p.draw();
+      });
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    const handleMouseMove = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = null;
+      mouse.y = null;
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
+
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [theme]);
+
+  return (
+    <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
     {/* ═══════════════════ LIGHT MODE ═══════════════════ */}
     <div
@@ -95,7 +215,8 @@ const SoftBackdrop = () => (
       />
     </div>
 
-  </div>
-);
+    </div>
+  );
+};
 
 export default SoftBackdrop;

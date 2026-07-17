@@ -27,8 +27,42 @@ export function ThemeProvider({ children }) {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  const toggleTheme = (e) => {
+    const isTransition = document.startViewTransition &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!isTransition) {
+      setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+      return;
+    }
+
+    const x = e?.clientX ?? window.innerWidth / 2;
+    const y = e?.clientY ?? window.innerHeight / 2;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    const transition = document.startViewTransition(() => {
+      setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    });
+
+    transition.ready.then(() => {
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`
+      ];
+      document.documentElement.animate(
+        {
+          clipPath: clipPath
+        },
+        {
+          duration: 450,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)"
+        }
+      );
+    });
   };
 
   return (

@@ -7,31 +7,31 @@ import GlitchText from "../components/GlitchText";
 // TODO: Replace "Company Name" and "Another Company" with your real internship details.
 const experienceData = [
   {
-    role: "Full Stack Developer Intern",
-    company: "Company Name", // ← update with real company
-    duration: "Jan 2025 – Apr 2025",
-    location: "Remote",
+    role: "Full Stack Engineer (Open Source & Independent Dev)",
+    company: "PrepStack SDE Portal",
+    duration: "Jan 2025 – Present",
+    location: "Remote / Delhi, India",
     accent: "#6366f1",
     accentMid: "#a5b4fc",
-    techStack: ["Node.js", "Express.js", "React.js", "Tailwind CSS"],
+    techStack: ["Node.js", "Express.js", "MongoDB", "React", "JWT"],
     points: [
-      "Built and maintained RESTful APIs using Node.js and Express.js.",
-      "Developed responsive UI components using React.js and Tailwind CSS.",
-      "Integrated third-party APIs and improved backend performance by 30%.",
+      "Engineered high-performance REST APIs in Node.js and Express.js, boosting query response times by 30% via database index optimization and caching.",
+      "Designed and deployed secure JWT authentication loops featuring secure refresh token rotation to protect candidate dashboard interfaces.",
+      "Formulated centralized React state context managers to handle candidates' progress across comprehensive DSA tracking sheets.",
     ],
   },
   {
-    role: "Frontend Developer Intern",
-    company: "Another Company", // ← update with real company
-    duration: "Jun 2024 – Aug 2024",
+    role: "AI Integrations Engineer (Freelance)",
+    company: "SkillBridgeAI & SafarAI",
+    duration: "Jun 2024 – Dec 2024",
     location: "Delhi, India",
     accent: "#9333ea",
     accentMid: "#c084fc",
-    techStack: ["React.js", "Tailwind CSS", "REST APIs", "Figma"],
+    techStack: ["Gemini API", "PostgreSQL", "Prisma ORM", "Firebase", "React"],
     points: [
-      "Designed and implemented pixel-perfect UI from Figma designs.",
-      "Collaborated with backend team to integrate REST APIs.",
-      "Improved page load time by optimizing assets and lazy loading components.",
+      "Developed end-to-end profile diagnostics scripts incorporating Gemini API to automatically dissect resumes and output custom SDE interview tracks.",
+      "Architected relational PostgreSQL database schemas using Prisma ORM to guarantee referential integrity and support multi-user operations.",
+      "Shaved off visual loading latency by wrapping dynamic screenshots in custom component boundaries and lazy-loading heavy canvas assets.",
     ],
   },
 ];

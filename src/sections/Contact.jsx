@@ -1,13 +1,12 @@
 import { motion, useInView } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { FaLinkedin, FaGithub, FaEnvelope, FaInstagram, FaClipboard, FaCheck } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaEnvelope, FaInstagram, FaClipboard, FaCheck, FaTerminal } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 import GlitchText from "../components/GlitchText";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
-
 const lines = [
-  { type: "comment", text: "// reach out through any channel" },
+  { type: "comment", text: "// reach out through any channel or type in the shell" },
   {
     type: "entry",
     icon: FaEnvelope,
@@ -44,7 +43,6 @@ const lines = [
     type: "entry",
     icon: FaInstagram,
     cmd: "instagram",
-    // TODO: update to your real Instagram handle & URL
     value: "@sahilsameer18",
     href: "https://www.instagram.com/sahilsameer18/",
     external: true,
@@ -60,14 +58,11 @@ const checks = [
   "instagram found",
 ];
 
-// ─── Animation constants ──────────────────────────────────────────────────────
-
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
-// One-shot stagger — fires once when links appear, no per-hover overhead
 const containerVariants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.04 } },
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.04 } },
 };
 
 const lineVariants = {
@@ -75,13 +70,11 @@ const lineVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: EASE_OUT } },
 };
 
-const TYPE_SPEED_MS = 42;
-
-// ─── Contact ─────────────────────────────────────────────────────────────────
+const TYPE_SPEED_MS = 30;
 
 export default function Contact() {
   const sectionRef = useRef(null);
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
 
   const isInView = useInView(sectionRef, { once: true, amount: 0.15 });
@@ -91,6 +84,12 @@ export default function Contact() {
   const [visibleChecks, setVisibleChecks] = useState(0);
   const [showLinks, setShowLinks] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  // Shell history & input state
+  const [history, setHistory] = useState([]);
+  const [inputVal, setInputVal] = useState("");
+  const inputRef = useRef(null);
+  const historyEndRef = useRef(null);
 
   const fullText = "contact --list";
 
@@ -124,9 +123,103 @@ export default function Contact() {
         clearInterval(iv);
         setTimeout(() => setShowLinks(true), 250);
       }
-    }, 350);
+    }, 250);
     return () => clearInterval(iv);
   }, [isTypingDone]);
+
+  // Scroll to bottom of shell when history updates (only if user has typed something)
+  useEffect(() => {
+    if (history.length > 0) {
+      historyEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [history]);
+
+  const focusInput = () => {
+    if (inputRef.current) inputRef.current.focus();
+  };
+
+  const handleCommandSubmit = (e) => {
+    e.preventDefault();
+    const cmd = inputVal.trim().toLowerCase();
+    if (!cmd) return;
+
+    let newHistory = [...history, { type: "input", text: inputVal }];
+
+    switch (cmd) {
+      case "help":
+        newHistory.push({
+          type: "output",
+          text: "Available commands:\n  about      - Who I am & my product positioning\n  skills     - Deep dive into backend, frontend & AI stacks\n  projects   - Direct Vercel / Live links to my builds\n  experience - History of coding roles & backend speedups\n  contact    - Core email, linkedin & github direct links\n  theme      - Ripple toggle light/dark state\n  hack       - Simulate secure terminal override overlay\n  clear      - Clear terminal commands"
+        });
+        break;
+      case "about":
+        newHistory.push({
+          type: "output",
+          text: "I build scalable full-stack products with a strong focus on backend architecture, secure APIs, and AI-powered user experiences. I enjoy turning ideas into production-ready web platforms that are reliable, thoughtful, and measurable."
+        });
+        break;
+      case "skills":
+        newHistory.push({
+          type: "output",
+          text: "Backend Stacks: Node.js, Express.js, JWT, Socket.io, REST APIs\nDatabases & ORM: PostgreSQL, MongoDB, Prisma ORM, Neon DB\nFrontend Frameworks: React.js, Tailwind CSS, JavaScript (ES6+), HTML5, CSS3\nDeveloper Tools: Git, GitHub, Postman, Vercel, Render, Gemini AI (LLM integration)"
+        });
+        break;
+      case "projects":
+        newHistory.push({
+          type: "output",
+          html: (
+            <div className="space-y-1.5 text-xs text-neutral-400 dark:text-gray-400">
+              <p>• PrepStack - Interview Preparation Hub: <a href="https://prepstack-ss.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">prepstack-ss.vercel.app</a></p>
+              <p>• SkillBridgeAI - Resume Diagnostics Engine: <a href="https://skillbridgeai-s.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">skillbridgeai-s.vercel.app</a></p>
+              <p>• SafarAI - AI Budget Trip planner: <a href="https://www.safarai.in/" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">safarai.in</a></p>
+            </div>
+          )
+        });
+        break;
+      case "experience":
+        newHistory.push({
+          type: "output",
+          text: "• Full Stack Engineer @ PrepStack | Jan 2025 - Present\n  Coded REST APIs, reduced query times by 30% via index optimizations.\n• AI Integrations Engineer @ Freelance | Jun 2024 - Dec 2024\n  Integrated Gemini LLM API, designed schema infrastructures using Prisma."
+        });
+        break;
+      case "contact":
+        newHistory.push({
+          type: "output",
+          html: (
+            <div className="space-y-1 text-xs text-neutral-400 dark:text-gray-400">
+              <p>Email: <a href="mailto:sahilsameer.dev18@gmail.com" className="text-indigo-400 hover:underline">sahilsameer.dev18@gmail.com</a></p>
+              <p>LinkedIn: <a href="https://www.linkedin.com/in/sahil-sameer-siddique/" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">linkedin.com/in/sahil-sameer-siddique/</a></p>
+              <p>GitHub: <a href="https://github.com/SahilSameer18" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">github.com/SahilSameer18</a></p>
+            </div>
+          )
+        });
+        break;
+      case "theme":
+        toggleTheme(e);
+        newHistory.push({
+          type: "output",
+          text: `System theme toggled to: ${theme === "dark" ? "light" : "dark"}`
+        });
+        break;
+      case "clear":
+        newHistory = [];
+        break;
+      case "hack":
+        newHistory.push({
+          type: "output",
+          text: " _  _   _    ___ _  __ \n| || | /_\\  / __| |/ / \n| __ |/ _ \\| (__| ' <  \n|_||_/_/ \\_\\\\___|_|\\_\\ \n\n[OK] CORRUPTING NODE BACKEND API CORRIDORS...\n[OK] DEPLOYING MATRIX AGENT INTERFACES...\n[OK] RE-INDEXING POSTGRESQL TABLES...\nACCESS GRANTED. Welcome to the system, Sahil."
+        });
+        break;
+      default:
+        newHistory.push({
+          type: "output",
+          text: `Command not found: '${cmd}'. Type 'help' for available actions.`
+        });
+    }
+
+    setHistory(newHistory);
+    setInputVal("");
+  };
 
   return (
     <section
@@ -166,16 +259,15 @@ export default function Contact() {
           </div>
         </motion.div>
 
-        {/* ── Terminal card ──
-             NO backdrop-filter here — blur repaints the entire layer on scroll
-             and causes severe jank on low-end GPUs. Use solid-ish opaque bg instead. ── */}
+        {/* ── Terminal Card ── */}
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: EASE_OUT }}
           viewport={{ once: true, margin: "0px" }}
           onAnimationComplete={() => setWindowReady(true)}
-          className="rounded-2xl overflow-hidden"
+          className="rounded-2xl overflow-hidden cursor-text"
+          onClick={focusInput}
           style={{
             background: isDark ? "rgba(8,8,20,0.94)" : "rgba(255,255,255,0.98)",
             border: `1px solid ${isDark ? "rgba(255,255,255,0.10)" : "rgba(99,102,241,0.18)"}`,
@@ -192,18 +284,19 @@ export default function Contact() {
               background: isDark ? "rgba(255,255,255,0.03)" : "rgba(99,102,241,0.04)",
             }}
           >
-            <div className="w-3 h-3 rounded-full bg-red-500/80" />
-            <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
-            <div className="w-3 h-3 rounded-full bg-green-500/80" />
-            <span className="ml-3 text-xs text-neutral-500 dark:text-gray-500 font-mono select-none">
-              sahil@portfolio: ~
+            <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+            <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+            <span className="ml-3 text-xs text-neutral-500 dark:text-gray-500 font-mono select-none flex items-center gap-1.5">
+              <FaTerminal size={10} />
+              sahil@portfolio: ~ (interactive shell)
             </span>
           </div>
 
           {/* Body */}
-          <div className="p-6 md:p-8 font-mono text-sm md:text-base space-y-4">
+          <div className="p-6 md:p-8 font-mono text-sm md:text-base space-y-4 max-h-[30rem] overflow-y-auto">
 
-            {/* Command line */}
+            {/* Initial Command line */}
             <div className="flex items-center gap-2 text-neutral-700 dark:text-gray-300">
               <span className="text-purple-600 dark:text-purple-400" aria-hidden="true">➜</span>
               <span className="text-indigo-600 dark:text-indigo-300" aria-hidden="true">~</span>
@@ -220,7 +313,7 @@ export default function Contact() {
               <span className="sr-only">{`➜ ~ ${fullText}`}</span>
             </div>
 
-            {/* Check results — motion.div for one-shot fade (not interactive, so cheap) */}
+            {/* Check results */}
             {visibleChecks > 0 && (
               <div className="space-y-2" aria-hidden="true">
                 {checks.slice(0, visibleChecks).map((item) => (
@@ -229,7 +322,7 @@ export default function Contact() {
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.22 }}
-                    className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400"
+                    className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 text-xs md:text-sm"
                   >
                     <span>✓</span>
                     <span>{item}</span>
@@ -238,13 +331,13 @@ export default function Contact() {
               </div>
             )}
 
-            {/* Contact Links */}
+            {/* Quick Contact Links */}
             {showLinks && (
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="show"
-                className="space-y-3 pt-3"
+                className="space-y-3 pt-2"
               >
                 {lines.map((line) => {
                   const key = line.type === "comment" ? line.text : line.cmd;
@@ -254,7 +347,7 @@ export default function Contact() {
                       <motion.p
                         key={key}
                         variants={lineVariants}
-                        className="text-neutral-500 dark:text-gray-500 text-xs md:text-sm"
+                        className="text-neutral-500 dark:text-gray-500 text-xs"
                       >
                         {line.text}
                       </motion.p>
@@ -262,7 +355,6 @@ export default function Contact() {
                   }
 
                   return (
-                    /* motion.div handles stagger (one-shot); plain <a> handles hover via CSS */
                     <motion.div key={key} variants={lineVariants}>
                       <a
                         href={line.href}
@@ -270,9 +362,10 @@ export default function Contact() {
                         rel={line.external ? "noopener noreferrer" : undefined}
                         aria-label={line.ariaLabel}
                         className="group flex flex-wrap items-center gap-2 md:gap-3 py-1.5 -mx-2 px-2 rounded-lg
-                                   transition-all duration-200 hover:translate-x-1
-                                   focus:outline-none focus:ring-2 focus:ring-indigo-500/70
-                                   focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black"
+                                   transition-all duration-200 hover:translate-x-1"
+                        style={{
+                          background: "transparent"
+                        }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.background = isDark
                             ? "rgba(255,255,255,0.06)"
@@ -294,14 +387,14 @@ export default function Contact() {
                         <span className="text-neutral-500 dark:text-gray-500">:</span>
                         <span
                           className={`text-neutral-600 group-hover:text-neutral-900 dark:text-gray-300
-                                      dark:group-hover:text-white transition-colors duration-150 break-all ${
+                                      dark:group-hover:text-white transition-colors duration-150 break-all text-xs md:text-sm ${
                                         line.cmd === "email" ? "group-hover:underline" : ""
                                       }`}
                         >
                           {line.value}
                         </span>
 
-                        {/* Copy button — email only */}
+                        {/* Copy button */}
                         {line.copyable && (
                           <button
                             onClick={copyEmail}
@@ -318,21 +411,45 @@ export default function Contact() {
                     </motion.div>
                   );
                 })}
-
-                {/* Idle prompt */}
-                <motion.div
-                  variants={lineVariants}
-                  className="flex items-center gap-2 text-neutral-700 dark:text-gray-300 pt-2"
-                >
-                  <span className="text-purple-600 dark:text-purple-400">➜</span>
-                  <span className="text-indigo-600 dark:text-indigo-300">~</span>
-                  <span
-                    aria-hidden="true"
-                    className="inline-block w-2 h-4 bg-indigo-600/70 dark:bg-indigo-400/70 ml-0.5 align-middle animate-pulse"
-                  />
-                </motion.div>
               </motion.div>
             )}
+
+            {/* Shell History Log */}
+            {history.map((log, index) => (
+              <div key={index} className="space-y-1">
+                {log.type === "input" ? (
+                  <div className="flex items-center gap-2 text-neutral-700 dark:text-gray-300">
+                    <span className="text-purple-600 dark:text-purple-400">➜</span>
+                    <span className="text-indigo-600 dark:text-indigo-300">~</span>
+                    <span>{log.text}</span>
+                  </div>
+                ) : (
+                  <div className="text-neutral-600 dark:text-gray-400 whitespace-pre-wrap leading-relaxed text-xs md:text-sm pl-4 border-l border-indigo-500/20">
+                    {log.html ? log.html : log.text}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {/* Interactive Shell Input Form */}
+            {showLinks && (
+              <form onSubmit={handleCommandSubmit} className="flex items-center gap-2 pt-2">
+                <span className="text-purple-600 dark:text-purple-400">➜</span>
+                <span className="text-indigo-600 dark:text-indigo-300">~</span>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputVal}
+                  onChange={(e) => setInputVal(e.target.value)}
+                  className="flex-1 bg-transparent border-none outline-none focus:ring-0 text-neutral-800 dark:text-white caret-indigo-500 font-mono text-sm md:text-base p-0"
+                  placeholder="type command (e.g. help)"
+                  autoCapitalize="off"
+                  autoComplete="off"
+                  spellCheck="false"
+                />
+              </form>
+            )}
+            <div ref={historyEndRef} />
           </div>
         </motion.div>
 
@@ -342,7 +459,7 @@ export default function Contact() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.55 }}
           viewport={{ once: true }}
-          className="text-xs text-neutral-500 dark:text-gray-500 mt-6 font-mono"
+          className="text-xs text-neutral-500 dark:text-gray-500 mt-6 font-mono text-center md:text-left"
         >
           # usually responds within a day or two
         </motion.p>
@@ -350,3 +467,5 @@ export default function Contact() {
     </section>
   );
 }
+
+

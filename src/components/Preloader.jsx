@@ -1,6 +1,21 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 
+const nameStr = "Sahil Sameer";
+
+const characterVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.15 + i * 0.045,
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
 /**
  * Preloader — branded intro animation (plays once per browser session).
  * Parent wraps this in <AnimatePresence>; calling onComplete removes it
@@ -33,12 +48,7 @@ export default function Preloader({ onComplete }) {
       />
 
       {/* ── SS Logo ── */}
-      <motion.div
-        className="relative"
-        initial={{ opacity: 0, scale: 0.45, y: 16 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-      >
+      <div className="relative">
         {/* Soft glow ring behind letters */}
         <div
           aria-hidden="true"
@@ -52,19 +62,30 @@ export default function Preloader({ onComplete }) {
         />
 
         <span
-          className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight"
+          className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight flex items-center justify-center gap-[0.08em]"
           style={{
             background: "linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
             filter: "drop-shadow(0 0 36px rgba(129,140,248,0.45))",
-            lineHeight: 1,
+            lineHeight: 1.1,
           }}
         >
-          Sahil Sameer
+          {nameStr.split("").map((char, index) => (
+            <motion.span
+              key={index}
+              custom={index}
+              variants={characterVariants}
+              initial="hidden"
+              animate="visible"
+              className={char === " " ? "w-3 sm:w-4" : "inline-block"}
+            >
+              {char}
+            </motion.span>
+          ))}
         </span>
-      </motion.div>
+      </div>
 
       {/* ── Progress bar + label ── */}
       <motion.div

@@ -15,7 +15,10 @@ const projects = [
     tag: "SDE Prep Platform",
     featured: true,
     description:
-      "A comprehensive platform for interview preparation, offering AI project idea generation, structured DSA sheets, and many more interview preparation resources.",
+      "A comprehensive preparation platform that structures and accelerates interview preparation workflows for software engineering candidates.",
+    challenge: "Candidates navigate fragmented sheets, scattered concept repositories, and lack custom, high-fidelity mock project ideas.",
+    solution: "Coded an automated DSA dashboard synced with React and MongoDB, coupled with a customized project idea engine running LLM-assisted generation.",
+    impact: "Created an integrated study tracker saving candidates prep time by consolidating structured sheet progress and project mockups.",
     link: "https://prepstack-ss.vercel.app/",
     github: "https://github.com/SahilSameer18/prepstack",
     techStack: ["React", "Node.js", "Express", "MongoDB"],
@@ -26,7 +29,10 @@ const projects = [
     title: "SkillBridgeAI",
     tag: "AI Career Analyzer",
     description:
-      "Helps users prepare effectively for interviews based on submitted profiles, providing personalized questions, a tailored preparation plan, and skill gap insights.",
+      "An intelligent resume and skill-gap diagnostics platform mapping user profiles to modern software roles.",
+    challenge: "Traditional technical prep is generic; candidates fail to identify concrete architectural and library knowledge gaps before coding assessments.",
+    solution: "Designed a backend profiling system integrating Gemini AI models to map resume skills directly to SQL/NoSQL tech metrics, spinning up customized sample questions.",
+    impact: "Accelerated skills matching and prep loops by offering instant tailored prep schedules and detailed answer analytics.",
     link: "https://skillbridgeai-s.vercel.app/",
     github: "https://github.com/SahilSameer18/skillbridgeAI",
     techStack: ["React", "PostgreSQL", "Prisma ORM", "Node", "Gemini AI"],
@@ -37,7 +43,10 @@ const projects = [
     title: "SafarAI",
     tag: "AI Travel Planner",
     description:
-      "An intelligent trip planning application that uses AI to create personalized travel itineraries based on user preferences, budget, and interests.",
+      "A context-aware day-by-day travel itinerary scheduler adjusting to user budget, timing constraints, and interests.",
+    challenge: "Constructing personalized travel schedules takes hours of manual aggregation across flight, hotel, and tourist logs.",
+    solution: "Engineered a rapid responsive layout integrating Firebase cloud storage with prompt-engineered Gemini schemas to produce day itineraries.",
+    impact: "Deploys complete customizable schedules in seconds under real-world testing conditions.",
     link: "https://www.safarai.in/",
     github: "https://github.com/SahilSameer18",
     techStack: ["React", "Tailwind CSS", "Firebase", "Gemini AI"],
@@ -90,6 +99,58 @@ const TechBadge = ({ tech, accent }) => {
   );
 };
 
+// ─── Browser Frame Component ───────────────────────────────────────────────────
+const BrowserFrame = ({ children, url, accent }) => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  const resolvedAccent = getContrastAccent(accent, theme);
+
+  return (
+    <div 
+      className="w-full rounded-2xl overflow-hidden flex flex-col border transition-all duration-300 group"
+      style={{
+        borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(99,102,241,0.12)",
+        boxShadow: isDark 
+          ? "0 24px 48px rgba(0,0,0,0.4)" 
+          : "0 16px 32px rgba(99,102,241,0.06)",
+      }}
+    >
+      {/* Top Header Bar */}
+      <div 
+        className="flex items-center gap-2 px-4 py-3 border-b select-none"
+        style={{
+          background: isDark ? "rgba(255,255,255,0.03)" : "rgba(99,102,241,0.03)",
+          borderColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(99,102,241,0.08)",
+        }}
+      >
+        {/* Controls dots */}
+        <div className="flex gap-1.5 shrink-0">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
+        </div>
+        
+        {/* Mock Search Input */}
+        <div 
+          className="mx-auto max-w-[14rem] sm:max-w-[18rem] w-full rounded-md px-3 py-1 text-[10px] font-mono text-center truncate transition-colors duration-300"
+          style={{
+            background: isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.8)",
+            border: `1px solid ${isDark ? "rgba(255,255,255,0.05)" : "rgba(99,102,241,0.08)"}`,
+            color: isDark ? "#64748b" : "#64748b",
+          }}
+        >
+          {url}
+        </div>
+      </div>
+      
+      {/* Content wrapper */}
+      <div className="bg-neutral-950/5 dark:bg-white/5 relative">
+        {children}
+      </div>
+    </div>
+  );
+};
+
 // ─── Single Project Card (with 3-D tilt) ─────────────────────────────────────
 const ProjectCard = ({ project, idx }) => {
   const isEven         = idx % 2 === 0;
@@ -115,8 +176,8 @@ const ProjectCard = ({ project, idx }) => {
         const dx   = (e.clientX - (rect.left + rect.width  / 2)) / (rect.width  / 2);
         const dy   = (e.clientY - (rect.top  + rect.height / 2)) / (rect.height / 2);
         setTilt({
-          rotX:  -dy * 5,
-          rotY:   dx * 5,
+          rotX:  -dy * 3,
+          rotY:   dx * 3,
           glowX: ((e.clientX - rect.left) / rect.width)  * 100,
           glowY: ((e.clientY - rect.top)  / rect.height) * 100,
         });
@@ -127,8 +188,6 @@ const ProjectCard = ({ project, idx }) => {
 
   const handleMouseLeave = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    // Only reset tilt angles — preserve glowX/Y at last cursor position
-    // so the spotlight fades out where the cursor left, not from card center.
     setTilt((prev) => ({ ...prev, rotX: 0, rotY: 0 }));
     setHovered(false);
   }, []);
@@ -144,7 +203,6 @@ const ProjectCard = ({ project, idx }) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={(e) => {
         setHovered(true);
-        // Capture entry position immediately so spotlight doesn't wait for first mousemove
         if (!prefersReduced && cardRef.current) {
           const rect = cardRef.current.getBoundingClientRect();
           setTilt((prev) => ({
@@ -175,9 +233,7 @@ const ProjectCard = ({ project, idx }) => {
             borderRadius: "1.5rem",
           }}
         >
-          {/* ── Mobile accent header — hidden on desktop ─────────────────────
-               Gives each card visual identity on small screens where the
-               alternating layout and 3-D tilt don't apply.               */}
+          {/* Mobile accent header */}
           <div className="md:hidden flex items-center gap-3 mb-5">
             <div
               className="w-[3px] h-6 rounded-full flex-shrink-0"
@@ -205,18 +261,18 @@ const ProjectCard = ({ project, idx }) => {
               isEven ? "" : "md:grid-flow-dense"
             }`}
           >
-            {/* Image side */}
+            {/* Image side wrapped in BrowserFrame */}
             <motion.div
               className={`flex justify-center ${isEven ? "" : "md:col-start-2"}`}
               variants={isEven ? fadeLeft : fadeRight}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "0px" }}
-              whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
+              whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
             >
-              <div className="relative group">
+              <div className="relative w-full max-w-md">
                 <div
-                  className="absolute -inset-3 rounded-2xl blur-2xl -z-10 opacity-15 group-hover:opacity-25 transition-all duration-500"
+                  className="absolute -inset-3 rounded-3xl blur-2xl -z-10 opacity-10 group-hover:opacity-20 transition-all duration-500"
                   style={{ background: resolvedAccent }}
                 />
                 <a
@@ -225,22 +281,20 @@ const ProjectCard = ({ project, idx }) => {
                   rel="noopener noreferrer"
                   className="block"
                 >
-                  <img
-                    src={project.image}
-                    alt={`${project.title} project screenshot`}
-                    className="w-72 md:w-[22rem] rounded-2xl object-cover transition-all duration-300"
-                    loading="lazy"
-                    decoding="async"
-                    style={{
-                      border:    `1px solid ${resolvedAccent}${isDark ? "30" : "15"}`,
-                      boxShadow: `0 8px 32px ${resolvedAccent}${isDark ? "10" : "05"}`,
-                    }}
-                  />
+                  <BrowserFrame url={project.link.replace("https://", "")} accent={project.accent}>
+                    <img
+                      src={project.image}
+                      alt={`${project.title} project screenshot`}
+                      className="w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </BrowserFrame>
                 </a>
               </div>
             </motion.div>
 
-            {/* Content side */}
+            {/* Content side - Case Study breakdown */}
             <motion.div
               className={`space-y-5 ${isEven ? "" : "md:col-start-1 md:row-start-1"}`}
               variants={isEven ? fadeRight : fadeLeft}
@@ -284,17 +338,33 @@ const ProjectCard = ({ project, idx }) => {
                 style={{ background: resolvedAccent }}
               />
 
-              <p className="text-neutral-600 dark:text-gray-400 leading-relaxed max-w-md transition-colors duration-300">
+              <p className="text-neutral-600 dark:text-gray-400 leading-relaxed text-sm md:text-base transition-colors duration-300 font-medium">
                 {project.description}
               </p>
 
-              <div className="flex flex-wrap gap-2">
+              {/* Case Study Details */}
+              <div className="space-y-3 pt-1 text-xs md:text-sm">
+                <div>
+                  <span className="font-bold text-neutral-800 dark:text-gray-200 uppercase tracking-wider text-[10px] block mb-0.5">Challenge</span>
+                  <span className="text-neutral-600 dark:text-gray-400 leading-relaxed">{project.challenge}</span>
+                </div>
+                <div>
+                  <span className="font-bold text-neutral-800 dark:text-gray-200 uppercase tracking-wider text-[10px] block mb-0.5">Solution</span>
+                  <span className="text-neutral-600 dark:text-gray-400 leading-relaxed">{project.solution}</span>
+                </div>
+                <div>
+                  <span className="font-bold text-neutral-800 dark:text-gray-200 uppercase tracking-wider text-[10px] block mb-0.5">Impact</span>
+                  <span className="text-neutral-600 dark:text-gray-400 leading-relaxed">{project.impact}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-2">
                 {project.techStack.map((tech) => (
                   <TechBadge key={tech} tech={tech} accent={project.accent} />
                 ))}
               </div>
 
-              <div className="flex items-center gap-4 pt-1">
+              <div className="flex items-center gap-4 pt-3">
                 <motion.a
                   href={project.link}
                   target="_blank"

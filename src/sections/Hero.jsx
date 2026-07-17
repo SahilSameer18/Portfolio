@@ -7,9 +7,9 @@ import Magnetic from "../components/Magnetic";
 import GlitchText from "../components/GlitchText";
 
 const titles = [
-  "Full Stack Developer",
-  "Backend Developer",
-  "Software Developer",
+  "Full Stack Engineer",
+  "Backend & API Architect",
+  "AI Integrations Developer",
 ];
 
 const containerVariants = {
@@ -129,10 +129,11 @@ export default function Hero({ startAnimation = true }) {
           {/* Bio */}
           <motion.p
             variants={itemVariants}
-            className="text-neutral-600 dark:text-gray-400 max-w-md leading-relaxed"
+            className="text-neutral-600 dark:text-gray-400 max-w-lg leading-relaxed text-sm md:text-base"
           >
-            I build AI-powered, production-ready web apps using the MERN stack
-            and PostgreSQL - from scalable REST APIs to Gemini AI integration.
+            I build scalable backend + AI products that turn ideas into live,
+            production-ready platforms. Specializing in secure APIs, performance-optimized
+            databases, and intelligent Gemini AI integrations.
           </motion.p>
 
           {/* Social Links */}
@@ -176,39 +177,57 @@ export default function Hero({ startAnimation = true }) {
             </Magnetic>
           </motion.div>
 
-          {/* Resume Button */}
-          <motion.div variants={itemVariants}>
+          {/* CTAs */}
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-2">
+            <motion.a
+              href="#projects"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group btn-shimmer inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-600 shadow-[0_4px_20px_rgba(99,102,241,0.3)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.5)] transition-shadow duration-300"
+            >
+              <span>View Projects</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </motion.a>
+
             <motion.a
               href="/my-resume.pdf"
               download="Sahil-Sameer-Resume.pdf"
-              rel="noopener noreferrer"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="group btn-shimmer inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-700 to-violet-500 shadow-[0_4px_20px_rgba(99,102,241,0.35)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.55)] transition-shadow duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300"
+              style={{
+                background: isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)",
+                border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(99,102,241,0.2)"}`,
+                color: isDark ? "#e5e7eb" : "#374151",
+              }}
             >
               {/* Download Icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                className="w-4 h-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2.5}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" />
               </svg>
-              <span className="relative h-5 overflow-hidden flex flex-col">
-                <span className="block transition-transform duration-300 group-hover:-translate-y-full">
-                  Resume
-                </span>
-                <span className="absolute top-full block transition-transform duration-300 group-hover:-translate-y-full">
-                  Resume
-                </span>
-              </span>
+              <span>Resume</span>
+            </motion.a>
+
+            <motion.a
+              href="#contact"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold text-sm transition-all duration-300"
+              style={{
+                background: "transparent",
+                border: "1px solid transparent",
+                color: isDark ? "#a5b4fc" : "#4f46e5",
+              }}
+            >
+              <span>Let's Connect</span>
+              <span>→</span>
             </motion.a>
           </motion.div>
         </motion.div>
@@ -223,15 +242,21 @@ export default function Hero({ startAnimation = true }) {
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="relative will-change-transform"
+            className="relative will-change-transform group"
           >
             {/* Ambient glow behind ring */}
             <div
               className="absolute -inset-8 rounded-full -z-10 pointer-events-none"
               style={{
-                background: "radial-gradient(circle, rgba(99,102,241,0.18) 0%, rgba(168,85,247,0.10) 50%, transparent 75%)",
-                filter: "blur(20px)",
+                background: "radial-gradient(circle, rgba(99,102,241,0.22) 0%, rgba(168,85,247,0.12) 50%, transparent 75%)",
+                filter: "blur(24px)",
               }}
+            />
+
+            {/* Outer spinning gradient ring on hover */}
+            <div 
+              className="absolute -inset-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 opacity-60 blur-xs transition duration-500 group-hover:opacity-100"
+              style={{ zIndex: -1 }}
             />
 
             {/* Profile photo — clean indigo ring + glow via box-shadow, zero DOM overhead */}
@@ -243,8 +268,8 @@ export default function Hero({ startAnimation = true }) {
               className="w-72 h-72 md:w-[22rem] md:h-[22rem] rounded-full object-cover"
               style={{
                 boxShadow: isDark
-                  ? "0 0 0 3px #6366f1, 0 0 0 8px rgba(99,102,241,0.22), 0 16px 48px rgba(99,102,241,0.28)"
-                  : "0 0 0 3px #6366f1, 0 0 0 8px rgba(99,102,241,0.14), 0 8px 32px rgba(99,102,241,0.18)",
+                  ? "0 0 0 3px #050507, 0 0 0 7px #6366f1, 0 16px 48px rgba(99,102,241,0.3)"
+                  : "0 0 0 3px #ffffff, 0 0 0 7px #6366f1, 0 8px 32px rgba(99,102,241,0.15)",
               }}
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
