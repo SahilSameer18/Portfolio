@@ -82,11 +82,12 @@ export default function About() {
           
           {/* Card 1: Bio Story (Col Span 2) */}
           <motion.div
-            className="col-span-1 md:col-span-2 p-6 md:p-8 rounded-2xl glass flex flex-col justify-between space-y-6"
-            initial={{ opacity: 0, y: 20 }}
+            className="col-span-1 md:col-span-2 p-6 md:p-8 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-6"
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }}
           >
             <div className="space-y-4">
               <div>
@@ -122,13 +123,14 @@ export default function About() {
             <div>
               <motion.a
                 href="#projects"
-                whileHover={{ scale: 1.03, x: 2 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={{ scale: 1.02, x: 2 }}
+                whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300"
                 style={{
                   background: isDark ? "rgba(99,102,241,0.14)" : "rgba(99,102,241,0.08)",
                   border: "1px solid rgba(99,102,241,0.25)",
                   color: isDark ? "#a5b4fc" : "#4f46e5",
+                  willChange: "transform",
                 }}
               >
                 Explore My Work
@@ -139,11 +141,12 @@ export default function About() {
 
           {/* Card 2: Self Portrait (Col Span 1, Row Span 2 on Desktop) */}
           <motion.div
-            className="col-span-1 md:row-span-2 p-6 rounded-2xl glass flex flex-col items-center justify-center space-y-6 relative overflow-hidden"
-            initial={{ opacity: 0, y: 20 }}
+            className="col-span-1 md:row-span-2 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col items-center justify-center space-y-6 relative overflow-hidden"
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }}
           >
             {/* Corner accents */}
             <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-indigo-500/40 rounded-tl-lg pointer-events-none" />
@@ -154,6 +157,7 @@ export default function About() {
               style={{
                 border: "1px solid rgba(99,102,241,0.2)",
                 boxShadow: "0 8px 32px rgba(99,102,241,0.08)",
+                willChange: "transform",
               }}
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
@@ -179,11 +183,12 @@ export default function About() {
 
           {/* Card 3: Credibility Stats (Col Span 1) */}
           <motion.div
-            className="col-span-1 p-6 rounded-2xl glass flex flex-col justify-between space-y-4"
-            initial={{ opacity: 0, y: 20 }}
+            className="col-span-1 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4"
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
             viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }}
           >
             <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-gray-500">
               Credibility & Impact
@@ -199,11 +204,12 @@ export default function About() {
 
           {/* Card 4: Core Architectural Focus (Col Span 1) */}
           <motion.div
-            className="col-span-1 p-6 rounded-2xl glass flex flex-col justify-between space-y-4"
-            initial={{ opacity: 0, y: 20 }}
+            className="col-span-1 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4"
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }}
           >
             <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-gray-500">
               Architectural Focus
@@ -228,3 +234,4 @@ export default function About() {
     </section>
   );
 }
+
