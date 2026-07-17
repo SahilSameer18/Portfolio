@@ -112,7 +112,7 @@ function EducationCard({ edu, index }) {
           aria-hidden="true"
           className="absolute top-0 right-2 select-none pointer-events-none font-black leading-none"
           style={{
-            fontSize: "clamp(4rem, 10vw, 7rem)",
+            fontSize: "clamp(5.5rem, 12vw, 7.5rem)",
             color: isDark ? `${edu.accent}28` : `${edu.accent}20`,
             letterSpacing: "-0.05em",
             zIndex: 1,

@@ -198,10 +198,8 @@ export default function Skills() {
                         whileHover={{ y: -4, scale: 1.04, transition: { duration: 0.2 } }}
                         className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl cursor-default select-none"
                         style={{
-                          background: isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.55)",
+                          background: isDark ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.80)",
                           border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.85)"}`,
-                          backdropFilter: "blur(12px)",
-                          WebkitBackdropFilter: "blur(12px)",
                           boxShadow: isDark
                             ? "none"
                             : "0 2px 8px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,0.7)",
@@ -219,7 +217,7 @@ export default function Skills() {
                             ? "none"
                             : "0 2px 8px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,0.7)";
                           e.currentTarget.style.borderColor = isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.85)";
-                          e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.55)";
+                          e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.80)";
                         }}
                       >
                         <Icon name={icon} color={iconColor} size={19} />
