@@ -1,30 +1,7 @@
 import { motion } from "framer-motion";
-import { FaLinkedin, FaGithub, FaArrowUp } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
-
-// ─── Social Links ─────────────────────────────────────────────────────────────
-const socials = [
-  {
-    icon: FaLinkedin,
-    href: "https://www.linkedin.com/in/sahil-sameer-siddique/",
-    label: "LinkedIn",
-    color: "#0077B5",
-    lightColor: "#0077B5",
-  },
-  {
-    icon: FaGithub,
-    href: "https://github.com/SahilSameer18",
-    label: "GitHub",
-    color: "#c4c4c4",
-    lightColor: "#374151",
-  },
-];
-
-const navLinks = [
-  { label: "Home",     href: "#home"     },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact",  href: "#contact"  },
-];
+import { footerSocials as socials, footerNavLinks as navLinks } from "../constants/footer.data";
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 export default function Footer() {
@@ -168,4 +145,3 @@ export default function Footer() {
     </footer>
   );
 }
-

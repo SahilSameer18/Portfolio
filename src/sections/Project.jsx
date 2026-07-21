@@ -4,56 +4,7 @@ import { FaGithub } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { useTheme } from "../context/ThemeContext";
 import GlitchText from "../components/GlitchText";
-import safar from "../assets/safar.png";
-import prepstack from "../assets/prepstack.png";
-import skillbridgeAI from "../assets/skillbridgeAI.png";
-
-// ─── Project Data ─────────────────────────────────────────────────────────────
-const projects = [
-  {
-    title: "PrepStack",
-    tag: "SDE Prep Platform",
-    featured: true,
-    description:
-      "A comprehensive preparation platform that structures and accelerates interview preparation workflows for software engineering candidates.",
-    challenge: "Candidates navigate fragmented sheets, scattered concept repositories, and lack custom, high-fidelity mock project ideas.",
-    solution: "Coded an automated DSA dashboard synced with React and MongoDB, coupled with a customized project idea engine running LLM-assisted generation.",
-    impact: "Created an integrated study tracker saving candidates prep time by consolidating structured sheet progress and project mockups.",
-    link: "https://prepstack-ss.vercel.app/",
-    github: "https://github.com/SahilSameer18/prepstack",
-    techStack: ["React", "Node.js", "Express", "MongoDB"],
-    image: prepstack,
-    accent: "#FFA116",
-  },
-  {
-    title: "SkillBridgeAI",
-    tag: "AI Career Analyzer",
-    description:
-      "An intelligent resume and skill-gap diagnostics platform mapping user profiles to modern software roles.",
-    challenge: "Traditional technical prep is generic; candidates fail to identify concrete architectural and library knowledge gaps before coding assessments.",
-    solution: "Designed a backend profiling system integrating Gemini AI models to map resume skills directly to SQL/NoSQL tech metrics, spinning up customized sample questions.",
-    impact: "Accelerated skills matching and prep loops by offering instant tailored prep schedules and detailed answer analytics.",
-    link: "https://skillbridgeai-s.vercel.app/",
-    github: "https://github.com/SahilSameer18/skillbridgeAI",
-    techStack: ["React", "PostgreSQL", "Prisma ORM", "Node", "Gemini AI"],
-    image: skillbridgeAI,
-    accent: "#4DB8D4",
-  },
-  {
-    title: "SafarAI",
-    tag: "AI Travel Planner",
-    description:
-      "A context-aware day-by-day travel itinerary scheduler adjusting to user budget, timing constraints, and interests.",
-    challenge: "Constructing personalized travel schedules takes hours of manual aggregation across flight, hotel, and tourist logs.",
-    solution: "Engineered a rapid responsive layout integrating Firebase cloud storage with prompt-engineered Gemini schemas to produce day itineraries.",
-    impact: "Deploys complete customizable schedules in seconds under real-world testing conditions.",
-    link: "https://www.safarai.in/",
-    github: "https://github.com/SahilSameer18",
-    techStack: ["React", "Tailwind CSS", "Firebase", "Gemini AI"],
-    image: safar,
-    accent: "#34d399",
-  },
-];
+import { projectsData as projects } from "../constants/projects.data";
 
 // ─── Accent Color Helper ───────────────────────────────────────────────────────
 const getContrastAccent = (accent, theme) => {
@@ -86,8 +37,13 @@ const TechBadge = ({ tech, accent }) => {
   const resolvedAccent = getContrastAccent(accent, theme);
 
   return (
-    <span
-      className="px-3 py-1 rounded-full text-xs font-medium tracking-wide transition-colors duration-300"
+    <motion.span
+      variants={{
+        hidden: { opacity: 0, scale: 0.8, y: 10 },
+        show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 20 } }
+      }}
+      whileHover={{ scale: 1.05, y: -2 }}
+      className="px-3 py-1 rounded-full text-xs font-medium tracking-wide transition-colors duration-300 cursor-default inline-block"
       style={{
         background: `${resolvedAccent}18`,
         border:     `1px solid ${resolvedAccent}35`,
@@ -95,7 +51,7 @@ const TechBadge = ({ tech, accent }) => {
       }}
     >
       {tech}
-    </span>
+    </motion.span>
   );
 };
 
@@ -281,15 +237,20 @@ const ProjectCard = ({ project, idx }) => {
                   rel="noopener noreferrer"
                   className="block"
                 >
-                  <BrowserFrame url={project.link.replace("https://", "")} accent={project.accent}>
-                    <img
-                      src={project.image}
-                      alt={`${project.title} project screenshot`}
-                      className="w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </BrowserFrame>
+                  <motion.div
+                    animate={prefersReduced ? {} : { y: [0, -6, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <BrowserFrame url={project.link.replace("https://", "")} accent={project.accent}>
+                      <img
+                        src={project.image}
+                        alt={`${project.title} project screenshot`}
+                        className="w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </BrowserFrame>
+                  </motion.div>
                 </a>
               </div>
             </motion.div>
@@ -316,7 +277,9 @@ const ProjectCard = ({ project, idx }) => {
                   {project.tag}
                 </p>
                 {project.featured && (
-                  <span
+                  <motion.span
+                    animate={{ opacity: [0.7, 1, 0.7] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
                     style={{
                       background: isDark ? "rgba(245,158,11,0.15)" : "rgba(245,158,11,0.10)",
@@ -325,7 +288,7 @@ const ProjectCard = ({ project, idx }) => {
                     }}
                   >
                     ⭐ Featured
-                  </span>
+                  </motion.span>
                 )}
               </div>
 
@@ -358,11 +321,20 @@ const ProjectCard = ({ project, idx }) => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2 pt-2">
+              <motion.div 
+                className="flex flex-wrap gap-2 pt-2"
+                variants={{
+                  hidden: {},
+                  show: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } }
+                }}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "0px" }}
+              >
                 {project.techStack.map((tech) => (
                   <TechBadge key={tech} tech={tech} accent={project.accent} />
                 ))}
-              </div>
+              </motion.div>
 
               <div className="flex items-center gap-4 pt-3">
                 <motion.a
@@ -459,13 +431,7 @@ export default function Projects() {
         viewport={{ once: true, margin: "0px" }}
       >
         <h2
-          className="text-5xl md:text-6xl font-bold mb-4"
-          style={{
-            background:           "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor:  "transparent",
-            backgroundClip:       "text",
-          }}
+          className="text-5xl md:text-6xl font-bold mb-4 text-gradient-heading"
         >
           <GlitchText text="My Projects" />
         </h2>

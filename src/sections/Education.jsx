@@ -4,34 +4,7 @@ import { FaGraduationCap, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 import { HiAcademicCap } from "react-icons/hi";
 import { useTheme } from "../context/ThemeContext";
 import GlitchText from "../components/GlitchText";
-
-// ─── Education Data ───────────────────────────────────────────────────────────
-const educationData = [
-  {
-    degree: "B.Tech in Computer Science & Engineering",
-    duration: "2021 – 2025",
-    institution: "International Institute of Technology and Management, Sonipat",
-    location: "Sonipat, Haryana",
-    type: "Undergraduate",
-    year: "2025",
-    // cgpa: "8.5 / 10",
-    accent: "#6366f1",
-    accentMid: "#a5b4fc",
-    highlights: ["Data Structures & Algorithms", "Database Management", "Full Stack Web Dev"],
-  },
-  {
-    degree: "Senior Secondary (Class XII - Science)",
-    duration: "2018 – 2020",
-    institution: "Dr Zakir Hussain High School, Patna",
-    location: "Patna, Bihar",
-    type: "Senior Secondary",
-    year: "2020",
-    // cgpa: "78%",
-    accent: "#9333ea",
-    accentMid: "#c084fc",
-    highlights: ["Physics", "Chemistry", "Mathematics"],
-  },
-];
+import { educationData } from "../constants/education.data";
 
 // ─── Single Education Card ────────────────────────────────────────────────────
 function EducationCard({ edu, index }) {
@@ -323,13 +296,7 @@ export default function Education() {
             Academic Journey
           </p>
           <h2
-            className="text-5xl md:text-6xl font-bold mb-5"
-            style={{
-              background: "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
+            className="text-5xl md:text-6xl font-bold mb-5 text-gradient-heading"
           >
             <GlitchText text="Education" />
           </h2>
@@ -414,4 +381,3 @@ export default function Education() {
     </section>
   );
 }
-

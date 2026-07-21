@@ -3,21 +3,7 @@ import { useTheme } from "../context/ThemeContext";
 import ais from "../assets/about2.png";
 import { useCountUp } from "../hooks/useCountUp";
 import GlitchText from "../components/GlitchText";
-
-// ─── Achievement stats ──────────────────────────────────────────────────
-const stats = [
-  { value: "5+",  label: "Live projects" },
-  { value: "4",   label: "Production platforms" },
-  { value: "30%", label: "Backend perf. improvement" },
-];
-
-// ─── Passion chips ────────────────────────────────────────────────────────
-const passions = [
-  { icon: "🗄️", label: "Databases" },
-  { icon: "⚡", label: "REST APIs" },
-  { icon: "🔒", label: "Auth & Security" },
-  { icon: "🤖", label: "AI Integration" },
-];
+import { aboutStats, aboutPassions } from "../constants/about.data";
 
 // Splits "5+" → { num: 5, suffix: "+" } etc.
 function parseStat(value) {
@@ -60,14 +46,7 @@ export default function About() {
         {/* Heading */}
         <div className="text-center md:text-left">
           <h2
-            className="text-5xl md:text-6xl font-bold"
-            style={{
-              background:
-                "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
+            className="text-5xl md:text-6xl font-bold text-gradient-heading"
           >
             <GlitchText text="About Me" />
           </h2>
@@ -85,14 +64,16 @@ export default function About() {
             className="col-span-1 md:col-span-2 p-6 md:p-8 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-6"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             style={{ willChange: "transform, opacity" }}
           >
             <div className="space-y-4">
               <div>
-                <span
-                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider"
+                <motion.span
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider cursor-default"
                   style={{
                     background: isDark ? "rgba(99,102,241,0.12)" : "rgba(238,242,255,0.95)",
                     border: isDark ? "1px solid rgba(99,102,241,0.32)" : "1px solid rgba(199,210,254,0.75)",
@@ -104,7 +85,7 @@ export default function About() {
                     <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-indigo-500" />
                   </span>
                   Open to Opportunities
-                </span>
+                </motion.span>
               </div>
 
               <h3 className="text-xl md:text-2xl font-bold text-neutral-900 dark:text-white">
@@ -159,8 +140,9 @@ export default function About() {
                 boxShadow: "0 8px 32px rgba(99,102,241,0.08)",
                 willChange: "transform",
               }}
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              whileHover={{ scale: 1.03 }}
             >
               <img
                 src={ais}
@@ -186,6 +168,7 @@ export default function About() {
             className="col-span-1 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
             transition={{ duration: 0.5, delay: 0.15 }}
             viewport={{ once: true }}
             style={{ willChange: "transform, opacity" }}
@@ -193,13 +176,23 @@ export default function About() {
             <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-gray-500">
               Credibility & Impact
             </h4>
-            <div className="flex flex-col gap-5">
-              {stats.map((stat) => (
-                <div key={stat.label} className="border-l-2 border-indigo-500/30 pl-4 py-0.5">
+            <motion.div 
+              className="flex flex-col gap-5"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15 } } }}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+            >
+              {aboutStats.map((stat) => (
+                <motion.div 
+                  key={stat.label} 
+                  className="border-l-2 border-indigo-500/30 pl-4 py-0.5"
+                  variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0, transition: { duration: 0.4 } } }}
+                >
                   <StatItem stat={stat} />
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Card 4: Core Architectural Focus (Col Span 1) */}
@@ -207,6 +200,7 @@ export default function About() {
             className="col-span-1 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
             style={{ willChange: "transform, opacity" }}
@@ -214,19 +208,27 @@ export default function About() {
             <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-gray-500">
               Architectural Focus
             </h4>
-            <div className="grid grid-cols-2 gap-2">
-              {passions.map(({ icon, label }) => (
-                <div
+            <motion.div 
+              className="grid grid-cols-2 gap-2"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+            >
+              {aboutPassions.map(({ icon, label }) => (
+                <motion.div
                   key={label}
-                  className="flex flex-col p-3 rounded-xl border border-neutral-200/50 dark:border-white/5 bg-neutral-500/5 hover:border-indigo-500/30 transition-all duration-300"
+                  variants={{ hidden: { opacity: 0, scale: 0.8 }, show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300 } } }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="flex flex-col p-3 rounded-xl border border-neutral-200/50 dark:border-white/5 bg-neutral-500/5 hover:border-indigo-500/30 transition-colors duration-300"
                 >
                   <span className="text-lg mb-1.5">{icon}</span>
                   <span className="text-[10px] md:text-xs font-semibold text-neutral-800 dark:text-gray-300 leading-snug">
                     {label}
                   </span>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
 
         </div>
@@ -234,4 +236,6 @@ export default function About() {
     </section>
   );
 }
+
+
 

@@ -5,12 +5,7 @@ import { useTheme } from "../context/ThemeContext";
 import pic from "../assets/pic2.webp";
 import Magnetic from "../components/Magnetic";
 import GlitchText from "../components/GlitchText";
-
-const titles = [
-  "Backend-Focused Full Stack Developer",
-  "API Architect & Database Specialist",
-  "AI Integrations Developer",
-];
+import { heroTitles as titles, heroParticles as PARTICLES } from "../constants/hero.data";
 
 const containerVariants = {
   hidden: {},
@@ -21,18 +16,6 @@ const itemVariants = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
 };
-
-// ── Static particle config (outside component to avoid re-creation per render) ──
-const PARTICLES = [
-  { size: 3, x: "12%",  y: "22%", delay: 0,   dur: 7   },
-  { size: 4, x: "78%",  y: "14%", delay: 1.4, dur: 9   },
-  { size: 2, x: "63%",  y: "58%", delay: 0.8, dur: 8   },
-  { size: 5, x: "28%",  y: "72%", delay: 2.1, dur: 11  },
-  { size: 3, x: "88%",  y: "78%", delay: 0.4, dur: 10  },
-  { size: 2, x: "45%",  y: "35%", delay: 3.0, dur: 8.5 },
-  { size: 4, x: "8%",   y: "58%", delay: 1.8, dur: 9.5 },
-  { size: 3, x: "55%",  y: "88%", delay: 0.6, dur: 7.5 },
-];
 
 export default function Hero({ startAnimation = true }) {
   const [currentTitle, setCurrentTitle] = useState(0);
@@ -146,12 +129,7 @@ export default function Hero({ startAnimation = true }) {
                 aria-label="GitHub profile"
                 whileHover={{ y: -2, scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200"
-                style={{
-                  background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
-                  border: isDark ? "1px solid rgba(255,255,255,0.10)" : "1px solid rgba(0,0,0,0.10)",
-                  color: isDark ? "#e5e7eb" : "#1f2937",
-                }}
+                className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-800 dark:text-gray-200"
               >
                 <FaGithub size={17} />
               </motion.a>
@@ -165,12 +143,7 @@ export default function Hero({ startAnimation = true }) {
                 aria-label="LinkedIn profile"
                 whileHover={{ y: -2, scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200"
-                style={{
-                  background: isDark ? "rgba(0,119,181,0.12)" : "rgba(0,119,181,0.08)",
-                  border: "1px solid rgba(0,119,181,0.30)",
-                  color: "#0077B5",
-                }}
+                className="flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200 bg-[#0077B5]/10 border border-[#0077B5]/30 text-[#0077B5]"
               >
                 <FaLinkedin size={17} />
               </motion.a>
@@ -194,12 +167,7 @@ export default function Hero({ startAnimation = true }) {
               download="Sahil-Sameer-Resume.pdf"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300"
-              style={{
-                background: isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)",
-                border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(99,102,241,0.2)"}`,
-                color: isDark ? "#e5e7eb" : "#374151",
-              }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 bg-white/60 dark:bg-white/5 border border-indigo-500/20 dark:border-white/10 text-gray-700 dark:text-gray-200"
             >
               {/* Download Icon */}
               <svg
@@ -219,12 +187,7 @@ export default function Hero({ startAnimation = true }) {
               href="#contact"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold text-sm transition-all duration-300"
-              style={{
-                background: "transparent",
-                border: "1px solid transparent",
-                color: isDark ? "#a5b4fc" : "#4f46e5",
-              }}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-semibold text-sm transition-all duration-300 bg-transparent border border-transparent text-indigo-600 dark:text-indigo-300"
             >
               <span>Let's Connect</span>
               <span>→</span>
@@ -313,5 +276,3 @@ export default function Hero({ startAnimation = true }) {
     </section>
   );
 }
-
-

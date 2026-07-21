@@ -1,62 +1,9 @@
 import { motion, useInView } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { FaLinkedin, FaGithub, FaEnvelope, FaInstagram, FaClipboard, FaCheck, FaTerminal } from "react-icons/fa";
+import { FaClipboard, FaCheck, FaTerminal } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 import GlitchText from "../components/GlitchText";
-
-// ─── Data ────────────────────────────────────────────────────────────────────
-const lines = [
-  { type: "comment", text: "// reach out through any channel or type in the shell" },
-  {
-    type: "entry",
-    icon: FaEnvelope,
-    cmd: "email",
-    value: "sahilsameer.dev18@gmail.com",
-    href: "mailto:sahilsameer.dev18@gmail.com",
-    external: false,
-    ariaLabel: "Send email to Sahil Sameer",
-    color: "#ff5f56",
-    copyable: true,
-  },
-  {
-    type: "entry",
-    icon: FaLinkedin,
-    cmd: "linkedin",
-    value: "/in/sahil-sameer-siddique",
-    href: "https://www.linkedin.com/in/sahil-sameer-siddique/",
-    external: true,
-    ariaLabel: "Open LinkedIn profile",
-    color: "#0077b5",
-  },
-  {
-    type: "entry",
-    icon: FaGithub,
-    cmd: "github",
-    value: "@SahilSameer18",
-    href: "https://github.com/SahilSameer18",
-    external: true,
-    ariaLabel: "Open GitHub profile",
-    color: "#c4c4c4",
-    lightColor: "#374151",
-  },
-  {
-    type: "entry",
-    icon: FaInstagram,
-    cmd: "instagram",
-    value: "@sahilsameer18",
-    href: "https://www.instagram.com/sahilsameer18/",
-    external: true,
-    ariaLabel: "Open Instagram profile",
-    color: "#E1306C",
-  },
-];
-
-const checks = [
-  "email found",
-  "linkedin found",
-  "github found",
-  "instagram found",
-];
+import { contactLines as lines, contactChecks as checks } from "../constants/contact.data";
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
@@ -238,14 +185,7 @@ export default function Contact() {
           viewport={{ once: true, margin: "0px" }}
         >
           <h2
-            className="text-5xl md:text-6xl font-bold mb-4"
-            style={{
-              background:
-                "linear-gradient(135deg, var(--heading-grad-start) 0%, var(--heading-grad-mid) 50%, var(--heading-grad-end) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
+            className="text-5xl md:text-6xl font-bold mb-4 text-gradient-heading"
           >
             <GlitchText text="Let's Connect" />
           </h2>
