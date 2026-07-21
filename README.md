@@ -1,38 +1,63 @@
-# 🚀 Sahil Sameer Siddique | Portfolio
+<div align="center">
+  <img src="public/portfolio-logo.png" alt="Logo" width="80" height="80" />
+  <h1 align="center">Sahil Sameer Siddique | Portfolio</h1>
+  <p align="center">
+    A high-performance, visually stunning developer portfolio showcasing full-stack capabilities. Built with React 19, Vite, and Tailwind CSS v4.
+    <br />
+    <br />
+    <a href="https://sahil-sameer-portfolio.vercel.app/"><strong>View Live Site »</strong></a>
+    ·
+    <a href="https://github.com/SahilSameer18/Portfolio/issues">Report Bug</a>
+  </p>
+</div>
 
-A high-performance, modern developer portfolio showcasing full-stack capabilities, built with React 19, Vite, and Tailwind CSS v4.
+<div align="center">
+  
+  ![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+  ![Vite](https://img.shields.io/badge/Vite_7-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+  ![TailwindCSS](https://img.shields.io/badge/Tailwind_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+  ![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue)
 
-🔗 **Live Site:** [sahil-sameer-portfolio.vercel.app](https://sahil-sameer-portfolio.vercel.app/)
+</div>
 
 ---
 
-## ✨ Features
+## ✨ Features & Highlights
 
-- **Performance-First Animations:** 100% GPU-composited scroll progress indicators and cursor followers built using Framer Motion.
+- **Bento Grid & Glassmorphism:** Sleek, modern UI utilizing custom radial backdrops, fine dot-grid overlays, and asymmetric bento-box layouts.
+- **Interactive 3D Elements:** Hardware-accelerated 3D card tilt effects calculating raw mouse coordinates via `requestAnimationFrame` to prevent React render chattering.
+- **Performance-First Animations:** 100% GPU-composited scroll progress indicators, interactive custom cursors, and magnetic buttons built with Framer Motion.
 - **Dynamic Themes:** Smooth transition system between dark and light mode with pre-render anti-flash protection.
-- **Glassmorphic Design:** Sleek UI utilizing custom radial backdrops and fine dot-grid overlays.
-- **Responsive Navigation:** Scroll-spy pill navbar for desktop and standard mobile drawer navigation.
+- **Interactive Terminal Shell:** A functional, command-line inspired contact section that accepts user commands (e.g., `email`, `github`, `clear`).
+- **Flawless SEO & Accessibility:** Semantic HTML, JSON-LD Structured Schema (Person), XML Sitemap, canonical tags, and `useReducedMotion` support.
 
 ---
 
 ## 🛠️ Architecture & Tech Stack
 
-- **Core Framework:** React 19 & Vite 7 (optimized production build with manual chunk splitting)
-- **Styling:** Tailwind CSS v4 & custom HSL/RGB CSS variables
+The architecture separates data logic from visual components for maximum scalability.
+
+- **Core Framework:** React 19 & Vite (optimized production build with manual chunk splitting)
+- **Styling:** Tailwind CSS v4 & custom CSS variables
 - **Animations:** Framer Motion 12
-- **SEO & Search Engines:** Semantic HTML, JSON-LD Structured Schema, XML Sitemap, and SEO meta tags
+- **Icons:** React Icons
 
 ```text
 src/
+├── assets/              # Static images and media
 ├── components/          # Global UI elements (Navbar, ThemeToggle, SoftBackdrop)
+├── constants/           # Centralized static data (skills, projects, education)
 ├── context/             # ThemeContext for global dark/light state
-├── sections/            # Visual layout components (Hero, About, Experience, Skills, Projects, etc.)
-└── hooks/               # Custom helper hooks (useCountUp)
+├── hooks/               # Custom helper hooks (useCountUp, etc.)
+├── sections/            # Visual layout components (Hero, About, Skills, Projects, etc.)
+└── App.jsx              # Main entry point with React.lazy() code splitting
 ```
 
 ---
 
 ## 🚀 Installation & Setup
+
+To run this project locally:
 
 ```bash
 # Clone the repository
@@ -42,24 +67,24 @@ cd Portfolio
 # Install dependencies
 npm install
 
-# Run development server
+# Run the development server
 npm run dev
 ```
 
 ### Available Commands
-- `npm run dev` — Starts Vite dev server.
-- `npm run build` — Compiles optimized production bundle to `/dist`.
-- `npm run lint` — Runs ESLint for syntax/lint validation.
+- `npm run dev` — Starts Vite dev server with hot module replacement (HMR).
+- `npm run build` — Compiles optimized production bundle to the `/dist` folder.
+- `npm run lint` — Runs ESLint for syntax and lint validation.
+- `npm run preview` — Locally previews the production build.
 
 ---
 
-## ⚡ Performance & Optimization
+## ⚡ Performance Optimizations
 
-- **Dynamic Code Splitting:** Heavy modules (framer-motion, react-icons) split to reduce initial footprint.
-- **Layout Stability:** Zero layout shifts (CLS) achieved through aspect-ratio sizing on graphics.
-- **Zero Render Chattering:** Mouse coordinates are updated directly via Framer Motion's React-bypass hooks.
-- **Anti-Flash Theme:** Custom blocking scripts applied in DOM to avoid dark-theme flashing.
-- **Lazy Component Loading:** Dynamically loads off-screen sections (About, Skills) on demand.
+This portfolio was engineered to be fast, despite the heavy animations.
+- **Dynamic Code Splitting:** `React.lazy()` and `<Suspense>` are used in `App.jsx` to load off-screen sections (Projects, Contact) on demand.
+- **Layout Stability:** Zero Cumulative Layout Shifts (CLS) achieved through strict aspect-ratio sizing on graphics and bento grids.
+- **Optimized Event Listeners:** Mouse tracking for the 3D tilt and cursor bypasses React's state cycle, directly updating the DOM via `requestAnimationFrame`.
 
 ---
 
@@ -70,4 +95,7 @@ npm run dev
 - **Email:** [sahilsameer.dev18@gmail.com](mailto:sahilsameer.dev18@gmail.com)
 
 ---
-*Developed with care by Sahil Sameer Siddique*
+<p align="center">
+  <i>Developed with precision and passion by Sahil Sameer Siddique</i>
+</p>
+
