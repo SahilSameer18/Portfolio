@@ -26,7 +26,7 @@ import { TbWorldWww, TbDatabase, TbSparkles, TbLayersIntersect, TbCpu, TbFilter 
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import GlitchText from "../components/GlitchText";
-import { skillsData, skillCategories as categories, skillCategoryAccents as categoryAccents, skillCategoryBentoSpans as categoryBentoSpans, skillCoreStackNames as coreStackNames } from "../constants/skills.data";
+import { skillsData, skillCategories as categories, skillCategoryAccents as categoryAccents, skillCoreStackNames as coreStackNames } from "../constants/skills.data";
 
 // Icon component mapping
 
@@ -71,6 +71,70 @@ const container = {
 const item = {
   hidden: { opacity: 0, y: 8 },
   show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
+
+// Reusable skill pill with brand-color glow on hover
+const SkillPill = ({ name, icon, color, theme }) => {
+  const [hovered, setHovered] = useState(false);
+  const isDark = theme === "dark";
+
+  // Per-icon color overrides — brand icons that are white/black need theme-specific fixes
+  const iconColorOverrides = {
+    // Socket.io: pure black brand color — soft slate on dark, near-black on light
+    "Socket.io": isDark ? "#94a3b8" : "#1e293b",
+    // GitHub: white brand — soft charcoal on light, muted white-gray on dark
+    "GitHub": isDark ? "#e2e8f0" : "#374151",
+    // Vercel: white brand — same treatment as GitHub
+    "Vercel": isDark ? "#e2e8f0" : "#374151",
+    // Express: white brand — readable gray on both themes
+    "Express.js": isDark ? "#d1d5db" : "#374151",
+    // Prisma: dark brand — indigo tint on dark for visual warmth
+    "Prisma": isDark ? "#a5b4fc" : "#1e293b",
+  };
+
+  // Use override if defined, otherwise fall back to skill's own brand color
+  const iconColor = iconColorOverrides[name] ?? color;
+
+  // Glow color overrides — brand colors that are black/white produce invisible glows
+  const glowColorOverrides = {
+    "Socket.io": "#64748b", // slate-500 — visible glow on both themes
+    "GitHub":    "#8b949e", // GitHub's actual gray — visible on both themes
+    "Vercel":    "#888888", // mid-gray — visible on both themes
+    "Express.js":"#6b7280", // neutral gray — visible on both themes
+  };
+
+  // Use glow override if defined, otherwise the brand color is fine
+  const glowColor = glowColorOverrides[name] ?? color;
+
+  // On hover, border and box-shadow use the resolved glow color
+  const hoverStyle = hovered
+    ? {
+        borderColor: glowColor,
+        boxShadow: isDark
+          ? `0 0 12px ${glowColor}66, 0 0 4px ${glowColor}44`
+          : `0 0 10px ${glowColor}50, 0 0 3px ${glowColor}30`,
+      }
+    : {};
+
+  return (
+    <motion.div
+      variants={item}
+      whileHover={{ scale: 1.05, y: -2 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-white/10 bg-white/80 dark:bg-neutral-500/5 transition-all duration-300 cursor-default"
+      style={hoverStyle}
+    >
+      {/* Technology Icon */}
+      <div className="flex-shrink-0">
+        <Icon name={icon} color={iconColor} size={18} />
+      </div>
+      {/* Technology Name */}
+      <span className="text-xs md:text-sm font-semibold text-neutral-800 dark:text-gray-300 whitespace-nowrap">
+        {name}
+      </span>
+    </motion.div>
+  );
 };
 
 export default function Skills() {
@@ -145,32 +209,10 @@ export default function Skills() {
                   viewport={{ once: true }}
                   className="flex flex-wrap gap-2.5"
                 >
-                  {catSkills.map(({ name, icon, color }) => {
-                    const iconColor =
-                      (name === "Express.js" || name === "GitHub" || name === "Vercel" || name === "Prisma" || name === "Socket.io") && theme === "light"
-                        ? "#09090b"
-                        : (name === "Socket.io") && theme === "dark"
-                        ? "#ffffff"
-                        : name === "Prisma" && theme === "dark"
-                        ? "#a5b4fc"
-                        : color;
-
-                    return (
-                      <motion.div
-                        key={name}
-                        variants={item}
-                        whileHover={{ scale: 1.03, y: -2 }}
-                        className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-neutral-200/50 dark:border-white/5 bg-white/70 dark:bg-white/5 hover:border-indigo-500/30 transition-colors duration-300 shadow-sm"
-                      >
-                        <div className="flex-shrink-0">
-                          <Icon name={icon} color={iconColor} size={18} />
-                        </div>
-                        <span className="text-xs font-medium text-neutral-800 dark:text-gray-200 whitespace-nowrap">
-                          {name}
-                        </span>
-                      </motion.div>
-                    );
-                  })}
+                  {/* Render each skill pill with branded color glow */}
+                  {catSkills.map(({ name, icon, color }) => (
+                    <SkillPill key={name} name={name} icon={icon} color={color} theme={theme} />
+                  ))}
                 </motion.div>
               </motion.div>
             );
@@ -216,12 +258,12 @@ export default function Skills() {
               </div>
 
               {/* Quick Metrics */}
-              <div className="grid grid-cols-2 gap-3 pt-4 border-t border-neutral-200/60 dark:border-white/10">
-                <div className="p-3 rounded-xl border border-neutral-200/50 dark:border-white/5 bg-neutral-500/5">
+              <div className="grid grid-cols-2 gap-3 pt-4 border-t border-neutral-200 dark:border-white/10">
+                <div className="p-3 rounded-xl border border-neutral-300 dark:border-white/10 bg-white/80 dark:bg-neutral-500/5">
                   <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{skillsData.length}</p>
                   <p className="text-xs text-neutral-500 dark:text-gray-500">Technologies</p>
                 </div>
-                <div className="p-3 rounded-xl border border-neutral-200/50 dark:border-white/5 bg-neutral-500/5">
+                <div className="p-3 rounded-xl border border-neutral-300 dark:border-white/10 bg-white/80 dark:bg-neutral-500/5">
                   <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{categories.length}</p>
                   <p className="text-xs text-neutral-500 dark:text-gray-500">Domains</p>
                 </div>
@@ -254,10 +296,10 @@ export default function Skills() {
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setActiveCategory("All")}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer border ${
                     activeCategory === "All"
-                      ? "bg-indigo-600 text-white shadow-sm"
-                      : "bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-400 hover:bg-neutral-200 dark:hover:bg-white/10"
+                      ? "bg-indigo-600 text-white shadow-sm border-indigo-600"
+                      : "bg-white/80 dark:bg-white/5 border-neutral-300 dark:border-white/10 text-neutral-600 dark:text-gray-400 hover:bg-neutral-100 dark:hover:bg-white/10"
                   }`}
                 >
                   All ({skillsData.length})
@@ -277,10 +319,10 @@ export default function Skills() {
                           ? accent
                           : isDark
                           ? "rgba(255,255,255,0.04)"
-                          : "rgba(0,0,0,0.04)",
+                          : "rgba(255,255,255,0.8)",
                         color: isActive ? "#ffffff" : undefined,
                         border: `1px solid ${
-                          isActive ? accent : isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"
+                          isActive ? accent : isDark ? "rgba(255,255,255,0.10)" : "#d1d5db"
                         }`,
                       }}
                     >
@@ -316,18 +358,8 @@ export default function Skills() {
 
               <div className="grid grid-cols-2 gap-2">
                 {coreStack.map((s) => (
-                  <motion.div
-                    key={s.name}
-                    whileHover={{ scale: 1.03, y: -2 }}
-                    className="flex items-center gap-2 p-2.5 rounded-xl border border-neutral-200/50 dark:border-white/5 bg-neutral-500/5 hover:border-indigo-500/30 transition-colors duration-300"
-                  >
-                    <div className="flex-shrink-0">
-                      <Icon name={s.icon} color={s.color} size={18} />
-                    </div>
-                    <span className="text-xs font-semibold text-neutral-800 dark:text-gray-300 truncate">
-                      {s.name}
-                    </span>
-                  </motion.div>
+                  // Core stack pill — uses SkillPill for consistent branded glow
+                  <SkillPill key={s.name} name={s.name} icon={s.icon} color={s.color} theme={theme} />
                 ))}
               </div>
             </motion.div>
@@ -335,39 +367,36 @@ export default function Skills() {
           </div>
 
 
-          {/* ── RIGHT BENTO CANVAS (8 Cols / ~67% width) ── */}
+          {/* ── RIGHT CATEGORY CARDS CANVAS (Stacked full-width layout matching mobile view) ── */}
           <div className="lg:col-span-7 xl:col-span-8">
             <AnimatePresence mode="wait">
+              {/* Animated container for selected filter or all categories */}
               <motion.div
                 key={activeCategory}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
-                className={
-                  activeCategory === "All"
-                    ? "grid grid-cols-1 md:grid-cols-2 gap-6 items-start"
-                    : "space-y-6"
-                }
+                className="space-y-6"
               >
                 {filteredCategories.map((category, ci) => {
                   const catSkills = skillsData.filter((s) => s.category === category);
                   if (!catSkills.length) return null;
                   const accent = categoryAccents[category];
-                  const cardSpan = activeCategory === "All" ? categoryBentoSpans[category] || "md:col-span-1" : "w-full";
 
                   return (
+                    /* Category card container */
                     <motion.div
                       key={category}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                      transition={{ duration: 0.5, delay: ci * 0.05 }}
+                      whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                      transition={{ duration: 0.4, delay: ci * 0.05 }}
                       viewport={{ once: true }}
-                      className={`p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4 ${cardSpan}`}
+                      className="p-6 rounded-2xl bg-white/90 dark:bg-white/5 border border-neutral-300 dark:border-white/10 shadow-sm flex flex-col space-y-4 w-full"
                       style={{ willChange: "transform, opacity" }}
                     >
-                      {/* Category Header */}
+                      {/* Category Title & Tool Count Badge */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <div
@@ -391,7 +420,7 @@ export default function Skills() {
                         </span>
                       </div>
 
-                      {/* Skill Pills */}
+                      {/* Interactive Skill Pills Flex Grid */}
                       <motion.div
                         variants={container}
                         initial="hidden"
@@ -399,32 +428,10 @@ export default function Skills() {
                         viewport={{ once: true }}
                         className="flex flex-wrap gap-2.5"
                       >
-                        {catSkills.map(({ name, icon, color }) => {
-                          const iconColor =
-                            (name === "Express.js" || name === "GitHub" || name === "Vercel" || name === "Prisma" || name === "Socket.io") && theme === "light"
-                              ? "#09090b"
-                              : (name === "Socket.io") && theme === "dark"
-                              ? "#ffffff"
-                              : name === "Prisma" && theme === "dark"
-                              ? "#a5b4fc"
-                              : color;
-
-                          return (
-                            <motion.div
-                              key={name}
-                              variants={item}
-                              whileHover={{ scale: 1.05, y: -2 }}
-                              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-neutral-200/50 dark:border-white/5 bg-neutral-500/5 hover:border-indigo-500/30 transition-colors duration-300"
-                            >
-                              <div className="flex-shrink-0">
-                                <Icon name={icon} color={iconColor} size={18} />
-                              </div>
-                              <span className="text-xs md:text-sm font-semibold text-neutral-800 dark:text-gray-300 whitespace-nowrap">
-                                {name}
-                              </span>
-                            </motion.div>
-                          );
-                        })}
+                        {/* Render each skill pill with branded color glow */}
+                        {catSkills.map(({ name, icon, color }) => (
+                          <SkillPill key={name} name={name} icon={icon} color={color} theme={theme} />
+                        ))}
                       </motion.div>
                     </motion.div>
                   );
@@ -439,5 +446,4 @@ export default function Skills() {
     </section>
   );
 }
-
 

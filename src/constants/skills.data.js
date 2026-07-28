@@ -50,15 +50,17 @@ export const skillsData = [
   { name: "Render",         icon: "SiRender",        color: "#46E3B7", category: "Tools & DevOps" },
 ];
 
+// Skill categories order
 export const skillCategories = [
+  "Language",
   "Frontend",
   "Backend",
-  "Language",
-  "AI & APIs",
   "Databases & ORM",
+  "AI & APIs",
   "Tools & DevOps",
 ];
 
+// Accent colors corresponding to each skill category
 export const skillCategoryAccents = {
   "Language":        "#6366f1",
   "Frontend":        "#4DB8D4",
@@ -68,15 +70,6 @@ export const skillCategoryAccents = {
   "Tools & DevOps":  "#fb923c",
 };
 
-export const skillCategoryBentoSpans = {
-  "Frontend":        "md:col-span-2",
-  "Backend":         "md:col-span-2",
-  "Language":        "md:col-span-1",
-  "AI & APIs":       "md:col-span-1",
-  "Databases & ORM": "md:col-span-1",
-  "Tools & DevOps":  "md:col-span-1",
-};
-
+// Core primary stack items featured in sidebar
 export const skillCoreStackNames = ["JavaScript", "Node.js", "React.js", "PostgreSQL"];
-
 
