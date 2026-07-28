@@ -171,7 +171,7 @@ export default function Navbar() {
                 ))}
 
                 <motion.a
-                  href="/my-resume.pdf"
+                  href="/sameer-resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -244,7 +244,7 @@ export default function Navbar() {
 
           {/* Desktop Resume Button */}
           <motion.a
-            href="/my-resume.pdf"
+            href="/sameer-resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}

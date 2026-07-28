@@ -163,8 +163,8 @@ export default function Hero({ startAnimation = true }) {
             </motion.a>
 
             <motion.a
-              href="/my-resume.pdf"
-              download="Sahil-Sameer-Resume.pdf"
+              href="/sameer-resume.pdf"
+              download="sahil-sameer-resume.pdf"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 bg-white/60 dark:bg-white/5 border border-indigo-500/20 dark:border-white/10 text-gray-700 dark:text-gray-200"
