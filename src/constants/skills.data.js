@@ -12,6 +12,7 @@ import {
   SiZod,
   SiMongodb,
   SiPostgresql,
+  SiRedis,
   SiPrisma,
   SiGit,
   SiGithub,
@@ -39,6 +40,7 @@ export const skillsData = [
   { name: "Gemini AI",      icon: "TbSparkles",      color: "#8E75B2", category: "AI & APIs" },
   { name: "MongoDB",        icon: "SiMongodb",       color: "#47A248", category: "Databases & ORM" },
   { name: "PostgreSQL",     icon: "SiPostgresql",    color: "#4169E1", category: "Databases & ORM" },
+  { name: "Redis",          icon: "SiRedis",         color: "#DC382D", category: "Databases & ORM" },
   { name: "Prisma",         icon: "SiPrisma",        color: "#2D3748", category: "Databases & ORM" },
   { name: "Neon",           icon: "TbDatabase",      color: "#00E599", category: "Databases & ORM" },
   { name: "Git",            icon: "SiGit",           color: "#F05032", category: "Tools & DevOps" },
@@ -76,6 +78,5 @@ export const skillCategoryBentoSpans = {
 };
 
 export const skillCoreStackNames = ["JavaScript", "Node.js", "React.js", "PostgreSQL"];
-
 
 

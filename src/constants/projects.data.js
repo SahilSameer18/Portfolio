@@ -28,7 +28,7 @@ export const projectsData = [
     impact: "Accelerated skills matching and prep loops by offering instant tailored prep schedules and detailed answer analytics.",
     link: "https://skillbridgeai-s.vercel.app/",
     github: "https://github.com/SahilSameer18/skillbridgeAI",
-    techStack: ["React", "PostgreSQL", "Prisma ORM", "Node", "Gemini AI"],
+    techStack: ["React", "PostgreSQL", "Prisma ORM", "Redis", "Node", "Gemini AI"],
     image: skillbridgeAI,
     accent: "#4DB8D4",
   },

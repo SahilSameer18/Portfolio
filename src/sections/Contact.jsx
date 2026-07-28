@@ -108,7 +108,7 @@ export default function Contact() {
       case "skills":
         newHistory.push({
           type: "output",
-          text: "Backend Stacks: Node.js, Express.js, JWT, Socket.io, REST APIs\nDatabases & ORM: PostgreSQL, MongoDB, Prisma ORM, Neon DB\nFrontend Frameworks: React.js, Tailwind CSS, JavaScript (ES6+), HTML5, CSS3\nDeveloper Tools: Git, GitHub, Postman, Vercel, Render, Gemini AI (LLM integration)"
+          text: "Backend Stacks: Node.js, Express.js, JWT, Socket.io, REST APIs\nDatabases & ORM: MongoDB, PostgreSQL, Redis, Prisma ORM, Neon DB\nFrontend Frameworks: React.js, Tailwind CSS, JavaScript (ES6+), HTML5, CSS3\nDeveloper Tools: Git, GitHub, Postman, Vercel, Render, Gemini AI (LLM integration)"
         });
         break;
       case "projects":
