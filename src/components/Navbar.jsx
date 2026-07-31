@@ -101,7 +101,7 @@ export default function Navbar() {
           {/* Controls: Toggle + Hamburger */}
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            
+
             {/* Hamburger Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -137,9 +137,15 @@ export default function Navbar() {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="w-full overflow-hidden"
               style={{
-                background: theme === "dark" ? "rgba(5,5,15,0.75)" : "rgba(255,255,255,0.85)",
+                background:
+                  theme === "dark"
+                    ? "rgba(5,5,15,0.75)"
+                    : "rgba(255,255,255,0.85)",
                 backdropFilter: "blur(20px)",
-                borderBottom: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.06)",
+                borderBottom:
+                  theme === "dark"
+                    ? "1px solid rgba(255,255,255,0.06)"
+                    : "1px solid rgba(0,0,0,0.06)",
               }}
             >
               <div className="flex flex-col items-center gap-6 py-10">
@@ -171,7 +177,7 @@ export default function Navbar() {
                 ))}
 
                 <motion.a
-                  href="/sameer-resume.pdf"
+                  href="/sahil-resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -223,7 +229,9 @@ export default function Navbar() {
                 <a
                   href={item.path}
                   className={`relative h-5 overflow-hidden block group transition-colors duration-300 ${
-                    active === item.id ? "text-indigo-600 dark:text-indigo-300 font-semibold" : "text-neutral-500 hover:text-neutral-900 dark:text-gray-400 dark:hover:text-white"
+                    active === item.id
+                      ? "text-indigo-600 dark:text-indigo-300 font-semibold"
+                      : "text-neutral-500 hover:text-neutral-900 dark:text-gray-400 dark:hover:text-white"
                   }`}
                 >
                   <span className="block leading-5 group-hover:-translate-y-full transition-transform duration-300">
@@ -235,16 +243,16 @@ export default function Navbar() {
                 </a>
               </Magnetic>
             ))}
-            
+
             {/* Theme Toggle */}
-          <ThemeToggle />
+            <ThemeToggle />
           </div>
           {/* Divider */}
           <div className="w-px h-4 bg-neutral-400 dark:bg-white/20 rounded-full" />
 
           {/* Desktop Resume Button */}
           <motion.a
-            href="/sameer-resume.pdf"
+            href="/sahil-resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
@@ -267,7 +275,6 @@ export default function Navbar() {
             </svg>
             Resume
           </motion.a>
-          
         </div>
       </div>
     </motion.nav>

@@ -5,7 +5,10 @@ import { useTheme } from "../context/ThemeContext";
 import pic from "../assets/pic2.webp";
 import Magnetic from "../components/Magnetic";
 import GlitchText from "../components/GlitchText";
-import { heroTitles as titles, heroParticles as PARTICLES } from "../constants/hero.data";
+import {
+  heroTitles as titles,
+  heroParticles as PARTICLES,
+} from "../constants/hero.data";
 
 const containerVariants = {
   hidden: {},
@@ -32,33 +35,45 @@ export default function Hero({ startAnimation = true }) {
   }, [startAnimation]);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center scroll-mt-12">
-
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center scroll-mt-12"
+    >
       {/* ── Floating particles — hidden on reduced-motion/mobile ── */}
       {!prefersReduced && (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        {PARTICLES.map((p, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width:  p.size,
-              height: p.size,
-              left:   p.x,
-              top:    p.y,
-              background: isDark
-                ? "radial-gradient(circle, rgba(139,92,246,0.75), rgba(99,102,241,0.18))"
-                : "radial-gradient(circle, rgba(99,102,241,0.50), rgba(139,92,246,0.12))",
-            }}
-            animate={{ y: [0, -(p.size * 3 + 10), 0], opacity: [0.25, 0.75, 0.25] }}
-            transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
-          />
-        ))}
-      </div>
+        <div
+          className="absolute inset-0 overflow-hidden pointer-events-none"
+          aria-hidden="true"
+        >
+          {PARTICLES.map((p, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: p.size,
+                height: p.size,
+                left: p.x,
+                top: p.y,
+                background: isDark
+                  ? "radial-gradient(circle, rgba(139,92,246,0.75), rgba(99,102,241,0.18))"
+                  : "radial-gradient(circle, rgba(99,102,241,0.50), rgba(139,92,246,0.12))",
+              }}
+              animate={{
+                y: [0, -(p.size * 3 + 10), 0],
+                opacity: [0.25, 0.75, 0.25],
+              }}
+              transition={{
+                duration: p.dur,
+                repeat: Infinity,
+                delay: p.delay,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
       )}
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid md:grid-cols-2 gap-16 items-center">
-
         {/* ── Left Text ── */}
         <motion.div
           className="space-y-6"
@@ -66,7 +81,6 @@ export default function Hero({ startAnimation = true }) {
           initial="hidden"
           animate={startAnimation ? "show" : "hidden"}
         >
-
           {/* Greeting */}
           <motion.p
             variants={itemVariants}
@@ -104,7 +118,10 @@ export default function Hero({ startAnimation = true }) {
           </motion.div>
 
           {/* Divider Lines */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3">
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-3"
+          >
             <div className="h-px w-12 bg-gradient-to-r from-indigo-600 to-purple-500" />
             <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-500" />
           </motion.div>
@@ -114,13 +131,17 @@ export default function Hero({ startAnimation = true }) {
             variants={itemVariants}
             className="text-neutral-600 dark:text-gray-400 max-w-lg leading-relaxed text-sm md:text-base"
           >
-            I specialize in engineering robust backend architectures, optimizing complex databases, 
-            and building secure APIs. I turn ambitious ideas into scalable, production-ready platforms 
-            with seamless frontend and AI integrations.
+            I specialize in engineering robust backend architectures, optimizing
+            complex databases, and building secure APIs. I turn ambitious ideas
+            into scalable, production-ready platforms with seamless frontend and
+            AI integrations.
           </motion.p>
 
           {/* Social Links */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3">
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-3"
+          >
             <Magnetic>
               <motion.a
                 href="https://github.com/SahilSameer18"
@@ -151,7 +172,10 @@ export default function Hero({ startAnimation = true }) {
           </motion.div>
 
           {/* CTAs */}
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-2">
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-wrap gap-4 pt-2"
+          >
             <motion.a
               href="#projects"
               whileHover={{ scale: 1.04, y: -2 }}
@@ -159,12 +183,14 @@ export default function Hero({ startAnimation = true }) {
               className="group btn-shimmer inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-600 shadow-[0_4px_20px_rgba(99,102,241,0.3)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.5)] transition-shadow duration-300"
             >
               <span>View Projects</span>
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
             </motion.a>
 
             <motion.a
-              href="/sameer-resume.pdf"
-              download="sahil-sameer-resume.pdf"
+              href="/sahil-resume.pdf"
+              download="sahil-resume.pdf"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 bg-white/60 dark:bg-white/5 border border-indigo-500/20 dark:border-white/10 text-gray-700 dark:text-gray-200"
@@ -178,7 +204,11 @@ export default function Hero({ startAnimation = true }) {
                 stroke="currentColor"
                 strokeWidth={2.5}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4"
+                />
               </svg>
               <span>Resume</span>
             </motion.a>
@@ -199,7 +229,9 @@ export default function Hero({ startAnimation = true }) {
         <motion.div
           className="flex justify-center"
           initial={{ opacity: 0, x: 40 }}
-          animate={startAnimation ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+          animate={
+            startAnimation ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }
+          }
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <motion.div
@@ -211,13 +243,14 @@ export default function Hero({ startAnimation = true }) {
             <div
               className="absolute -inset-8 rounded-full -z-10 pointer-events-none"
               style={{
-                background: "radial-gradient(circle, rgba(99,102,241,0.22) 0%, rgba(168,85,247,0.12) 50%, transparent 75%)",
+                background:
+                  "radial-gradient(circle, rgba(99,102,241,0.22) 0%, rgba(168,85,247,0.12) 50%, transparent 75%)",
                 filter: "blur(24px)",
               }}
             />
 
             {/* Outer spinning gradient ring on hover */}
-            <div 
+            <div
               className="absolute -inset-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 opacity-60 blur-xs transition duration-500 group-hover:opacity-100"
               style={{ zIndex: -1 }}
             />
@@ -239,7 +272,6 @@ export default function Hero({ startAnimation = true }) {
             />
           </motion.div>
         </motion.div>
-
       </div>
 
       {/* ── Scroll-down arrow ── */}
