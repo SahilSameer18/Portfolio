@@ -1,5 +1,5 @@
-import { useRef, useState, useCallback } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { motion, useReducedMotion, useMotionValue, useSpring } from "framer-motion";
 import { FaGraduationCap, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 import { HiAcademicCap } from "react-icons/hi";
 import { useTheme } from "../context/ThemeContext";
@@ -12,8 +12,14 @@ function EducationCard({ edu, index }) {
   const isDark = theme === "dark";
   const prefersReduced = useReducedMotion();
   const cardRef = useRef(null);
+  const glowRef = useRef(null);
   const rafRef = useRef(null);
-  const [tilt, setTilt] = useState({ rotX: 0, rotY: 0, glowX: 50, glowY: 50 });
+
+  const rotX = useMotionValue(0);
+  const rotY = useMotionValue(0);
+  const springX = useSpring(rotX, { stiffness: 200, damping: 22, mass: 0.4 });
+  const springY = useSpring(rotY, { stiffness: 200, damping: 22, mass: 0.4 });
+
   const [hovered, setHovered] = useState(false);
 
   const handleMouseMove = useCallback(
@@ -25,22 +31,32 @@ function EducationCard({ edu, index }) {
         const rect = cardRef.current.getBoundingClientRect();
         const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
         const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-        setTilt({
-          rotX: -dy * 5,
-          rotY: dx * 5,
-          glowX: ((e.clientX - rect.left) / rect.width) * 100,
-          glowY: ((e.clientY - rect.top) / rect.height) * 100,
-        });
+
+        rotX.set(-dy * 5);
+        rotY.set(dx * 5);
+
+        if (glowRef.current) {
+          const glowX = ((e.clientX - rect.left) / rect.width) * 100;
+          const glowY = ((e.clientY - rect.top) / rect.height) * 100;
+          glowRef.current.style.setProperty("--glow-x", `${glowX}%`);
+          glowRef.current.style.setProperty("--glow-y", `${glowY}%`);
+        }
       });
     },
-    [prefersReduced],
+    [prefersReduced, rotX, rotY],
   );
 
   const handleMouseLeave = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    setTilt((prev) => ({ ...prev, rotX: 0, rotY: 0 }));
+    rotX.set(0);
+    rotY.set(0);
     setHovered(false);
-  }, []);
+  }, [rotX, rotY]);
+
+  useEffect(
+    () => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); },
+    [],
+  );
 
   return (
     <motion.div
@@ -50,24 +66,16 @@ function EducationCard({ edu, index }) {
       viewport={{ once: true, margin: "0px" }}
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={(e) => {
-        setHovered(true);
-        if (!prefersReduced && cardRef.current) {
-          const rect = cardRef.current.getBoundingClientRect();
-          setTilt((prev) => ({
-            ...prev,
-            glowX: ((e.clientX - rect.left) / rect.width) * 100,
-            glowY: ((e.clientY - rect.top) / rect.height) * 100,
-          }));
-        }
-      }}
+      onMouseEnter={() => setHovered(true)}
       onMouseLeave={handleMouseLeave}
       style={{ perspective: "1200px" }}
     >
       <motion.div
-        animate={prefersReduced ? {} : { rotateX: tilt.rotX, rotateY: tilt.rotY }}
-        transition={{ type: "spring", stiffness: 200, damping: 22, mass: 0.4 }}
-        style={{ transformStyle: "preserve-3d" }}
+        style={{
+          rotateX: springX,
+          rotateY: springY,
+          transformStyle: "preserve-3d",
+        }}
         className="relative rounded-2xl p-6 md:p-7 transition-[box-shadow,border-color] duration-400"
         // ─── Card shell ───
         // Box-shadow and border change on hover; background stays stable
@@ -123,9 +131,10 @@ function EducationCard({ edu, index }) {
         {/* ── Cursor spotlight ── */}
         {hovered && !prefersReduced && (
           <div
+            ref={glowRef}
             className="absolute inset-0 rounded-2xl pointer-events-none"
             style={{
-              background: `radial-gradient(circle at ${tilt.glowX}% ${tilt.glowY}%, ${edu.accent}14 0%, transparent 65%)`,
+              background: `radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), ${edu.accent}14 0%, transparent 65%)`,
             }}
           />
         )}

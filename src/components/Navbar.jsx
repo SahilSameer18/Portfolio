@@ -20,7 +20,7 @@ export default function Navbar() {
     { name: "Contact", path: "#contact", id: "contact" },
   ];
 
-  // ✅ Separate effect: scroll tracking — runs once only
+  // ✅ Scroll tracking: runs IntersectionObserver on sections directly
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -34,27 +34,18 @@ export default function Navbar() {
     );
 
     const observeSections = () => {
-      observer.disconnect();
-
-      document.querySelectorAll("section").forEach((section) => {
+      document.querySelectorAll("section[id]").forEach((section) => {
         observer.observe(section);
       });
     };
 
     observeSections();
-
-    const mutationObserver = new MutationObserver(() => {
-      observeSections();
-    });
-
-    mutationObserver.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
+    // Catch any lazy-loaded sections after initial paint
+    const timer = setTimeout(observeSections, 500);
 
     return () => {
       observer.disconnect();
-      mutationObserver.disconnect();
+      clearTimeout(timer);
     };
   }, []);
 

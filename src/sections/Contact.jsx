@@ -201,6 +201,8 @@ export default function Contact() {
 
         {/* ── Terminal Card ── */}
         <motion.div
+          role="region"
+          aria-label="Interactive terminal"
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: EASE_OUT }}
@@ -383,6 +385,7 @@ export default function Contact() {
                   onChange={(e) => setInputVal(e.target.value)}
                   className="flex-1 bg-transparent border-none outline-none focus:ring-0 text-neutral-800 dark:text-white caret-indigo-500 font-mono text-sm md:text-base p-0"
                   placeholder="type command (e.g. help)"
+                  aria-label="Terminal command input"
                   autoCapitalize="off"
                   autoComplete="off"
                   spellCheck="false"

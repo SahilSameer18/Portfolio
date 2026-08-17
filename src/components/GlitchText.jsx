@@ -54,8 +54,9 @@ export default function GlitchText({ text, className, style, triggerOnInView = t
       onMouseEnter={() => setTriggerGlitch(true)}
       className={`inline-block ${className || ""}`}
       style={style}
+      aria-label={text}
     >
-      {displayText}
+      <span aria-hidden="true">{displayText}</span>
     </motion.span>
   );
 }

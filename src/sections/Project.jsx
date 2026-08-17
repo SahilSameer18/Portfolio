@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useMotionValue, useSpring } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { useTheme } from "../context/ThemeContext";
@@ -115,10 +115,16 @@ const ProjectCard = ({ project, idx }) => {
   const resolvedAccent = getContrastAccent(project.accent, theme);
   const prefersReduced = useReducedMotion();
 
-  // 3D tilt state
+  // 3D tilt state via motion values (zero React re-renders on mousemove)
   const cardRef = useRef(null);
+  const glowRef = useRef(null);
   const rafRef  = useRef(null);
-  const [tilt,    setTilt]    = useState({ rotX: 0, rotY: 0, glowX: 50, glowY: 50 });
+
+  const rotX    = useMotionValue(0);
+  const rotY    = useMotionValue(0);
+  const springX = useSpring(rotX, { stiffness: 200, damping: 22, mass: 0.4 });
+  const springY = useSpring(rotY, { stiffness: 200, damping: 22, mass: 0.4 });
+
   const [hovered, setHovered] = useState(false);
 
   // rAF-throttled handler — max one update per frame
@@ -131,22 +137,27 @@ const ProjectCard = ({ project, idx }) => {
         const rect = cardRef.current.getBoundingClientRect();
         const dx   = (e.clientX - (rect.left + rect.width  / 2)) / (rect.width  / 2);
         const dy   = (e.clientY - (rect.top  + rect.height / 2)) / (rect.height / 2);
-        setTilt({
-          rotX:  -dy * 3,
-          rotY:   dx * 3,
-          glowX: ((e.clientX - rect.left) / rect.width)  * 100,
-          glowY: ((e.clientY - rect.top)  / rect.height) * 100,
-        });
+
+        rotX.set(-dy * 3);
+        rotY.set(dx * 3);
+
+        if (glowRef.current) {
+          const glowX = ((e.clientX - rect.left) / rect.width)  * 100;
+          const glowY = ((e.clientY - rect.top)  / rect.height) * 100;
+          glowRef.current.style.setProperty("--glow-x", `${glowX}%`);
+          glowRef.current.style.setProperty("--glow-y", `${glowY}%`);
+        }
       });
     },
-    [prefersReduced],
+    [prefersReduced, rotX, rotY],
   );
 
   const handleMouseLeave = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    setTilt((prev) => ({ ...prev, rotX: 0, rotY: 0 }));
+    rotX.set(0);
+    rotY.set(0);
     setHovered(false);
-  }, []);
+  }, [rotX, rotY]);
 
   useEffect(
     () => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); },
@@ -157,17 +168,7 @@ const ProjectCard = ({ project, idx }) => {
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={(e) => {
-        setHovered(true);
-        if (!prefersReduced && cardRef.current) {
-          const rect = cardRef.current.getBoundingClientRect();
-          setTilt((prev) => ({
-            ...prev,
-            glowX: ((e.clientX - rect.left) / rect.width)  * 100,
-            glowY: ((e.clientY - rect.top)  / rect.height) * 100,
-          }));
-        }
-      }}
+      onMouseEnter={() => setHovered(true)}
       onMouseLeave={handleMouseLeave}
       style={{ perspective: "1200px" }}
     >
@@ -180,9 +181,9 @@ const ProjectCard = ({ project, idx }) => {
       >
         {/* ── 3-D tilt ── */}
         <motion.div
-          animate={prefersReduced ? {} : { rotateX: tilt.rotX, rotateY: tilt.rotY }}
-          transition={{ type: "spring", stiffness: 200, damping: 22, mass: 0.4 }}
           style={{
+            rotateX: springX,
+            rotateY: springY,
             transformStyle: "preserve-3d",
             position: "relative",
             padding: "2rem 2.5rem",
@@ -394,13 +395,14 @@ const ProjectCard = ({ project, idx }) => {
           {/* Spotlight — only the area around the cursor glows */}
           {!prefersReduced && (
             <div
+              ref={glowRef}
               aria-hidden="true"
               style={{
                 position:      "absolute",
                 inset:         0,
                 borderRadius:  "1.5rem",
                 pointerEvents: "none",
-                background:    `radial-gradient(circle 200px at ${tilt.glowX}% ${tilt.glowY}%, rgba(255,255,255,${
+                background:    `radial-gradient(circle 200px at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255,255,255,${
                   isDark ? "0.10" : "0.22"
                 }) 0%, transparent 100%)`,
                 opacity:       hovered ? 1 : 0,

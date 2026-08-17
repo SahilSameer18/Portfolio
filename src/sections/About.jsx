@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useMotionValue, useSpring } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import ais from "../assets/about2.png";
 import { useCountUp } from "../hooks/useCountUp";
@@ -39,12 +39,16 @@ function StatItem({ stat }) {
 // ─── Optimized 3D Tilt Card Wrapper ───────────────────────────────────────────
 function TiltCard({ children, className = "", delay = 0, innerClass = "justify-between" }) {
   const cardRef        = useRef(null);
+  const glowRef        = useRef(null);
   const rafRef         = useRef(null);
   const prefersReduced = useReducedMotion();
   const { theme }      = useTheme();
   const isDark         = theme === "dark";
 
-  const [tilt, setTilt]       = useState({ rotX: 0, rotY: 0, glowX: 50, glowY: 50 });
+  const rotX           = useMotionValue(0);
+  const rotY           = useMotionValue(0);
+  const springX        = useSpring(rotX, { stiffness: 220, damping: 20, mass: 0.4 });
+  const springY        = useSpring(rotY, { stiffness: 220, damping: 20, mass: 0.4 });
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = useCallback((e) => {
@@ -57,20 +61,24 @@ function TiltCard({ children, className = "", delay = 0, innerClass = "justify-b
       const dx   = (e.clientX - (rect.left + rect.width  / 2)) / (rect.width  / 2);
       const dy   = (e.clientY - (rect.top  + rect.height / 2)) / (rect.height / 2);
 
-      setTilt({
-        rotX:  -dy * 5, // 5 deg max tilt
-        rotY:   dx * 5,
-        glowX: ((e.clientX - rect.left) / rect.width)  * 100,
-        glowY: ((e.clientY - rect.top)  / rect.height) * 100,
-      });
+      rotX.set(-dy * 5); // 5 deg max tilt
+      rotY.set(dx * 5);
+
+      if (glowRef.current) {
+        const glowX = ((e.clientX - rect.left) / rect.width) * 100;
+        const glowY = ((e.clientY - rect.top) / rect.height) * 100;
+        glowRef.current.style.setProperty("--glow-x", `${glowX}%`);
+        glowRef.current.style.setProperty("--glow-y", `${glowY}%`);
+      }
     });
-  }, [prefersReduced]);
+  }, [prefersReduced, rotX, rotY]);
 
   const handleMouseLeave = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    setTilt((p) => ({ ...p, rotX: 0, rotY: 0 }));
+    rotX.set(0);
+    rotY.set(0);
     setIsHovered(false);
-  }, []);
+  }, [rotX, rotY]);
 
   useEffect(() => () => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
@@ -90,17 +98,20 @@ function TiltCard({ children, className = "", delay = 0, innerClass = "justify-b
       className={className}
     >
       <motion.div
-        animate={prefersReduced ? {} : { rotateX: tilt.rotX, rotateY: tilt.rotY }}
-        transition={{ type: "spring", stiffness: 220, damping: 20, mass: 0.4 }}
-        style={{ transformStyle: "preserve-3d" }}
+        style={{
+          rotateX: springX,
+          rotateY: springY,
+          transformStyle: "preserve-3d",
+        }}
         className="relative h-full w-full rounded-2xl"
       >
         {/* Spotlight cursor glow */}
         {isHovered && !prefersReduced && (
           <div
+            ref={glowRef}
             className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
             style={{
-              background: `radial-gradient(circle 180px at ${tilt.glowX}% ${tilt.glowY}%, ${
+              background: `radial-gradient(circle 180px at var(--glow-x, 50%) var(--glow-y, 50%), ${
                 isDark ? "rgba(99,102,241,0.12)" : "rgba(99,102,241,0.07)"
               } 0%, transparent 80%)`,
               zIndex: 0,
