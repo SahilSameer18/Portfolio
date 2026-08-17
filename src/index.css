@@ -197,5 +197,7 @@ html:active-view-transition *::after {
   background-clip: text;
 }
 
-
-
+@keyframes spin {
+  from { transform: rotateZ(0deg); }
+  to   { transform: rotateZ(360deg); }
+}

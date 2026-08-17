@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import ais from "../assets/about2.png";
 import { useCountUp } from "../hooks/useCountUp";
@@ -35,12 +36,102 @@ function StatItem({ stat }) {
   );
 }
 
+// ─── Optimized 3D Tilt Card Wrapper ───────────────────────────────────────────
+function TiltCard({ children, className = "", delay = 0, innerClass = "justify-between" }) {
+  const cardRef        = useRef(null);
+  const rafRef         = useRef(null);
+  const prefersReduced = useReducedMotion();
+  const { theme }      = useTheme();
+  const isDark         = theme === "dark";
+
+  const [tilt, setTilt]       = useState({ rotX: 0, rotY: 0, glowX: 50, glowY: 50 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = useCallback((e) => {
+    if (prefersReduced || !cardRef.current) return;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+
+    rafRef.current = requestAnimationFrame(() => {
+      if (!cardRef.current) return;
+      const rect = cardRef.current.getBoundingClientRect();
+      const dx   = (e.clientX - (rect.left + rect.width  / 2)) / (rect.width  / 2);
+      const dy   = (e.clientY - (rect.top  + rect.height / 2)) / (rect.height / 2);
+
+      setTilt({
+        rotX:  -dy * 5, // 5 deg max tilt
+        rotY:   dx * 5,
+        glowX: ((e.clientX - rect.left) / rect.width)  * 100,
+        glowY: ((e.clientY - rect.top)  / rect.height) * 100,
+      });
+    });
+  }, [prefersReduced]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    setTilt((p) => ({ ...p, rotX: 0, rotY: 0 }));
+    setIsHovered(false);
+  }, []);
+
+  useEffect(() => () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      style={{ perspective: "1000px" }}
+      className={className}
+    >
+      <motion.div
+        animate={prefersReduced ? {} : { rotateX: tilt.rotX, rotateY: tilt.rotY }}
+        transition={{ type: "spring", stiffness: 220, damping: 20, mass: 0.4 }}
+        style={{ transformStyle: "preserve-3d" }}
+        className="relative h-full w-full rounded-2xl"
+      >
+        {/* Spotlight cursor glow */}
+        {isHovered && !prefersReduced && (
+          <div
+            className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
+            style={{
+              background: `radial-gradient(circle 180px at ${tilt.glowX}% ${tilt.glowY}%, ${
+                isDark ? "rgba(99,102,241,0.12)" : "rgba(99,102,241,0.07)"
+              } 0%, transparent 80%)`,
+              zIndex: 0,
+            }}
+          />
+        )}
+        <div className={`relative z-10 h-full flex flex-col ${innerClass}`}>
+          {children}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function About() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
   return (
-    <section id="about" className="min-h-screen py-24 scroll-mt-12">
+    <section id="about" className="min-h-screen py-24 scroll-mt-12 relative overflow-hidden">
+      {/* Subtle 3D background accent */}
+      <div
+        className="absolute inset-0 pointer-events-none -z-10"
+        aria-hidden="true"
+        style={{
+          background: isDark
+            ? "radial-gradient(ellipse 60% 40% at 80% 20%, rgba(99,102,241,0.06) 0%, transparent 60%), radial-gradient(ellipse 40% 30% at 20% 80%, rgba(168,85,247,0.05) 0%, transparent 55%)"
+            : "radial-gradient(ellipse 60% 40% at 80% 20%, rgba(99,102,241,0.05) 0%, transparent 60%), radial-gradient(ellipse 40% 30% at 20% 80%, rgba(168,85,247,0.04) 0%, transparent 55%)",
+        }}
+      />
+
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full space-y-16">
         
         {/* Heading */}
@@ -60,14 +151,9 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-auto">
           
           {/* Card 1: Bio Story (Col Span 2) */}
-          <motion.div
-            className="col-span-1 md:col-span-2 p-6 md:p-8 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-6"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }}
+          <TiltCard
+            className="col-span-1 md:col-span-2 p-6 md:p-8 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm transition-all duration-300 hover:border-indigo-500/30 dark:hover:border-indigo-500/40"
+            delay={0}
           >
             <div className="space-y-4">
               <div>
@@ -101,10 +187,10 @@ export default function About() {
               </p>
             </div>
 
-            <div>
+            <div className="pt-4">
               <motion.a
                 href="#projects"
-                whileHover={{ scale: 1.02, x: 2 }}
+                whileHover={{ scale: 1.02, x: 3 }}
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300"
                 style={{
@@ -118,37 +204,34 @@ export default function About() {
                 <span>→</span>
               </motion.a>
             </div>
-          </motion.div>
+          </TiltCard>
 
           {/* Card 2: Self Portrait (Col Span 1, Row Span 2 on Desktop) */}
-          <motion.div
-            className="col-span-1 md:row-span-2 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col items-center justify-center space-y-6 relative overflow-hidden"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }}
+          <TiltCard
+            className="col-span-1 md:row-span-2 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm relative overflow-hidden transition-all duration-300 hover:border-indigo-500/30 dark:hover:border-indigo-500/40"
+            innerClass="items-center justify-center space-y-6"
+            delay={0.1}
           >
             {/* Corner accents */}
             <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-indigo-500/40 rounded-tl-lg pointer-events-none" />
             <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-indigo-500/40 rounded-br-lg pointer-events-none" />
 
             <motion.div
-              className="w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden"
+              className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden group"
               style={{
-                border: "1px solid rgba(99,102,241,0.2)",
-                boxShadow: "0 8px 32px rgba(99,102,241,0.08)",
+                border: "1px solid rgba(99,102,241,0.25)",
+                boxShadow: isDark ? "0 8px 32px rgba(99,102,241,0.20)" : "0 8px 32px rgba(99,102,241,0.10)",
                 willChange: "transform",
               }}
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.04 }}
             >
               <img
                 src={ais}
                 alt="Sahil Sameer Siddique portrait"
-                className="w-full h-full object-cover"
-                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="eager"
                 decoding="async"
               />
             </motion.div>
@@ -161,17 +244,12 @@ export default function About() {
                 Delhi, India
               </p>
             </div>
-          </motion.div>
+          </TiltCard>
 
           {/* Card 3: Credibility Stats (Col Span 1) */}
-          <motion.div
-            className="col-span-1 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }}
+          <TiltCard
+            className="col-span-1 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4 transition-all duration-300 hover:border-indigo-500/30 dark:hover:border-indigo-500/40"
+            delay={0.15}
           >
             <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-gray-500">
               Credibility & Impact
@@ -193,17 +271,12 @@ export default function About() {
                 </motion.div>
               ))}
             </motion.div>
-          </motion.div>
+          </TiltCard>
 
           {/* Card 4: Core Architectural Focus (Col Span 1) */}
-          <motion.div
-            className="col-span-1 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }}
+          <TiltCard
+            className="col-span-1 p-6 rounded-2xl bg-white/70 dark:bg-white/5 border border-neutral-200 dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4 transition-all duration-300 hover:border-indigo-500/30 dark:hover:border-indigo-500/40"
+            delay={0.2}
           >
             <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-gray-500">
               Architectural Focus
@@ -229,13 +302,10 @@ export default function About() {
                 </motion.div>
               ))}
             </motion.div>
-          </motion.div>
+          </TiltCard>
 
         </div>
       </div>
     </section>
   );
 }
-
-
-

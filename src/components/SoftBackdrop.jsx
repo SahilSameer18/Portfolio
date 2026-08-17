@@ -17,8 +17,8 @@ const SoftBackdrop = () => {
 
     let animationFrameId;
     let particles = [];
-    const maxParticles = 65;
-    const mouse = { x: null, y: null, radius: 130 };
+    const maxParticles = 120;
+    const mouse = { x: null, y: null, radius: 120 };
 
     const resizeCanvas = () => {
       const dpr = window.devicePixelRatio || 1;
@@ -34,11 +34,11 @@ const SoftBackdrop = () => {
       constructor() {
         this.x = Math.random() * window.innerWidth;
         this.y = Math.random() * window.innerHeight;
-        this.baseSpeedY = -(Math.random() * 0.4 + 0.15); // float up (antigravity)
-        this.speedX = Math.random() * 0.2 - 0.1;
+        this.baseSpeedY = -(Math.random() * 0.3 + 0.08);
+        this.speedX = Math.random() * 0.15 - 0.075;
         this.speedY = this.baseSpeedY;
-        this.size = Math.random() * 1.8 + 0.8; // particles size
-        this.opacity = Math.random() * 0.45 + 0.15;
+        this.size = Math.random() * 1.2 + 0.6;      // 0.6–1.8px — tiny
+        this.opacity = Math.random() * 0.26 + 0.12; // 0.12–0.38 — subtle
       }
 
       update() {
@@ -77,9 +77,9 @@ const SoftBackdrop = () => {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         if (theme === "dark") {
-          ctx.fillStyle = `rgba(167, 139, 250, ${this.opacity})`; // violet-400
+          ctx.fillStyle = `rgba(129, 140, 248, ${this.opacity})`; // indigo-400
         } else {
-          ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity * 0.7})`; // indigo-500
+          ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity * 0.75})`; // indigo-500
         }
         ctx.fill();
       }
@@ -128,7 +128,6 @@ const SoftBackdrop = () => {
 
   return (
     <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
     {/* ═══════════════════ LIGHT MODE ═══════════════════ */}
     <div
@@ -214,6 +213,9 @@ const SoftBackdrop = () => {
         }}
       />
     </div>
+
+    {/* Canvas on top of backgrounds so particles are visible */}
+    <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
     </div>
   );
