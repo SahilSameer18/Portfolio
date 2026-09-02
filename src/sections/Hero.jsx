@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState, Suspense } from "react";
-import { motion, AnimatePresence, useReducedMotion, useSpring, useMotionValue } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  useSpring,
+  useMotionValue,
+} from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 import pic from "../assets/pic2.webp";
@@ -15,7 +21,11 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
 };
 
 // ─── Typing cursor animation for "Hello, I'm" ──────────────────────────────
@@ -51,12 +61,12 @@ function TypedGreeting({ active }) {
 
 // ─── 3D-tilt profile photo wrapper ───────────────────────────────────────────
 function PhotoCard({ isDark, startAnimation }) {
-  const cardRef   = useRef(null);
-  const rafRef    = useRef(null);
-  const rotX      = useMotionValue(0);
-  const rotY      = useMotionValue(0);
-  const springX   = useSpring(rotX, { stiffness: 120, damping: 18 });
-  const springY   = useSpring(rotY, { stiffness: 120, damping: 18 });
+  const cardRef = useRef(null);
+  const rafRef = useRef(null);
+  const rotX = useMotionValue(0);
+  const rotY = useMotionValue(0);
+  const springX = useSpring(rotX, { stiffness: 120, damping: 18 });
+  const springY = useSpring(rotY, { stiffness: 120, damping: 18 });
   const prefersReduced = useReducedMotion();
 
   const handleMove = (e) => {
@@ -65,8 +75,8 @@ function PhotoCard({ isDark, startAnimation }) {
     rafRef.current = requestAnimationFrame(() => {
       if (!cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
-      const dx   = (e.clientX - (rect.left + rect.width  / 2)) / (rect.width  / 2);
-      const dy   = (e.clientY - (rect.top  + rect.height / 2)) / (rect.height / 2);
+      const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+      const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
       rotX.set(-dy * 10);
       rotY.set(dx * 10);
     });
@@ -77,9 +87,12 @@ function PhotoCard({ isDark, startAnimation }) {
     rotY.set(0);
   };
 
-  useEffect(() => () => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    },
+    [],
+  );
 
   return (
     <motion.div
@@ -121,7 +134,9 @@ function PhotoCard({ isDark, startAnimation }) {
           <div
             className="absolute -inset-6 rounded-full border pointer-events-none"
             style={{
-              borderColor: isDark ? "rgba(99,102,241,0.38)" : "rgba(99,102,241,0.45)",
+              borderColor: isDark
+                ? "rgba(99,102,241,0.38)"
+                : "rgba(99,102,241,0.45)",
               animation: "spin 14s linear infinite",
             }}
           />
@@ -129,7 +144,9 @@ function PhotoCard({ isDark, startAnimation }) {
           <div
             className="absolute -inset-10 rounded-full border pointer-events-none"
             style={{
-              borderColor: isDark ? "rgba(168,85,247,0.28)" : "rgba(124,58,237,0.35)",
+              borderColor: isDark
+                ? "rgba(168,85,247,0.28)"
+                : "rgba(124,58,237,0.35)",
               transform: "rotateX(65deg)",
               animation: "spin 22s linear infinite reverse",
             }}
@@ -141,7 +158,7 @@ function PhotoCard({ isDark, startAnimation }) {
             style={{
               background:
                 "conic-gradient(from 0deg, #6366f1, #a78bfa, #ec4899, #38bdf8, #6366f1)",
-              opacity: isDark ? 0.75 : 0.70,
+              opacity: isDark ? 0.75 : 0.7,
             }}
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -182,8 +199,12 @@ function PhotoCard({ isDark, startAnimation }) {
             <span
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold"
               style={{
-                background: isDark ? "rgba(4,4,15,0.85)" : "rgba(255,255,255,0.92)",
-                border: isDark ? "1px solid rgba(99,102,241,0.35)" : "1px solid rgba(99,102,241,0.2)",
+                background: isDark
+                  ? "rgba(4,4,15,0.85)"
+                  : "rgba(255,255,255,0.92)",
+                border: isDark
+                  ? "1px solid rgba(99,102,241,0.35)"
+                  : "1px solid rgba(99,102,241,0.2)",
                 backdropFilter: "blur(10px)",
                 color: isDark ? "#a5b4fc" : "#4f46e5",
                 boxShadow: isDark
@@ -208,7 +229,7 @@ function PhotoCard({ isDark, startAnimation }) {
 export default function Hero({ startAnimation = true }) {
   const [currentTitle, setCurrentTitle] = useState(0);
   const { theme } = useTheme();
-  const isDark     = theme === "dark";
+  const isDark = theme === "dark";
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
@@ -230,8 +251,10 @@ export default function Hero({ startAnimation = true }) {
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
           style={{
-            maskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, black 55%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 55%, transparent 100%)",
           }}
         >
           <Suspense fallback={null}>
@@ -269,7 +292,6 @@ export default function Hero({ startAnimation = true }) {
 
       {/* ── Main content ── */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid md:grid-cols-2 gap-16 items-center relative z-10">
-
         {/* ── Left Text ── */}
         <motion.div
           className="space-y-6"
@@ -304,8 +326,8 @@ export default function Hero({ startAnimation = true }) {
                 key={titles[currentTitle]}
                 className="text-lg md:text-xl font-semibold tracking-wide bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-700 dark:from-white/90 dark:via-indigo-500 dark:to-purple-600 bg-clip-text text-transparent"
                 initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0,  filter: "blur(0px)" }}
-                exit={{    opacity: 0, y: -10, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
                 transition={{ type: "spring", stiffness: 280, damping: 24 }}
               >
                 {titles[currentTitle]}
@@ -314,7 +336,10 @@ export default function Hero({ startAnimation = true }) {
           </motion.div>
 
           {/* Divider */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3">
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-3"
+          >
             <div className="h-px w-12 bg-gradient-to-r from-indigo-600 to-purple-500" />
             <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-500" />
           </motion.div>
@@ -331,7 +356,10 @@ export default function Hero({ startAnimation = true }) {
           </motion.p>
 
           {/* Social Links */}
-          <motion.div variants={itemVariants} className="flex items-center gap-3">
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-3"
+          >
             <Magnetic>
               <motion.a
                 href="https://github.com/SahilSameer18"
@@ -362,7 +390,10 @@ export default function Hero({ startAnimation = true }) {
           </motion.div>
 
           {/* CTAs */}
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-2">
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-wrap gap-4 pt-2"
+          >
             <motion.a
               href="#projects"
               whileHover={{ scale: 1.04, y: -2 }}
@@ -370,18 +401,31 @@ export default function Hero({ startAnimation = true }) {
               className="group btn-shimmer inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-indigo-600 to-violet-600 shadow-[0_4px_20px_rgba(99,102,241,0.3)] hover:shadow-[0_4px_32px_rgba(99,102,241,0.5)] transition-shadow duration-300"
             >
               <span>View Projects</span>
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
             </motion.a>
 
             <motion.a
-              href="/sahil-resume.pdf"
-              download="sahil-resume.pdf"
+              href="/sameer-resume.pdf"
+              download="sameer-resume.pdf"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 bg-white dark:bg-white/5 border border-neutral-200 dark:border-white/10 text-gray-700 dark:text-gray-200 shadow-sm hover:shadow-md"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4"
+                />
               </svg>
               <span>Resume</span>
             </motion.a>
@@ -419,9 +463,14 @@ export default function Hero({ startAnimation = true }) {
             scroll
           </span>
           <svg
-            width="16" height="16" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" strokeWidth={2}
-            strokeLinecap="round" strokeLinejoin="round"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="text-neutral-400 dark:text-gray-600"
           >
             <path d="M6 9l6 6 6-6" />
