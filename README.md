@@ -29,7 +29,7 @@
 - **Performance-First Animations:** 100% GPU-composited scroll progress indicators, interactive custom cursors, and magnetic buttons built with Framer Motion.
 - **Dynamic Themes:** Smooth transition system between dark and light mode with pre-render anti-flash protection.
 - **Interactive Terminal Shell:** A functional, command-line inspired contact section that accepts user commands (e.g., `email`, `github`, `clear`).
-- **Flawless SEO & Accessibility:** Semantic HTML, JSON-LD Structured Schema (Person), XML Sitemap, canonical tags, and `useReducedMotion` support.
+- **SEO & Accessibility Foundations:** Semantic HTML, JSON-LD structured data (Person), XML sitemap, canonical tags, and partial `useReducedMotion` support.
 
 ---
 
@@ -72,6 +72,7 @@ npm run dev
 ```
 
 ### Available Commands
+
 - `npm run dev` — Starts Vite dev server with hot module replacement (HMR).
 - `npm run build` — Compiles optimized production bundle to the `/dist` folder.
 - `npm run lint` — Runs ESLint for syntax and lint validation.
@@ -82,8 +83,9 @@ npm run dev
 ## ⚡ Performance Optimizations
 
 This portfolio was engineered to be fast, despite the heavy animations.
+
 - **Dynamic Code Splitting:** `React.lazy()` and `<Suspense>` are used in `App.jsx` to load off-screen sections (Projects, Contact) on demand.
-- **Layout Stability:** Zero Cumulative Layout Shifts (CLS) achieved through strict aspect-ratio sizing on graphics and bento grids.
+- **Layout Stability:** Responsive sizing and reserved layout space are used across graphics and bento grids to reduce layout shifts; verify CLS with Lighthouse in the deployed environment.
 - **Optimized Event Listeners:** Mouse tracking for the 3D tilt and cursor bypasses React's state cycle, directly updating the DOM via `requestAnimationFrame`.
 
 ---
@@ -95,7 +97,7 @@ This portfolio was engineered to be fast, despite the heavy animations.
 - **Email:** [sahilsameer.dev18@gmail.com](mailto:sahilsameer.dev18@gmail.com)
 
 ---
+
 <p align="center">
   <i>Developed with precision and passion by Sahil Sameer Siddique</i>
 </p>
-
