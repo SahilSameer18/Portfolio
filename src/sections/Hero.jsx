@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, Suspense } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import {
   motion,
   AnimatePresence,
@@ -11,8 +11,9 @@ import { useTheme } from "../context/ThemeContext";
 import pic from "../assets/pic2.webp";
 import Magnetic from "../components/Magnetic";
 import GlitchText from "../components/GlitchText";
-import HeroScene from "../components/HeroScene";
 import { heroTitles as titles } from "../constants/hero.data";
+
+const HeroScene = lazy(() => import("../components/HeroScene"));
 
 const containerVariants = {
   hidden: {},
@@ -97,8 +98,8 @@ function PhotoCard({ isDark, startAnimation }) {
   return (
     <motion.div
       className="flex justify-center"
-      initial={{ opacity: 0, x: 40 }}
-      animate={startAnimation ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={startAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
       transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* Perspective wrapper */}
@@ -231,6 +232,20 @@ export default function Hero({ startAnimation = true }) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const prefersReduced = useReducedMotion();
+  const sectionRef = useRef(null);
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
+
+  // Auto-pause Three.js WebGL canvas when Hero is not on screen
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroVisible(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!startAnimation) return;
@@ -243,9 +258,10 @@ export default function Hero({ startAnimation = true }) {
   return (
     <section
       id="home"
+      ref={sectionRef}
       className="relative min-h-screen flex items-center scroll-mt-12 overflow-hidden"
     >
-      {/* ── 3D canvas — dark mode only, fades out at bottom to blend with next section ── */}
+      {/* ── 3D canvas — dark mode only, pauses when offscreen ── */}
       {!prefersReduced && isDark && (
         <div
           className="absolute inset-0 pointer-events-none"
@@ -258,7 +274,7 @@ export default function Hero({ startAnimation = true }) {
           }}
         >
           <Suspense fallback={null}>
-            <HeroScene isDark={isDark} />
+            <HeroScene isDark={isDark} isVisible={isHeroVisible} />
           </Suspense>
         </div>
       )}
@@ -320,11 +336,14 @@ export default function Hero({ startAnimation = true }) {
           </motion.h1>
 
           {/* Rotating title */}
-          <motion.div variants={itemVariants} className="h-9 overflow-hidden">
+          <motion.div
+            variants={itemVariants}
+            className="min-h-[3.25rem] sm:min-h-[2.5rem] md:min-h-[2.25rem] flex items-center overflow-hidden"
+          >
             <AnimatePresence mode="wait">
               <motion.p
                 key={titles[currentTitle]}
-                className="text-lg md:text-xl font-semibold tracking-wide bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-700 dark:from-white/90 dark:via-indigo-500 dark:to-purple-600 bg-clip-text text-transparent"
+                className="text-base sm:text-lg md:text-xl font-semibold tracking-wide leading-snug md:leading-normal bg-gradient-to-r from-indigo-950 via-indigo-600 to-purple-700 dark:from-white/90 dark:via-indigo-500 dark:to-purple-600 bg-clip-text text-transparent"
                 initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}

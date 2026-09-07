@@ -56,10 +56,9 @@ const TechBadge = ({ tech, accent }) => {
 };
 
 // ─── Browser Frame Component ───────────────────────────────────────────────────
-const BrowserFrame = ({ children, url, accent }) => {
+const BrowserFrame = ({ children, url }) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const resolvedAccent = getContrastAccent(accent, theme);
 
   return (
     <div 

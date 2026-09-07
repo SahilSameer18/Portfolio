@@ -19,6 +19,7 @@ export default function SmoothScroll({ children }) {
       infinite: false,
     });
     lenisRef.current = lenis;
+    window.__lenis = lenis;
 
     const raf = (time) => {
       lenis.raf(time);
@@ -27,9 +28,26 @@ export default function SmoothScroll({ children }) {
 
     reqIdRef.current = requestAnimationFrame(raf);
 
+    // Intercept internal hash links (#home, #projects, etc.) for smooth gliding
+    const handleAnchorClick = (e) => {
+      const anchor = e.target.closest("a[href^='#']");
+      if (!anchor) return;
+      const href = anchor.getAttribute("href");
+      if (!href || href === "#") return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -24, duration: 1.2 });
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+
     return () => {
       if (reqIdRef.current) cancelAnimationFrame(reqIdRef.current);
+      document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
+      delete window.__lenis;
     };
   }, []);
 

@@ -93,20 +93,23 @@ export default function Footer() {
 
           {/* Socials + Back to top */}
           <div className="flex items-center gap-5">
-            {socials.map(({ icon: Icon, href, label, color, lightColor }) => (
-              <motion.a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                whileHover={{ y: -3, scale: 1.15 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Icon style={{ color: isDark ? color : lightColor, fontSize: "17px" }} />
-              </motion.a>
-            ))}
+            {socials.map((item) => {
+              const SocialIcon = item.icon;
+              return (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.label}
+                  whileHover={{ y: -3, scale: 1.15 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <SocialIcon style={{ color: isDark ? item.color : item.lightColor, fontSize: "17px" }} />
+                </motion.a>
+              );
+            })}
 
             <div
               className="w-px h-4 transition-colors duration-300"

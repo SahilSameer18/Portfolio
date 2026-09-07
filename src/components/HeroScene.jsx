@@ -1,6 +1,23 @@
-import { useRef, useMemo, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
+
+// ─── Module-scoped precomputed particle positions (Zero render-time RNG) ─────
+const PARTICLE_COUNT = 550;
+const particlePositions = new Float32Array(PARTICLE_COUNT * 3);
+
+// Deterministic LCG pseudo-random generator
+let seed = 42891;
+function lcg() {
+  seed = (seed * 16807) % 2147483647;
+  return (seed - 1) / 2147483646;
+}
+
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  particlePositions[i * 3]     = (lcg() - 0.5) * 26;
+  particlePositions[i * 3 + 1] = (lcg() - 0.5) * 13;
+  particlePositions[i * 3 + 2] = (lcg() - 0.5) * 6 - 3;
+}
 
 // ─── Single shared mouse ref (one listener for the whole scene) ───────────────
 function useMouse() {
@@ -16,20 +33,9 @@ function useMouse() {
   return mouse;
 }
 
-// ─── Particle cloud — reduced to 550 ─────────────────────────────────────────
+// ─── Particle cloud ──────────────────────────────────────────────────────────
 function ParticleCloud({ isDark, mouse }) {
-  const ref   = useRef();
-  const count = 550;
-
-  const positions = useMemo(() => {
-    const arr = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      arr[i * 3]     = (Math.random() - 0.5) * 26;
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 13;
-      arr[i * 3 + 2] = (Math.random() - 0.5) * 6 - 3;
-    }
-    return arr;
-  }, []);
+  const ref = useRef();
 
   useFrame((state) => {
     if (!ref.current) return;
@@ -39,7 +45,7 @@ function ParticleCloud({ isDark, mouse }) {
   });
 
   return (
-    <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
+    <Points ref={ref} positions={particlePositions} stride={3} frustumCulled={false}>
       <PointMaterial
         transparent
         color={isDark ? "#818cf8" : "#6366f1"}
@@ -52,7 +58,7 @@ function ParticleCloud({ isDark, mouse }) {
   );
 }
 
-// ─── Wireframe torus — reduced segments ──────────────────────────────────────
+// ─── Wireframe torus ──────────────────────────────────────────────────────────
 function WireTorus({ isDark, mouse }) {
   const ref = useRef();
   useFrame((state) => {
@@ -64,7 +70,6 @@ function WireTorus({ isDark, mouse }) {
   });
   return (
     <mesh ref={ref} position={[4.2, 0, -2]}>
-      {/* reduced: tube 0.008→0.010, radial 12→8, tubular 90→60 */}
       <torusGeometry args={[1.55, 0.010, 8, 60]} />
       <meshBasicMaterial
         color={isDark ? "#6366f1" : "#4f46e5"}
@@ -76,7 +81,7 @@ function WireTorus({ isDark, mouse }) {
   );
 }
 
-// ─── Photo orbit rings — reduced segments ─────────────────────────────────────
+// ─── Photo orbit rings ────────────────────────────────────────────────────────
 function PhotoOrbit({ isDark, mouse }) {
   const outer = useRef();
   const inner = useRef();
@@ -99,7 +104,6 @@ function PhotoOrbit({ isDark, mouse }) {
   return (
     <group position={[3.5, 0, 0]}>
       <mesh ref={outer}>
-        {/* reduced: 8→6 radial, 100→70 tubular */}
         <torusGeometry args={[2.0, 0.006, 6, 70]} />
         <meshBasicMaterial color={color} opacity={isDark ? 0.50 : 0.30} transparent />
       </mesh>
@@ -111,7 +115,7 @@ function PhotoOrbit({ isDark, mouse }) {
   );
 }
 
-// ─── Camera parallax — gentler lerp ──────────────────────────────────────────
+// ─── Camera parallax ──────────────────────────────────────────────────────────
 function CameraRig({ mouse }) {
   const { camera } = useThree();
   const target     = useRef({ x: 0, y: 0 });
@@ -119,17 +123,16 @@ function CameraRig({ mouse }) {
   useFrame(() => {
     target.current.x += (mouse.current.x * 0.35 - target.current.x) * 0.04;
     target.current.y += (mouse.current.y * 0.18 - target.current.y) * 0.04;
-    camera.position.x = target.current.x;
-    camera.position.y = target.current.y;
+    camera.position.set(target.current.x, target.current.y, 8);
     camera.lookAt(0, 0, 0);
   });
 
   return null;
 }
 
-// ─── Scene — mouse shared, no ambient glow spheres ───────────────────────────
+// ─── Scene ───────────────────────────────────────────────────────────────────
 function Scene({ isDark }) {
-  const mouse = useMouse(); // one listener for all children
+  const mouse = useMouse();
 
   return (
     <>
@@ -141,11 +144,12 @@ function Scene({ isDark }) {
   );
 }
 
-// ─── Exported canvas — performance settings ───────────────────────────────────
-export default function HeroScene({ isDark }) {
+// ─── Exported canvas with Auto-Sleep frameloop ─────────────────────────────────
+export default function HeroScene({ isDark, isVisible = true }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 8], fov: 60 }}
+      frameloop={isVisible ? "always" : "never"}
       gl={{
         antialias: false,          // off — big win on low-end GPUs
         alpha: true,

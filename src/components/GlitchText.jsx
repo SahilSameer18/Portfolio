@@ -1,30 +1,21 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 
 const CHARS = "!<>-_\\/[]{}—=+*^?#_";
 
 export default function GlitchText({ text, className, style, triggerOnInView = true, active = true }) {
   const [displayText, setDisplayText] = useState(text);
-  const [triggerGlitch, setTriggerGlitch] = useState(false);
   const ref = useRef(null);
-  
+  const intervalRef = useRef(null);
+  const hasTriggeredRef = useRef(false);
+
   // Triggers when 10% of the heading is visible, runs only once
   const isInView = useInView(ref, { once: true, margin: "-10%" });
 
-  useEffect(() => {
-    if (triggerOnInView && isInView && active) {
-      setTriggerGlitch(true);
-    }
-  }, [isInView, triggerOnInView, active]);
-
-  useEffect(() => {
-    if (!triggerGlitch) {
-      setDisplayText(text);
-      return;
-    }
-
+  const runGlitch = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
     let iteration = 0;
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setDisplayText((prev) =>
         prev
           .split("")
@@ -38,20 +29,31 @@ export default function GlitchText({ text, className, style, triggerOnInView = t
       );
 
       if (iteration >= text.length) {
-        clearInterval(interval);
-        setTriggerGlitch(false);
+        clearInterval(intervalRef.current);
+        setDisplayText(text);
       }
-      
+
       iteration += 1 / 3;
     }, 30);
+  }, [text]);
 
-    return () => clearInterval(interval);
-  }, [triggerGlitch, text]);
+  useEffect(() => {
+    if (triggerOnInView && isInView && active && !hasTriggeredRef.current) {
+      hasTriggeredRef.current = true;
+      runGlitch();
+    }
+  }, [isInView, triggerOnInView, active, runGlitch]);
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
   return (
     <motion.span
       ref={ref}
-      onMouseEnter={() => setTriggerGlitch(true)}
+      onMouseEnter={runGlitch}
       className={`inline-block ${className || ""}`}
       style={style}
       aria-label={text}

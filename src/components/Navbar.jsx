@@ -20,8 +20,9 @@ export default function Navbar() {
     { name: "Contact", path: "#contact", id: "contact" },
   ];
 
-  // ✅ Scroll tracking: runs IntersectionObserver on sections directly
+  // ✅ Scroll tracking: robustly observes all sections including lazy-loaded chunks
   useEffect(() => {
+    const observed = new Set();
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -30,22 +31,26 @@ export default function Navbar() {
           }
         });
       },
-      { threshold: 0.3 },
+      { threshold: 0.25 },
     );
 
     const observeSections = () => {
       document.querySelectorAll("section[id]").forEach((section) => {
-        observer.observe(section);
+        if (!observed.has(section)) {
+          observer.observe(section);
+          observed.add(section);
+        }
       });
     };
 
     observeSections();
-    // Catch any lazy-loaded sections after initial paint
-    const timer = setTimeout(observeSections, 500);
+    const interval = setInterval(observeSections, 400);
+    const stopTimer = setTimeout(() => clearInterval(interval), 3000);
 
     return () => {
       observer.disconnect();
-      clearTimeout(timer);
+      clearInterval(interval);
+      clearTimeout(stopTimer);
     };
   }, []);
 
@@ -96,7 +101,7 @@ export default function Navbar() {
             {/* Hamburger Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="flex flex-col justify-center items-center w-10 h-10 gap-1.5 focus:outline-none"
+              className="flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer"
               aria-label="Toggle menu"
             >
               <motion.span
@@ -153,8 +158,12 @@ export default function Navbar() {
                       const target = document.querySelector(item.path);
                       if (target) {
                         setTimeout(() => {
-                          target.scrollIntoView({ behavior: "smooth" });
-                        }, 300);
+                          if (window.__lenis) {
+                            window.__lenis.scrollTo(target, { offset: -24, duration: 1.2 });
+                          } else {
+                            target.scrollIntoView({ behavior: "smooth" });
+                          }
+                        }, 250);
                       }
                     }}
                     className={`text-base font-medium tracking-widest uppercase transition-colors duration-200 ${

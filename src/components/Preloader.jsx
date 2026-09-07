@@ -1,28 +1,27 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
-import * as THREE from "three";
 
 // ─── Boot sequence ────────────────────────────────────────────────────────────
 const BOOT_LOGS = [
-  { tag: "system", text: "Initializing boot sequence..." },
-  { tag: "system", text: "Loading environment variables..." },
-  { tag: "ok",     text: "ENV loaded successfully." },
-  { tag: "network",text: "Resolving localhost:3000..." },
-  { tag: "network",text: "Starting reverse proxy on port 80..." },
-  { tag: "db",     text: "Connecting to PostgreSQL cluster at aws-ap-south-1...", pause: 520 },
-  { tag: "db",     text: "Authenticating user 'sahil_admin'..." },
-  { tag: "ok",     text: "PostgreSQL connected (Pool size: 20)." },
-  { tag: "cache",  text: "Initializing Redis connection..." },
-  { tag: "ok",     text: "Redis connected (Latency: 12ms)." },
-  { tag: "auth",   text: "Initializing JWT strategies..." },
-  { tag: "api",    text: "Mounting routes: /api/v1/auth, /api/v1/users..." },
-  { tag: "api",    text: "Compiling AI models...", pause: 650 },
-  { tag: "ok",     text: "Gemini LLM interface ready." },
-  { tag: "server", text: "Starting Express application...", pause: 420 },
-  { tag: "ok",     text: "Server listening on port 8080." },
-  { tag: "ready",  text: "System is ready. Welcome to Sahil Sameer portfolio." },
+  { tag: "system",  text: "Initializing boot sequence..." },
+  { tag: "system",  text: "Loading environment variables..." },
+  { tag: "ok",      text: "ENV loaded successfully." },
+  { tag: "network", text: "Resolving localhost:3000..." },
+  { tag: "network", text: "Starting reverse proxy on port 80..." },
+  { tag: "db",      text: "Connecting to PostgreSQL cluster at aws-ap-south-1...", pause: 80 },
+  { tag: "db",      text: "Authenticating user 'sahil_admin'..." },
+  { tag: "ok",      text: "PostgreSQL connected (Pool size: 20)." },
+  { tag: "cache",   text: "Initializing Redis connection..." },
+  { tag: "ok",      text: "Redis connected (Latency: 12ms)." },
+  { tag: "auth",    text: "Initializing JWT strategies..." },
+  { tag: "api",     text: "Mounting routes: /api/v1/auth, /api/v1/users..." },
+  { tag: "api",     text: "Compiling AI models...", pause: 100 },
+  { tag: "ok",      text: "Gemini LLM interface ready." },
+  { tag: "server",  text: "Starting Express application...", pause: 80 },
+  { tag: "ok",      text: "Server listening on port 8080." },
+  { tag: "ready",   text: "System is ready. Welcome to Sahil Sameer portfolio." },
 ];
 
 const TAG_STYLES = {
@@ -37,23 +36,28 @@ const TAG_STYLES = {
   ready:   { color: "#ffffff", label: "RDY" },
 };
 
+// ─── Module-scoped precomputed particle coordinates (Zero render-time RNG) ───
+const PRELOADER_PARTICLE_COUNT = 800; // Optimized from 1800 to 800 for mobile/low-end GPU
+const preloaderPositions = new Float32Array(PRELOADER_PARTICLE_COUNT * 3);
+
+let pSeed = 99881;
+function pLcg() {
+  pSeed = (pSeed * 16807) % 2147483647;
+  return (pSeed - 1) / 2147483646;
+}
+
+for (let i = 0; i < PRELOADER_PARTICLE_COUNT; i++) {
+  const theta = pLcg() * Math.PI * 2;
+  const phi   = Math.acos(2 * pLcg() - 1);
+  const r     = 3 + pLcg() * 8;
+  preloaderPositions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
+  preloaderPositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+  preloaderPositions[i * 3 + 2] = r * Math.cos(phi);
+}
+
 // ─── 3D: Floating particle field ─────────────────────────────────────────────
 function ParticleField() {
   const ref = useRef();
-  const count = 1800;
-
-  const positions = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi   = Math.acos(2 * Math.random() - 1);
-      const r     = 3 + Math.random() * 8;
-      pos[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
-      pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      pos[i * 3 + 2] = r * Math.cos(phi);
-    }
-    return pos;
-  }, []);
 
   useFrame((state) => {
     if (ref.current) {
@@ -63,7 +67,7 @@ function ParticleField() {
   });
 
   return (
-    <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
+    <Points ref={ref} positions={preloaderPositions} stride={3} frustumCulled={false}>
       <PointMaterial
         transparent
         color="#6366f1"
@@ -105,7 +109,7 @@ function OrbitRing({ radius, speed, tilt, color }) {
   });
   return (
     <mesh ref={ref} rotation={[tilt, 0, 0]}>
-      <torusGeometry args={[radius, 0.005, 8, 120]} />
+      <torusGeometry args={[radius, 0.005, 8, 60]} />
       <meshBasicMaterial color={color} opacity={0.22} transparent />
     </mesh>
   );
@@ -122,7 +126,7 @@ function CoreSphere() {
   });
   return (
     <mesh ref={ref}>
-      <sphereGeometry args={[0.42, 32, 32]} />
+      <sphereGeometry args={[0.42, 24, 24]} />
       <meshBasicMaterial color="#818cf8" opacity={0.14} transparent />
     </mesh>
   );
@@ -155,7 +159,7 @@ function ProgressBar({ progress }) {
         }}
         initial={{ width: "0%" }}
         animate={{ width: `${progress}%` }}
-        transition={{ ease: "easeOut", duration: 0.3 }}
+        transition={{ ease: "easeOut", duration: 0.15 }}
       />
       {/* Shimmer sweep */}
       <motion.div
@@ -164,7 +168,7 @@ function ProgressBar({ progress }) {
           background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)",
         }}
         animate={{ x: ["-80px", "100vw"] }}
-        transition={{ duration: 1.8, repeat: Infinity, ease: "linear", repeatDelay: 0.4 }}
+        transition={{ duration: 1.2, repeat: Infinity, ease: "linear", repeatDelay: 0.2 }}
       />
     </div>
   );
@@ -177,7 +181,23 @@ export default function Preloader({ onComplete }) {
   const bottomRef           = useRef(null);
   const progress            = Math.round((logs.length / BOOT_LOGS.length) * 100);
 
-  // Boot sequence runner
+  // Quick skip function
+  const handleSkip = () => {
+    onComplete();
+  };
+
+  // Keyboard shortcut (Escape to skip)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onComplete();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onComplete]);
+
+  // Boot sequence runner (~3.2s total: ~2s logs + ~1.2s name display)
   useEffect(() => {
     let idx      = 0;
     let isActive = true;
@@ -188,29 +208,32 @@ export default function Preloader({ onComplete }) {
         const entry = BOOT_LOGS[idx];
         setLogs((prev) => [...prev, entry]);
         idx++;
-        const base  = Math.random() * 75 + 30;
-        const extra = entry.pause ?? 0;
+        const base  = Math.random() * 20 + 95; // avg ~105ms per log step (~1.9s for all logs)
+        const extra = entry.pause ? entry.pause : 0;
         setTimeout(next, base + extra);
       } else {
+        // Show name right after logs complete
         setTimeout(() => {
           if (isActive) setIsDone(true);
-        }, 900);
+        }, 50);
+
+        // Keep name displayed for exactly ~1.2s before transition
         setTimeout(() => {
           if (isActive) onComplete();
-        }, 1800);
+        }, 1250);
       }
     };
 
-    const t = setTimeout(next, 350);
+    const t = setTimeout(next, 80);
     return () => {
       isActive = false;
       clearTimeout(t);
     };
   }, [onComplete]);
 
-  // Auto-scroll
+  // Auto-scroll terminal logs
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    bottomRef.current?.scrollIntoView({ behavior: "auto" });
   }, [logs]);
 
   return (
@@ -220,17 +243,15 @@ export default function Preloader({ onComplete }) {
       initial={{ opacity: 1 }}
       exit={{
         opacity: 0,
-        scale: 1.04,
-        filter: "blur(12px)",
-        transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
       }}
     >
-      {/* ── 3D canvas background ── */}
+      {/* ── 3D canvas background (low-power, DPR=1) ── */}
       <div className="absolute inset-0" style={{ zIndex: 0 }}>
         <Canvas
           camera={{ position: [0, 0, 6], fov: 55 }}
-          gl={{ antialias: true, alpha: true }}
-          dpr={[1, 1.5]}
+          gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
+          dpr={1}
         >
           <Scene />
         </Canvas>
@@ -269,7 +290,7 @@ export default function Preloader({ onComplete }) {
           className={`absolute ${cls} w-8 h-8 border-indigo-500/30`}
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 + i * 0.06 }}
+          transition={{ duration: 0.4, delay: 0.1 + i * 0.04 }}
           style={{ zIndex: 3 }}
         />
       ))}
@@ -284,7 +305,7 @@ export default function Preloader({ onComplete }) {
           className="flex items-center justify-between"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.4 }}
         >
           <div className="flex items-center gap-2.5">
             <div
@@ -295,9 +316,18 @@ export default function Preloader({ onComplete }) {
               SYSTEM BOOT
             </span>
           </div>
-          <span className="text-neutral-600 text-[10px] md:text-xs font-mono">
-            v1.0.0 · Node.js · Express
-          </span>
+
+          <div className="flex items-center gap-3">
+            <span className="text-neutral-600 text-[10px] md:text-xs font-mono hidden sm:inline">
+              v1.0.0 · Node.js · Express
+            </span>
+            <button
+              onClick={handleSkip}
+              className="px-2.5 py-1 rounded text-[10px] md:text-xs font-mono text-indigo-300/80 hover:text-white bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/25 transition cursor-pointer"
+            >
+              Skip [Esc]
+            </button>
+          </div>
         </motion.div>
 
         {/* Center name (fades in at end) */}
@@ -305,9 +335,9 @@ export default function Preloader({ onComplete }) {
           {isDone && (
             <motion.div
               className="absolute inset-0 flex items-center justify-center pointer-events-none"
-              initial={{ opacity: 0, scale: 0.92 }}
+              initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               style={{ zIndex: 5 }}
             >
               <div className="text-center select-none">
@@ -338,16 +368,16 @@ export default function Preloader({ onComplete }) {
         {/* Terminal log area */}
         <div className="w-full max-w-2xl space-y-0">
           {/* Log lines */}
-          <div className="space-y-1 mb-4 max-h-64 sm:max-h-80 overflow-hidden">
+          <div className="space-y-1 mb-4 max-h-56 sm:max-h-72 overflow-hidden">
             {logs.map((entry, i) => {
               const style = TAG_STYLES[entry.tag] ?? TAG_STYLES.system;
               const isReady = entry.tag === "ready";
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -12 }}
+                  initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.18 }}
+                  transition={{ duration: 0.12 }}
                   className="flex items-start gap-2.5 leading-relaxed"
                 >
                   {/* Tag badge */}
@@ -361,12 +391,16 @@ export default function Preloader({ onComplete }) {
                   >
                     {style.label}
                   </span>
-                  {/* Message */}
+
+                  {/* Log text */}
                   <span
-                    className={`text-[11px] sm:text-xs md:text-sm break-words ${
-                      isReady ? "font-semibold" : "font-normal"
+                    className={`text-[11px] sm:text-xs leading-relaxed ${
+                      isReady
+                        ? "text-white font-semibold"
+                        : entry.tag === "ok"
+                        ? "text-emerald-400/90"
+                        : "text-neutral-400"
                     }`}
-                    style={{ color: isReady ? "#ffffff" : `${style.color}cc` }}
                   >
                     {entry.text}
                   </span>
@@ -378,7 +412,7 @@ export default function Preloader({ onComplete }) {
             {logs.length < BOOT_LOGS.length && (
               <motion.div
                 animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 0.75, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
                 className="w-2 h-3.5 sm:h-4 mt-1"
                 style={{
                   background: "#6366f1",
@@ -400,7 +434,7 @@ export default function Preloader({ onComplete }) {
                 className="text-[10px] font-mono"
                 style={{ color: "#6366f1" }}
                 animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                transition={{ duration: 1.0, repeat: Infinity }}
               >
                 {progress}%
               </motion.span>

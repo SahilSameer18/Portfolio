@@ -5,14 +5,13 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
+    chunkSizeWarningLimit: 950,
     rollupOptions: {
       output: {
         manualChunks: {
-          "vendor-react":  ["react", "react-dom"],
           "vendor-icons":  ["react-icons"],
           "vendor-motion": ["framer-motion"],
-          "vendor-three":  ["three"],
-          "vendor-r3f":    ["@react-three/fiber", "@react-three/drei"],
+          "vendor-three":  ["three", "@react-three/fiber", "@react-three/drei"],
         },
       },
     },

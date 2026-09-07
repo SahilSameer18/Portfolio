@@ -33,18 +33,23 @@ export default function Cursor() {
 
   const [hovering, setHovering] = useState(false);
   const [visible,  setVisible]  = useState(false);
-  const [mounted,  setMounted]  = useState(false);
+  const [mounted] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    return !isTouch && !reduceMotion;
+  });
 
   useEffect(() => {
-    const isTouch      = window.matchMedia("(hover: none), (pointer: coarse)").matches;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (isTouch || reduceMotion) return;
+    if (!mounted) return;
 
-    setMounted(true);
     document.documentElement.classList.add("custom-cursor");
 
     const onMove  = (e) => { dotX.set(e.clientX); dotY.set(e.clientY); setVisible(true); };
-    const onOver  = (e) => setHovering(!!e.target.closest(INTERACTIVE));
+    const onOver  = (e) => {
+      const isInter = Boolean(e.target.closest(INTERACTIVE));
+      setHovering((prev) => (prev !== isInter ? isInter : prev));
+    };
     const onLeave = () => setVisible(false);
     const onEnter = () => setVisible(true);
 
@@ -78,12 +83,12 @@ export default function Cursor() {
           width:        220,
           height:       220,
           borderRadius: "50%",
-          // Dark  → white glow  (screen adds light over dark content)
-          // Light → dark smudge (multiply darkens light content slightly)
+          // Dark  → soft white screen glow
+          // Light → subtle clean indigo ambient aura (normal blend mode avoids muddy smudge)
           background: isDark
-            ? "radial-gradient(circle, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.05) 50%, transparent 70%)"
-            : "radial-gradient(circle, rgba(99,102,241,0.20) 0%, rgba(99,102,241,0.08) 50%, transparent 70%)",
-          mixBlendMode: isDark ? "screen" : "multiply",
+            ? "radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 50%, transparent 70%)"
+            : "radial-gradient(circle, rgba(99,102,241,0.09) 0%, rgba(99,102,241,0.03) 50%, transparent 70%)",
+          mixBlendMode: isDark ? "screen" : "normal",
           opacity:      visible ? 1 : 0,
           transition:   "opacity 0.5s ease",
         }}

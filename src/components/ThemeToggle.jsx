@@ -10,7 +10,7 @@ export default function ThemeToggle() {
       onClick={(e) => toggleTheme(e)}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className="p-2 rounded-full cursor-pointer hover:bg-neutral-800/10 dark:hover:bg-white/10 text-neutral-800 dark:text-neutral-200 transition-colors duration-200 flex items-center justify-center outline-hidden"
+      className="p-2 rounded-full cursor-pointer hover:bg-neutral-800/10 dark:hover:bg-white/10 text-neutral-800 dark:text-neutral-200 transition-colors duration-200 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-indigo-500 outline-none"
       aria-label="Toggle theme"
     >
       <AnimatePresence mode="wait" initial={false}>

@@ -297,25 +297,17 @@ export default function Contact() {
                   }
 
                   return (
-                    <motion.div key={key} variants={lineVariants}>
+                    <motion.div
+                      key={key}
+                      variants={lineVariants}
+                      className="flex items-center justify-between gap-2 py-1.5 -mx-2 px-2 rounded-lg transition-colors duration-200 hover:bg-black/5 dark:hover:bg-white/5"
+                    >
                       <a
                         href={line.href}
                         target={line.external ? "_blank" : undefined}
                         rel={line.external ? "noopener noreferrer" : undefined}
                         aria-label={line.ariaLabel}
-                        className="group flex flex-wrap items-center gap-2 md:gap-3 py-1.5 -mx-2 px-2 rounded-lg
-                                   transition-all duration-200 hover:translate-x-1"
-                        style={{
-                          background: "transparent"
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = isDark
-                            ? "rgba(255,255,255,0.06)"
-                            : "rgba(99,102,241,0.08)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = "transparent";
-                        }}
+                        className="group flex flex-wrap items-center gap-2 md:gap-3 min-w-0 flex-1 transition-all duration-200 hover:translate-x-1"
                       >
                         <line.icon
                           aria-hidden="true"
@@ -335,21 +327,22 @@ export default function Contact() {
                         >
                           {line.value}
                         </span>
-
-                        {/* Copy button */}
-                        {line.copyable && (
-                          <button
-                            onClick={copyEmail}
-                            className="ml-auto flex-shrink-0 p-1.5 rounded-md transition-colors duration-200
-                                       hover:bg-neutral-100 dark:hover:bg-white/10"
-                            style={{ color: copied ? "#22c55e" : (isDark ? "#64748b" : "#9ca3af") }}
-                            title={copied ? "Copied!" : "Copy email"}
-                            aria-label="Copy email address"
-                          >
-                            {copied ? <FaCheck size={10} /> : <FaClipboard size={10} />}
-                          </button>
-                        )}
                       </a>
+
+                      {/* Copy button — sibling to <a>, not nested inside */}
+                      {line.copyable && (
+                        <button
+                          type="button"
+                          onClick={copyEmail}
+                          className="flex-shrink-0 p-1.5 rounded-md transition-colors duration-200
+                                     hover:bg-neutral-200/80 dark:hover:bg-white/10 cursor-pointer focus-visible:ring-2 focus-visible:ring-indigo-500 outline-none"
+                          style={{ color: copied ? "#22c55e" : (isDark ? "#64748b" : "#9ca3af") }}
+                          title={copied ? "Copied!" : "Copy email"}
+                          aria-label="Copy email address"
+                        >
+                          {copied ? <FaCheck size={11} /> : <FaClipboard size={11} />}
+                        </button>
+                      )}
                     </motion.div>
                   );
                 })}
