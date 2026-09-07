@@ -65,7 +65,7 @@ export default function Cursor() {
       document.documentElement.removeEventListener("mouseleave", onLeave);
       document.documentElement.removeEventListener("mouseenter", onEnter);
     };
-  }, [dotX, dotY]);
+  }, [dotX, dotY, mounted]);
 
   if (!mounted) return null;
 

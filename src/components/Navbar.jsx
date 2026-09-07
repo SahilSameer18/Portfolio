@@ -159,7 +159,7 @@ export default function Navbar() {
                       if (target) {
                         setTimeout(() => {
                           if (window.__lenis) {
-                            window.__lenis.scrollTo(target, { offset: -24, duration: 1.2 });
+                            window.__lenis.scrollTo(target, { offset: -75, duration: 1.2 });
                           } else {
                             target.scrollIntoView({ behavior: "smooth" });
                           }

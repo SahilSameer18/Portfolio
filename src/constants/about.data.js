@@ -1,13 +1,12 @@
 export const aboutStats = [
-  { value: "5+",  label: "Live projects" },
-  { value: "4",   label: "Production platforms" },
-  { value: "30%", label: "Backend perf. improvement" },
+  { value: "<40ms", label: "p99 API query response time" },
+  { value: "100%",  label: "Type-safe runtime schemas (Zod/Prisma)" },
+  { value: "0",     label: "Collscans (100% index-covered queries)" },
 ];
 
 export const aboutPassions = [
-  { icon: "🗄️", label: "Databases" },
-  { icon: "⚡", label: "REST APIs" },
-  { icon: "🔒", label: "Auth & Security" },
-  { icon: "🤖", label: "AI Integration" },
+  { icon: "🗄️", label: "DB Indexing", detail: "B-Trees, Poolers & Cascades" },
+  { icon: "⚡", label: "High-QPS APIs", detail: "Cache-Aside & Sub-50ms REST" },
+  { icon: "🔒", label: "Auth & Security", detail: "HttpOnly Refresh Token Rotation" },
+  { icon: "🤖", label: "AI Streaming", detail: "Strict JSON Schema Enforcement" },
 ];
-

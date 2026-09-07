@@ -6,14 +6,17 @@ import { useCountUp } from "../hooks/useCountUp";
 import GlitchText from "../components/GlitchText";
 import { aboutStats, aboutPassions } from "../constants/about.data";
 
-// Splits "5+" → { num: 5, suffix: "+" } etc.
+// Splits "<40ms" → { prefix: "<", num: 40, suffix: "ms" } etc.
 function parseStat(value) {
-  const num = parseInt(value, 10);
-  return { num, suffix: value.replace(String(num), "") };
+  const match = String(value).match(/^([^0-9]*)(\d+)(.*)$/);
+  if (match) {
+    return { prefix: match[1], num: parseInt(match[2], 10), suffix: match[3] };
+  }
+  return { prefix: "", num: 0, suffix: value };
 }
 
 function StatItem({ stat }) {
-  const { num, suffix } = parseStat(stat.value);
+  const { prefix, num, suffix } = parseStat(stat.value);
   const { count, ref }  = useCountUp(num, 1.6);
 
   return (
@@ -27,7 +30,7 @@ function StatItem({ stat }) {
           backgroundClip: "text",
         }}
       >
-        {count}{suffix}
+        {prefix}{count}{suffix}
       </p>
       <p className="text-xs text-neutral-500 dark:text-gray-500 mt-1.5 leading-snug">
         {stat.label}
@@ -299,17 +302,22 @@ export default function About() {
               whileInView="show"
               viewport={{ once: true }}
             >
-              {aboutPassions.map(({ icon, label }) => (
+              {aboutPassions.map(({ icon, label, detail }) => (
                 <motion.div
                   key={label}
                   variants={{ hidden: { opacity: 0, scale: 0.8 }, show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300 } } }}
                   whileHover={{ scale: 1.05, y: -2 }}
                   className="flex flex-col p-3 rounded-xl border border-neutral-200/50 dark:border-white/5 bg-neutral-500/5 hover:border-indigo-500/30 transition-colors duration-300"
                 >
-                  <span className="text-lg mb-1.5">{icon}</span>
-                  <span className="text-[10px] md:text-xs font-semibold text-neutral-800 dark:text-gray-300 leading-snug">
+                  <span className="text-lg mb-1">{icon}</span>
+                  <span className="text-[11px] md:text-xs font-semibold text-neutral-800 dark:text-gray-200 leading-snug">
                     {label}
                   </span>
+                  {detail && (
+                    <span className="text-[9.5px] text-neutral-500 dark:text-gray-400 mt-1 leading-tight font-mono">
+                      {detail}
+                    </span>
+                  )}
                 </motion.div>
               ))}
             </motion.div>
