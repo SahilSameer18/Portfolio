@@ -2,7 +2,7 @@
   <img src="public/portfolio-logo.png" alt="Logo" width="80" height="80" />
   <h1 align="center">Sahil Sameer Siddique | Portfolio</h1>
   <p align="center">
-    A high-performance, visually stunning developer portfolio showcasing modern full-stack capabilities. Built with React 19, Vite, Tailwind CSS v4, Three.js, and Framer Motion.
+    A high-performance, visually stunning developer portfolio showcasing modern full-stack capabilities. Built with React, Vite, Tailwind CSS, Three.js, and Framer Motion.
     <br />
     <br />
     <a href="https://sahil-sameer-portfolio.vercel.app/"><strong>View Live Site »</strong></a>
