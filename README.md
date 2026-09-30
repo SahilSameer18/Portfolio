@@ -1,6 +1,6 @@
 <div align="center">
   <img src="public/portfolio-logo.png" alt="Logo" width="80" height="80" />
-  <h1 align="center">Sahil Sameer Siddique | Portfolio</h1>
+  <h1 align="center">Sahil Sameer Siddique | Portfolio </h1>
   <p align="center">
     A high-performance, visually stunning developer portfolio showcasing modern full-stack capabilities. Built with React 19, Vite, Tailwind CSS v4, Three.js, and Framer Motion.
     <br />
